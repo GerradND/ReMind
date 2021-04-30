@@ -1,14 +1,30 @@
 package com.adpro.remind.model;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "schedule")
 public class Schedule {
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer idSchedule;
+
+    @Column(name = "title")
     private String title;
+
+    @Column(name = "day")
     private String day;
+
+    @Column(name = "start_time")
     private LocalDateTime startTime;
+
+    @Column(name = "end_time")
     private LocalDateTime endTime;
+
+    @Column(name = "desc", columnDefinition = "text")
     private String description;
+
+    // implement ManyToOne User
 
     public Schedule(String title, String day, LocalDateTime startTime, LocalDateTime endTime, String description){
         this.title = title;
