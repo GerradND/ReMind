@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TodoListRepository extends JpaRepository<TodoList, String>{
+public interface TodoListRepository extends JpaRepository<TodoList, Integer>{
     TodoList findById(int id);
 }

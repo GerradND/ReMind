@@ -2,8 +2,12 @@ package com.adpro.remind.service;
 
 import com.adpro.remind.repository.TodoListRepository;
 import com.adpro.remind.model.TodoList;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class TodoListServiceImpl implements TodoListService{
+    @Autowired
     private TodoListRepository todoListRepository;
 
     @Override
@@ -14,7 +18,7 @@ public class TodoListServiceImpl implements TodoListService{
     @Override
     public boolean deleteTodoList(int id){
         if(todoListRepository.findById(id) == null) return false;
-        todoListRepository.deleteById(Integer.toString(id));
+        todoListRepository.deleteById(id);
         return true;
     }
 
