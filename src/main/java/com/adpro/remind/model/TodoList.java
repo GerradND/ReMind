@@ -18,7 +18,10 @@ public class TodoList {
     @Column
     private int id;
 
-    @Column
+    @Column(nullable = false)
     private String title;
 
+    public TodoList(String title){
+        this.title = title;
+    }
 }
