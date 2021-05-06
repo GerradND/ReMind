@@ -6,12 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name="todo_list")
 @Data
 @Getter
-@NoArgsConstructor
 public class TodoList {
     @Id
     @GeneratedValue
@@ -21,7 +21,11 @@ public class TodoList {
     @Column(nullable = false)
     private String title;
 
+    @OneToMany(mappedBy = "todoList")
+    private Set<TodoItem> todoItemSet;
+
     public TodoList(String title){
+        this.id = id;
         this.title = title;
     }
 }
