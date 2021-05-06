@@ -25,6 +25,8 @@ public class BotConfiguration {
     @Value("${token}")
     private String token;
 
+    private static final String REGEX = "^-list\\s+ADD";
+
     @Bean
     public <T extends Event> GatewayDiscordClient gatewayDiscordClient(List<EventListener<T>> eventListeners) {
         GatewayDiscordClient client = null;
@@ -33,6 +35,7 @@ public class BotConfiguration {
                     .build()
                     .login()
                     .block();
+            Pattern pattern = Pattern.compile(REGEX);
             client.getEventDispatcher().on(ReadyEvent.class).subscribe(event -> {
                 final User self = event.getSelf();
                 System.out.println(String.format("Logged in as %s#%s", self.getUsername(), self.getDiscriminator()));
@@ -41,9 +44,9 @@ public class BotConfiguration {
             client.getEventDispatcher().on(MessageCreateEvent.class)
                     .map(MessageCreateEvent::getMessage)
                     .filter(message -> message.getAuthor().map(user -> !user.isBot()).orElse(false))
-                    .filter(message -> message.getContent().equalsIgnoreCase("ping"))
+                    .filter(message -> pattern.matcher(message.getContent()).find())
                     .flatMap(Message::getChannel)
-                    .flatMap(channel -> channel.createMessage("Pong!"))
+                    .flatMap(channel -> channel.createMessage("List berhasil dibuat!"))
                     .subscribe();
 
             client.onDisconnect().block();
