@@ -2,9 +2,11 @@ package com.adpro.remind.service;
 
 import com.adpro.remind.model.Schedule;
 import com.adpro.remind.repository.ScheduleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class ScheduleServiceImpl implements ScheduleService {
 
+    @Autowired
     private ScheduleRepository scheduleRepository;
 
     @Override
