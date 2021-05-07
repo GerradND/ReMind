@@ -1,16 +1,5 @@
 image: gradle:jdk11
 
-services:
-  - postgres:latest
-
-variables:
-  GRADLE_OPTS: "-Dorg.gradle.daemon=true"
-  POSTGRES_DB: studyhelper
-  POSTGRES_HOST: postgres
-  POSTGRES_PORT: 5432
-  POSTGRES_USER: postgres
-  POSTGRES_PASSWORD: postgres
-
 before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle
 
