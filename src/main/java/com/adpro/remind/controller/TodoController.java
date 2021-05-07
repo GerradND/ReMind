@@ -2,39 +2,48 @@ package com.adpro.remind.controller;
 
 import com.adpro.remind.model.TodoItem;
 import com.adpro.remind.model.TodoList;
-import com.adpro.remind.service.TodoListService;
 import com.adpro.remind.service.TodoListServiceImpl;
-import com.austinv11.servicer.Service;
-import com.sun.tools.javac.comp.Todo;
+import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.message.MessageCreateEvent;
-import discord4j.core.object.entity.Message;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.Metadata;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+
+import java.util.regex.Pattern;
 
 @Controller
 public class TodoController {
     @Autowired
     private TodoListServiceImpl todoListService;
-    private static final String addTodoList = "^-list\\s+ADD";
-    private static final String addTodoItem = "^-list\\s+ADDITEM";
-    private static final String deleteTodoList = "^-list\\s+DELETE";
-    private static final String deleteTodoItem = "^-list\\s+DELETE";
-    private static final String showTodoList = "^-list\\s+SHOW";
-    private static final String showAllTodoList = "^-list\\s+SHOW\\s+ALL";
+    private GatewayDiscordClient client;
+    private final Pattern addTodoListPattern = Pattern.compile("^-list\\s+ADD");
+    private final Pattern addTodoItemPattern = Pattern.compile("^-list\\s+ADDITEM");
+    private final Pattern deleteTodoListPattern = Pattern.compile("^-list\\s+DELETE");
+    private final Pattern deleteTodoItemPattern = Pattern.compile("^-list\\s+DELETE");
+    private final Pattern showTodoListPattern = Pattern.compile("^-list\\s+SHOW");
+    private final Pattern showAllTodoListPattern = Pattern.compile("^-list\\s+SHOW\\s+ALL");
 
-    public void mainHandler(MessageCreateEvent event){
-        System.out.println(event.getMessage());
-        System.out.println(todoListService.getClass());
-//        addTodoList(event);
-        System.out.println(deleteTodoList(event));
+    public GatewayDiscordClient mainHandler(MessageCreateEvent event, GatewayDiscordClient client){
+        if(this.client != null) this.client = client;
+        String messageContent = event.getMessage().getContent();
+        if(addTodoItemPattern.matcher(messageContent).find()){
+            addTodoItem(event);
+        }
+        else if(deleteTodoItemPattern.matcher(messageContent).find()){
+            deleteTodoItem(event);
+        }
+        else if(addTodoListPattern.matcher(messageContent).find()){
+            addTodoList(event);
+        }
+        else if(deleteTodoListPattern.matcher(messageContent).find()){
+            deleteTodoList(event);
+        }
+        else if(showTodoListPattern.matcher(messageContent).find()){
+            showTodoList(event);
+        }
+        else if(showAllTodoListPattern.matcher(messageContent).find()){
+            showAllTodoList(event);
+        }
+        return client;
     }
 
     public void addTodoList(MessageCreateEvent event){
@@ -44,6 +53,7 @@ public class TodoController {
 
     public void addTodoItem(MessageCreateEvent event){
         TodoItem todoItem = new TodoItem(event.getMessage().getContent());
+        event.getMessage().getChannel().block().createMessage("hiyaa").block();
         todoListService.addTodoItem(todoItem);
     }
 

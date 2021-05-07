@@ -33,26 +33,20 @@ public class BotConfiguration {
 
     @Bean
     public <T extends Event> GatewayDiscordClient gatewayDiscordClient(List<EventListener<T>> eventListeners) {
-        GatewayDiscordClient client = null;
-        try {
-            client = DiscordClientBuilder.create(token)
-                    .build()
-                    .login()
-                    .block();
-            Pattern pattern = Pattern.compile(REGEX);
-            client.getEventDispatcher().on(ReadyEvent.class).subscribe(event -> {
-                final User self = event.getSelf();
-                System.out.println(String.format("Logged in as %s#%s", self.getUsername(), self.getDiscriminator()));
-            });
-            client.getEventDispatcher().on(MessageCreateEvent.class).subscribe(event -> {
-                todoController.mainHandler(event);
-            });
+        final GatewayDiscordClient client = DiscordClientBuilder.create(token)
+                .build()
+                .login()
+                .block();
 
-            client.onDisconnect().block();
-        }
-        catch ( Exception exception ) {
-            log.error( "Be sure to use a valid bot token!", exception );
-        }
+        client.getEventDispatcher().on(ReadyEvent.class).subscribe(event -> {
+            final User self = event.getSelf();
+            System.out.println(String.format("Logged in as %s#%s", self.getUsername(), self.getDiscriminator()));
+        });
+        client.getEventDispatcher().on(MessageCreateEvent.class).subscribe(event -> {
+            todoController.mainHandler(event, client);
+        });
+
+        client.onDisconnect().block();
 
         return client;
     }
