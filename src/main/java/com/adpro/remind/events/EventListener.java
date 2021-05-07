@@ -3,8 +3,10 @@ package com.adpro.remind.events;
 import discord4j.core.event.domain.Event;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
+@Component
 public interface EventListener<T extends Event> {
 
     Logger LOG = LoggerFactory.getLogger(EventListener.class);
