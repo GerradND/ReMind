@@ -1,7 +1,9 @@
 package com.adpro.remind.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import javax.persistence.*;
+import java.time.DayOfWeek;
 import java.time.LocalTime;
 
 @Entity
@@ -15,7 +17,7 @@ public class Schedule {
     private String title;
 
     @Column(name = "day")
-    private String day;
+    private DayOfWeek day;
 
     @Column(name = "start_time")
     private LocalTime startTime;
@@ -26,8 +28,17 @@ public class Schedule {
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
-    // implement ManyToOne User
-    public Schedule(String title, String day, LocalTime startTime, LocalTime endTime, String description){
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private User user;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "id_guild")
+    private Guild guild;
+
+    public Schedule(String title, DayOfWeek day, LocalTime startTime, LocalTime endTime, String description){
         this.title = title;
         this.day = day;
         this.startTime = startTime;
