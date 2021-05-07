@@ -1,50 +1,35 @@
 package com.adpro.remind.controller;
-import discord4j.core.DiscordClientBuilder;
-import discord4j.core.GatewayDiscordClient;
-import discord4j.core.event.domain.lifecycle.ReadyEvent;
+import com.adpro.remind.controller.help.HelpCommand;
+import com.adpro.remind.controller.list.ToDoListCommand;
+import com.adpro.remind.controller.reminder.ReminderCommand;
+import com.adpro.remind.controller.schedule.ScheduleCommand;
 import discord4j.core.event.domain.message.MessageCreateEvent;
-import discord4j.core.object.entity.Message;
-import discord4j.core.object.entity.User;
 
 public class InputController {
-    public static void main(String[] args){
-        GatewayDiscordClient client = DiscordClientBuilder.create("ODM3Mjk3MTYxMzQ3MDA2NDc1.YIqfvw.79D0XnAJgGS-dEfaN-KduhnXsog")
-                .build()
-                .login()
-                .block();
+    private final String PREFIX = "-";
+    private String output;
+    private String[] content;
+    private MessageCreateEvent event;
 
-        client.getEventDispatcher().on(MessageCreateEvent.class)
-                .map(MessageCreateEvent::getMessage)
-                .filter(message -> message.getAuthor().map(user -> !user.isBot()).orElse(false))
-                .filter(message -> message.getContent().equalsIgnoreCase("!ping"))
-                .flatMap(Message::getChannel)
-                .flatMap(channel -> channel.createMessage("Pong!"))
-                .subscribe();
+    public InputController(MessageCreateEvent event, String[] content) {
+        this.event = event;
+        this.content = content;
+    }
 
-        client.getEventDispatcher().on(MessageCreateEvent.class)
-                .map(MessageCreateEvent::getMessage)
-                .filter(message -> message.getAuthor().map(user -> !user.isBot()).orElse(false))
-                .filter(message -> message.getContent().split(" ")[0].equalsIgnoreCase("!Reminder"))
-                .flatMap(Message::getChannel)
-                .flatMap(channel -> channel.createMessage(" berhasil dibuat!"))
-                .subscribe();
-
-        client.getEventDispatcher().on(MessageCreateEvent.class)
-                .map(MessageCreateEvent::getMessage)
-                .filter(message -> message.getAuthor().map(user -> !user.isBot()).orElse(false))
-                .filter(message -> message.getContent().split(" ")[0].equalsIgnoreCase("!Todo"))
-                .flatMap(Message::getChannel)
-                .flatMap(channel -> channel.createMessage("ToDo berhasil dibuat"))
-                .subscribe();
-
-        client.getEventDispatcher().on(MessageCreateEvent.class)
-                .map(MessageCreateEvent::getMessage)
-                .filter(message -> message.getAuthor().map(user -> !user.isBot()).orElse(false))
-                .filter(message -> message.getContent().split(" ")[0].equalsIgnoreCase("!Schedule"))
-                .flatMap(Message::getChannel)
-                .flatMap(channel -> channel.createMessage("Schedule berhasil dibuat!"))
-                .subscribe();
-
-        client.onDisconnect().block();
+    public String getOutputMessage() {
+        if (content[0].startsWith(PREFIX + "reminder")) {
+            ReminderCommand reminderCommand = new ReminderCommand(content, content[1]);
+            output = reminderCommand.getOutputMessage();
+        } else if (content[0].startsWith(PREFIX + "schedule")) {
+            ScheduleCommand scheduleCommand = new ScheduleCommand(content, content[1]);
+            output = scheduleCommand.getOutputMessage();
+        } else if (content[0].startsWith(PREFIX + "list")) {
+            ToDoListCommand toDoListCommand = new ToDoListCommand(content, content[1]);
+            output = toDoListCommand.getOutputMessage();
+        } else if (content[0].startsWith(PREFIX + "help")) {
+            HelpCommand helpCommand = new HelpCommand(content, content[1]);
+            output = helpCommand.getOutputMessage();
+        }
+        return output;
     }
 }
