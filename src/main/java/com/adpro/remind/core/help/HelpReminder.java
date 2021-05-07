@@ -21,7 +21,7 @@ public class HelpReminder implements HelpMessage {
                 "-reminder SET [ID_REMINDER] [WAKTU_REMINDER]\n" +
                 "\n" +
                 "Notes:\n" +
-                "1. Format TANGGAL: DD/MM/YY\n" +
+                "1. Format TANGGAL: DD/MM/YYYY\n" +
                 "2. Format JAM: HH:MM\n" +
                 "3. Format WAKTU: X Hari atau X Jam\n" +
                 "4. Untuk melihat ID suatu Reminder, gunakan -reminder SHOW ALL atau -reminder SHOW [TANGGAL]\n";
