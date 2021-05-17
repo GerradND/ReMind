@@ -5,6 +5,6 @@ public class ReminderCommand {
     }
 
     public String getOutputMessage() {
-        return "";
+        return "halo reminder";
     }
 }

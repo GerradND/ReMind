@@ -6,7 +6,7 @@ public class ScheduleCommand {
     }
 
     public String getOutputMessage() {
-        return "";
+        return "halo schedule";
     }
 
 }

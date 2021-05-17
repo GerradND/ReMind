@@ -7,6 +7,6 @@ public class HelpCommand {
 
     }
     public String getOutputMessage(){
-        return "";
+        return "halo help";
     }
 }

@@ -5,6 +5,6 @@ public class ToDoListCommand {
     }
 
     public String getOutputMessage() {
-        return "";
+        return "halo list";
     }
 }
