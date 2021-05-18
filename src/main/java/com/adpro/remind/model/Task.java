@@ -15,8 +15,8 @@ import java.util.Set;
 public class Task {
     @Id
     @GeneratedValue
-    @Column(name = "id")
-    private Integer id;
+    @Column(name = "idTask")
+    private Integer idTask;
 
     @Column(name = "name")
     private String name;

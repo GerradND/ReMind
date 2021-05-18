@@ -24,7 +24,7 @@ public class Reminder {
     private LocalTime time;
 
     @ManyToOne
-    @JoinColumn(name="taskID", nullable = false)
+    @JoinColumn(name="id_task", nullable = false)
     private Task task;
 
     public Reminder(LocalDate date, LocalTime time){
