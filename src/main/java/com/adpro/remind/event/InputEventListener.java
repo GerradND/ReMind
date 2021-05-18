@@ -2,13 +2,14 @@ package com.adpro.remind.controller;
 import com.adpro.remind.controller.help.HelpCommand;
 import com.adpro.remind.controller.list.ToDoListCommand;
 import com.adpro.remind.controller.reminder.ReminderCommand;
-import com.adpro.remind.controller.schedule.ScheduleCommand;
+import com.adpro.remind.controller.schedule.ScheduleAddCommand;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +22,11 @@ public class InputEventListener extends ListenerAdapter {
 
     @Value("${prefix}")
     private String prefix;
-    private String output;
     private String[] content;
     private Map<String, String> Command = new HashMap<String, String>();
+
+    @Autowired
+    private CommandService commandService;
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
@@ -50,11 +53,11 @@ public class InputEventListener extends ListenerAdapter {
 
     private void init(){
         ReminderCommand reminderCommand = new ReminderCommand(content, content[1]);
-        ScheduleCommand scheduleCommand = new ScheduleCommand(content, content[1]);
+        ScheduleAddCommand scheduleAddCommand = new ScheduleAddCommand(content, content[1]);
         ToDoListCommand toDoListCommand = new ToDoListCommand(content, content[1]);
         HelpCommand helpCommand = new HelpCommand(content, content[1]);
         Command.put("-reminder", reminderCommand.getOutputMessage());
-        Command.put("-schedule", scheduleCommand.getOutputMessage());
+        Command.put("-schedule", scheduleAddCommand.getOutputMessage());
         Command.put("-list", toDoListCommand.getOutputMessage());
         Command.put("-help", helpCommand.getOutputMessage());
     }

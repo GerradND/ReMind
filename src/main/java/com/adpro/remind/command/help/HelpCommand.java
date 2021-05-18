@@ -1,4 +1,4 @@
-package com.adpro.remind.controller.help;
+package com.adpro.remind.command.help;
 
 
 

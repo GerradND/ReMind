@@ -1,4 +1,4 @@
-package com.adpro.remind.controller.list;
+package com.adpro.remind.command.list;
 
 public class ToDoListCommand {
     public ToDoListCommand(String[] components, String ops){

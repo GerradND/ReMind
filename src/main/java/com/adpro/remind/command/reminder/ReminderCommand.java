@@ -1,4 +1,4 @@
-package com.adpro.remind.controller.reminder;
+package com.adpro.remind.command.reminder;
 
 public class ReminderCommand {
     public ReminderCommand(String[] components, String ops){
