@@ -13,9 +13,9 @@ public class ReminderAddCommand implements Command {
 
     private TaskService taskService;
     private String[] inputContent;
-    private final String name = inputContent[2];
-    private final String dateText = inputContent[3];
-    private final String timeText = inputContent[4];
+    private String name;
+    private String dateText;
+    private String timeText;
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -25,6 +25,10 @@ public class ReminderAddCommand implements Command {
     }
 
     private Task newTask(){
+        System.out.println(inputContent[2]);
+        this.name = inputContent[2];
+        this.dateText = inputContent[3];
+        this.timeText = inputContent[4];
         LocalDate date = LocalDate.parse(dateText, dateFormatter);
         LocalTime time = LocalTime.parse(timeText, timeFormatter);
 

@@ -14,17 +14,17 @@ import java.util.Set;
 @NoArgsConstructor
 public class Task {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "idTask")
     private Integer idTask;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "date")
+    @Column(name = "date", nullable = false)
     private LocalDate date;
 
-    @Column(name = "time")
+    @Column(name = "time", nullable = false)
     private LocalTime time;
 
     @OneToMany(mappedBy = "task")

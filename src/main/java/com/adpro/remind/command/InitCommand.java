@@ -18,9 +18,10 @@ public class InitCommand {
     private TaskService taskService;
 
     @Autowired
-    public InitCommand(CommandRepository commandRepository, ScheduleService scheduleService) {
+    public InitCommand(CommandRepository commandRepository, ScheduleService scheduleService, TaskService taskService) {
         this.commandRepository = commandRepository;
         this.scheduleService = scheduleService;
+        this.taskService = taskService;
     }
 
     @PostConstruct

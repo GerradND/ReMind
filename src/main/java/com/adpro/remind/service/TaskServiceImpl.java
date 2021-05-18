@@ -5,17 +5,20 @@ import com.adpro.remind.model.Task;
 import com.adpro.remind.repository.ReminderRepository;
 import com.adpro.remind.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 
+@Service
 public class TaskServiceImpl implements TaskService{
 
     private TaskRepository taskRepository;
     private ReminderRepository reminderRepository;
 
     @Autowired
-    public TaskServiceImpl(TaskRepository taskRepository){
+    public TaskServiceImpl(TaskRepository taskRepository, ReminderRepository reminderRepository){
         this.taskRepository = taskRepository;
+        this.reminderRepository = reminderRepository;
     }
 
     @Override
