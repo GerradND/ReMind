@@ -1,0 +1,29 @@
+image: gradle:jdk11
+
+before_script:
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+
+stages:
+  - test
+  - deploy
+
+gradle-test:
+  image: gradle:jdk11
+  stage: test
+  script:
+    - export SPRING_PROFILES_ACTIVE=test
+    - ./gradlew check --info --stacktrace
+    - ./gradlew test
+    - ./gradlew jacocoTestReport
+    - cat build/reports/jacoco/test/html/index.html
+
+gradle-deploy:
+  stage: deploy
+  image: ruby:latest
+  before_script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
+  script:
+    - dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_API_KEY
