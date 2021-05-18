@@ -20,10 +20,11 @@ public class Help implements HelpMessage {
     }
 
     public String help(String fitur) {
-        HelpMessage helpMessage = ErrorHelp.getInstance();
+        HelpMessage helpMessage;
         if (fitur.equals("reminder")) helpMessage = HelpReminder.getInstance();
-        if (fitur.equals("schedule")) helpMessage = HelpSchedule.getInstance();
-        if (fitur.equals("todo")) helpMessage = HelpToDoList.getInstance();
+        else if (fitur.equals("schedule")) helpMessage = HelpSchedule.getInstance();
+        else if (fitur.equals("todo")) helpMessage = HelpToDoList.getInstance();
+        else helpMessage = ErrorHelp.getInstance();
         return helpMessage.help();
     }
 }
