@@ -1,8 +1,10 @@
-package com.adpro.remind.controller;
-import com.adpro.remind.controller.help.HelpCommand;
-import com.adpro.remind.controller.list.ToDoListCommand;
-import com.adpro.remind.controller.reminder.ReminderCommand;
-import com.adpro.remind.controller.schedule.ScheduleAddCommand;
+package com.adpro.remind.event;
+import com.adpro.remind.command.help.HelpCommand;
+import com.adpro.remind.command.list.ToDoListCommand;
+import com.adpro.remind.command.reminder.ReminderCommand;
+import com.adpro.remind.command.schedule.ScheduleAddCommand;
+import com.adpro.remind.controller.FeatureCommand;
+import com.adpro.remind.service.ScheduleService;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -26,7 +28,10 @@ public class InputEventListener extends ListenerAdapter {
     private Map<String, String> Command = new HashMap<String, String>();
 
     @Autowired
-    private CommandService commandService;
+    private FeatureCommand featureCommand;
+
+    @Autowired
+    private ScheduleService scheduleService;
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
@@ -38,8 +43,7 @@ public class InputEventListener extends ListenerAdapter {
         if (message.getContentRaw().startsWith(prefix)) {
             if(content.length > 1){
                 try {
-                    init();
-                    message.getChannel().sendMessage(this.getOutputMessage()).queue();
+                    featureCommand.outputMessage(message, content);
                 } catch (Exception ex) {
                     message.getChannel().sendMessage(
                             "There was an error in your command..."
@@ -51,18 +55,16 @@ public class InputEventListener extends ListenerAdapter {
         }
     }
 
-    private void init(){
-        ReminderCommand reminderCommand = new ReminderCommand(content, content[1]);
-        ScheduleAddCommand scheduleAddCommand = new ScheduleAddCommand(content, content[1]);
-        ToDoListCommand toDoListCommand = new ToDoListCommand(content, content[1]);
-        HelpCommand helpCommand = new HelpCommand(content, content[1]);
-        Command.put("-reminder", reminderCommand.getOutputMessage());
-        Command.put("-schedule", scheduleAddCommand.getOutputMessage());
-        Command.put("-list", toDoListCommand.getOutputMessage());
-        Command.put("-help", helpCommand.getOutputMessage());
-    }
+//    private void init(){
+//        featureCommand.feature.put(new String[] {"-schedule", "add"}, new ScheduleAddCommand(scheduleService));
+//        ReminderCommand reminderCommand = new ReminderCommand(content, content[1]);
+//        ToDoListCommand toDoListCommand = new ToDoListCommand(content, content[1]);
+//        HelpCommand helpCommand = new HelpCommand(content, content[1]);
+//        Command.put("-reminder", reminderCommand.getOutputMessage());
+//        Command.put("-list", toDoListCommand.getOutputMessage());
+//        Command.put("-help", helpCommand.getOutputMessage());
+//        ScheduleAddCommand scheduleAddCommand = new ScheduleAddCommand(scheduleService);
+//        Command.put("-schedule", scheduleAddCommand.getOutputMessage());
+//    }
 
-    public String getOutputMessage() {
-        return Command.get(content[0]);
-    }
 }
