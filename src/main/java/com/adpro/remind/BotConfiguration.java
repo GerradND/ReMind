@@ -1,5 +1,4 @@
 package com.adpro.remind;
-
 import com.adpro.remind.event.InputEventListener;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;

@@ -28,6 +28,7 @@ public class InitCommand {
     public void init() {
         commandRepository.addCommand("schedule add", new ScheduleAddCommand(scheduleService));
         commandRepository.addCommand("reminder add", new ReminderAddCommand(taskService));
+
     }
 
 }

@@ -1,4 +1,9 @@
 package com.adpro.remind.event;
+
+import com.adpro.remind.command.help.HelpCommand;
+import com.adpro.remind.command.list.ToDoListCommand;
+import com.adpro.remind.command.reminder.ReminderCommand;
+import com.adpro.remind.command.schedule.ScheduleAddCommand;
 import com.adpro.remind.controller.FeatureCommand;
 import com.adpro.remind.service.ScheduleService;
 import com.adpro.remind.service.TaskService;
@@ -54,17 +59,4 @@ public class InputEventListener extends ListenerAdapter {
             }
         }
     }
-
-//    private void init(){
-//        featureCommand.feature.put(new String[] {"-schedule", "add"}, new ScheduleAddCommand(scheduleService));
-//        ReminderCommand reminderCommand = new ReminderCommand(content, content[1]);
-//        ToDoListCommand toDoListCommand = new ToDoListCommand(content, content[1]);
-//        HelpCommand helpCommand = new HelpCommand(content, content[1]);
-//        Command.put("-reminder", reminderCommand.getOutputMessage());
-//        Command.put("-list", toDoListCommand.getOutputMessage());
-//        Command.put("-help", helpCommand.getOutputMessage());
-//        ScheduleAddCommand scheduleAddCommand = new ScheduleAddCommand(scheduleService);
-//        Command.put("-schedule", scheduleAddCommand.getOutputMessage());
-//    }
-
 }

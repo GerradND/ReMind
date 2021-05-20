@@ -9,4 +9,3 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
     Schedule findByIdSchedule(Integer idSchedule);
     Iterable<Schedule> findByDay(String day);
 }
-

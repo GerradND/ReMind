@@ -25,7 +25,6 @@ public class ReminderAddCommand implements Command {
     }
 
     private Task newTask(){
-        System.out.println(inputContent[2]);
         this.name = inputContent[2];
         this.dateText = inputContent[3];
         this.timeText = inputContent[4];
