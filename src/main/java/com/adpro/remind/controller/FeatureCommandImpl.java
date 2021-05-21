@@ -33,8 +33,6 @@ public class FeatureCommandImpl implements FeatureCommand {
             e.printStackTrace();
             message.getChannel().sendMessage("Perintah yang Anda masukan salah, coba lagi.").queue();
         }
-
     }
-
 
 }

@@ -16,6 +16,8 @@ gradle-test:
     - ./gradlew test
     - ./gradlew jacocoTestReport
     - cat build/reports/jacoco/test/html/index.html
+  only:
+    - development
 
 gradle-deploy:
   stage: deploy
@@ -27,3 +29,5 @@ gradle-deploy:
     - wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
   script:
     - dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_API_KEY
+  only:
+    - master
