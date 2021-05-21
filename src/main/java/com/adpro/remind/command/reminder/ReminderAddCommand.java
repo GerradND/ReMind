@@ -13,9 +13,6 @@ public class ReminderAddCommand implements Command {
 
     private TaskService taskService;
     private String[] inputContent;
-    private String name;
-    private String dateText;
-    private String timeText;
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -25,9 +22,10 @@ public class ReminderAddCommand implements Command {
     }
 
     private Task newTask(){
-        this.name = inputContent[2];
-        this.dateText = inputContent[3];
-        this.timeText = inputContent[4];
+        String name = inputContent[2];
+        String dateText = inputContent[3];
+        String timeText = inputContent[4];
+
         LocalDate date = LocalDate.parse(dateText, dateFormatter);
         LocalTime time = LocalTime.parse(timeText, timeFormatter);
 
@@ -44,8 +42,6 @@ public class ReminderAddCommand implements Command {
 
         String output = "Tugas " + createdTask.getName() + " berhasil dibuat.";
         System.out.println(output);
-
-
 
     }
 }

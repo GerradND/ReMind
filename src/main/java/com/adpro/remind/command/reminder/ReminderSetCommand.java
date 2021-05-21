@@ -39,8 +39,8 @@ public class ReminderSetCommand implements Command {
         String time = inputContent[4];
 
         Reminder createdReminder = newReminder(date, time, id);
-        String output = "Reminder " + createdReminder.getDate() + " " +
-                        createdReminder.getTime() + " berhasil dibuat";
+        String output = "Reminder pada " + createdReminder.getDate() + " " +
+                        createdReminder.getTime() + " berhasil dibuat.";
         System.out.println(output);
 
     }

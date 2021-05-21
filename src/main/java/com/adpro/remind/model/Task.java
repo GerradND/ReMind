@@ -9,6 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -32,7 +33,7 @@ public class Task {
     private LocalTime time;
 
     @OneToMany(targetEntity = Reminder.class, mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Reminder> reminders;
+    private Set<Reminder> reminders = new HashSet<>();
 
     public Task(String name, LocalDate date, LocalTime time){
         this.name = name;
