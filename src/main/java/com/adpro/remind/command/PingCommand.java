@@ -10,7 +10,7 @@ public class PingCommand implements Command {
         long time = System.currentTimeMillis();
         message.getChannel().sendMessage("Pong!")/* => RestAction<Message> */
                 .queue(response /* => Message */ -> {
-                    response.editMessageFormat("Pong: %d ms", System.currentTimeMillis() - time).queue();
+                    response.editMessageFormat("Ping: %d ms", System.currentTimeMillis() - time).queue();
                 });
     }
 }
