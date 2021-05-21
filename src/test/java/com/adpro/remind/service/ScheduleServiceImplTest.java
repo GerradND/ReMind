@@ -1,29 +1,18 @@
 package com.adpro.remind.service;
 
-<<<<<<< HEAD
-import com.adpro.remind.controller.schedule.AddSchedule;
-import com.adpro.remind.controller.schedule.ScheduleCommand;
-import com.adpro.remind.model.Schedule;
-=======
 import com.adpro.remind.model.Schedule;
 import com.adpro.remind.repository.ScheduleRepository;
 import org.junit.jupiter.api.BeforeEach;
->>>>>>> 2f72d3489f745ec377c15a4e5e4e3ffd915820f4
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 
-<<<<<<< HEAD
-import org.mockito.junit.jupiter.MockitoExtension;
-
-=======
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 
->>>>>>> 2f72d3489f745ec377c15a4e5e4e3ffd915820f4
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.lenient;
 
@@ -31,17 +20,6 @@ import static org.mockito.Mockito.lenient;
 @ExtendWith(MockitoExtension.class)
 public class ScheduleServiceImplTest {
 
-<<<<<<< HEAD
-    @InjectMocks
-    private ScheduleServiceImpl scheduleService;
-
-    private ScheduleCommand scheduleCommand;
-    private Schedule schedule;
-
-    public void setUp(){
-        Schedule schedule = new Schedule("Adpro", AddSchedule.getDayOfWeek("Monday"),
-                AddSchedule.getTime("08:00"), AddSchedule.getTime("10:00"), "Kelas pagi");
-=======
     @Mock
     private ScheduleRepository scheduleRepository;
 
@@ -54,18 +32,11 @@ public class ScheduleServiceImplTest {
     public void setUp(){
         schedule = new Schedule("Adpro", DayOfWeek.MONDAY,
                LocalTime.of(8,0), LocalTime.of(10,0), "Kelas pagi");
->>>>>>> 2f72d3489f745ec377c15a4e5e4e3ffd915820f4
     }
 
     @Test
     void testServiceCreateSchedule() {
         lenient().when(scheduleService.createSchedule(schedule)).thenReturn(schedule);
-<<<<<<< HEAD
-        lenient().when(scheduleCommand.getOutputMessage()).thenReturn("Schedule " + schedule.getTitle() + " berhasil ditambahkan!");
-        String output = scheduleCommand.getOutputMessage();
-        assertEquals(output, "Schedule Adpro berhasil ditambahkan!");
-    }
-=======
         assertEquals(scheduleService.createSchedule(schedule), schedule);
     }
 
@@ -118,5 +89,4 @@ public class ScheduleServiceImplTest {
         assertNull(scheduleService.getScheduleByID(idSchedule));
     }
 
->>>>>>> 2f72d3489f745ec377c15a4e5e4e3ffd915820f4
 }

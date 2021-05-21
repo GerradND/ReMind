@@ -2,11 +2,8 @@ package com.adpro.remind.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
-<<<<<<< HEAD
-=======
 import lombok.NoArgsConstructor;
 
->>>>>>> 2f72d3489f745ec377c15a4e5e4e3ffd915820f4
 import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
@@ -14,10 +11,7 @@ import java.time.LocalTime;
 @Entity
 @Table(name = "schedule")
 @Data
-<<<<<<< HEAD
-=======
 @NoArgsConstructor
->>>>>>> 2f72d3489f745ec377c15a4e5e4e3ffd915820f4
 public class Schedule {
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer idSchedule;
@@ -37,17 +31,6 @@ public class Schedule {
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
-<<<<<<< HEAD
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "id_user")
-    private User user;
-
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "id_guild")
-    private Guild guild;
-=======
 //    @JsonBackReference
 //    @ManyToOne
 //    @JoinColumn(name = "id_user")
@@ -57,7 +40,6 @@ public class Schedule {
 //    @ManyToOne
 //    @JoinColumn(name = "id_guild")
 //    private Guild guild;
->>>>>>> 2f72d3489f745ec377c15a4e5e4e3ffd915820f4
 
     public Schedule(String title, DayOfWeek day, LocalTime startTime, LocalTime endTime, String description){
         this.title = title;
