@@ -56,6 +56,7 @@ public class InitCommand {
         commandRepository.addCommand("list ADDITEM", new ListAddTodoItemCommand(todoListService));
         commandRepository.addCommand("list DELETE", new ListDeleteTodoListCommand(todoListService));
         commandRepository.addCommand("list DELETEITEM", new ListDeleteTodoItemCommand(todoListService));
+        commandRepository.addCommand("list showall", new ListShowAllTodoListCommand(todoListService));
     }
 
 }

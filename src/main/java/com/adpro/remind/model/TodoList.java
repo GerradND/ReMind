@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -21,7 +22,7 @@ public class TodoList {
     @Column(nullable = false)
     private String title;
 
-    @OneToMany(mappedBy = "todoList", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "todoList", fetch = FetchType.LAZY)
     private Set<TodoItem> todoItemSet;
 
     public TodoList(String title){
