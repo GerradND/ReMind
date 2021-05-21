@@ -1,5 +1,4 @@
 package com.adpro.remind.command.help;
-
 public class HelpCommand {
     public HelpCommand(String[] content, String query){
 
