@@ -38,6 +38,4 @@ public class CommandTests {
         assertTrue(Modifier.isAbstract(methodModifiers));
         assertEquals(2, getOutputMessage.getParameterCount());
     }
-
-
 }
