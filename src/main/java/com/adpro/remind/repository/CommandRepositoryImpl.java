@@ -1,6 +1,5 @@
 package com.adpro.remind.repository;
 
-
 import com.adpro.remind.command.Command;
 import org.springframework.stereotype.Repository;
 
