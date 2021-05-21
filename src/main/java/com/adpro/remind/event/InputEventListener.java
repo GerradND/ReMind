@@ -1,11 +1,8 @@
 package com.adpro.remind.event;
 
-import com.adpro.remind.command.help.HelpCommand;
-import com.adpro.remind.command.list.ToDoListCommand;
-import com.adpro.remind.command.reminder.ReminderCommand;
-import com.adpro.remind.command.schedule.ScheduleAddCommand;
 import com.adpro.remind.controller.FeatureCommand;
 import com.adpro.remind.service.ScheduleService;
+import com.adpro.remind.service.TaskService;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -34,6 +31,9 @@ public class InputEventListener extends ListenerAdapter {
     @Autowired
     private ScheduleService scheduleService;
 
+    @Autowired
+    private TaskService taskService;
+
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         Message message = event.getMessage();
@@ -42,16 +42,14 @@ public class InputEventListener extends ListenerAdapter {
         if (message.getAuthor().isBot()) return;
 
         if (message.getContentRaw().startsWith(prefix)) {
-            if(content.length > 1){
-                try {
-                    featureCommand.outputMessage(message, content);
-                } catch (Exception ex) {
-                    message.getChannel().sendMessage(
-                            "There was an error in your command..."
-                    ).queue();
-                    logger.error("Failed to process message: " + message.getContentRaw());
-                    ex.printStackTrace();
-                }
+            try {
+                featureCommand.outputMessage(message, content);
+            } catch (Exception ex) {
+                message.getChannel().sendMessage(
+                        "There was an error in your command..."
+                ).queue();
+                logger.error("Failed to process message: " + message.getContentRaw());
+                ex.printStackTrace();
             }
         }
     }
