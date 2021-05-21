@@ -44,4 +44,10 @@ public class FeatureCommandImplTests {
         String[] myString = "-help".split(" ");
         assertEquals("help", featureCommandImplDummy.formatCommand(myString));
     }
+
+    @Test
+    public void testFormatCommandWithArrayLengthMoreThanOneReturnString() {
+        String[] myString = "-help aku".split(" ");
+        assertEquals("help aku", featureCommandImplDummy.formatCommand(myString));
+    }
 }
