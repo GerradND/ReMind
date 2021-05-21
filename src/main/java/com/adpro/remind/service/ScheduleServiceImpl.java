@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
+
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
 
@@ -42,7 +44,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public Iterable<Schedule> getScheduleByDay(String day) {
-        return scheduleRepository.findByDay(day);
+        return scheduleRepository.findByDay(DayOfWeek.valueOf(day));
     }
 
     @Override
