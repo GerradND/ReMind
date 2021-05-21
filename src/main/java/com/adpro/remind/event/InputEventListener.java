@@ -42,16 +42,14 @@ public class InputEventListener extends ListenerAdapter {
         if (message.getAuthor().isBot()) return;
 
         if (message.getContentRaw().startsWith(prefix)) {
-            if(content.length > 1){
-                try {
-                    featureCommand.outputMessage(message, content);
-                } catch (Exception ex) {
-                    message.getChannel().sendMessage(
-                            "There was an error in your command..."
-                    ).queue();
-                    logger.error("Failed to process message: " + message.getContentRaw());
-                    ex.printStackTrace();
-                }
+            try {
+                featureCommand.outputMessage(message, content);
+            } catch (Exception ex) {
+                message.getChannel().sendMessage(
+                        "There was an error in your command..."
+                ).queue();
+                logger.error("Failed to process message: " + message.getContentRaw());
+                ex.printStackTrace();
             }
         }
     }
