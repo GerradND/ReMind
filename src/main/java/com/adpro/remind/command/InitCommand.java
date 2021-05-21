@@ -1,5 +1,6 @@
 package com.adpro.remind.command;
 
+import com.adpro.remind.command.list.*;
 import com.adpro.remind.command.help.HelpCommand;
 import com.adpro.remind.command.help.HelpReminderCommand;
 import com.adpro.remind.command.help.HelpScheduleCommand;
@@ -7,8 +8,10 @@ import com.adpro.remind.command.help.HelpToDoListCommand;
 import com.adpro.remind.command.schedule.ScheduleAddCommand;
 import com.adpro.remind.command.reminder.*;
 import com.adpro.remind.command.schedule.*;
+import com.adpro.remind.command.schedule.ListAddTodoItemCommand;
 import com.adpro.remind.repository.CommandRepository;
 import com.adpro.remind.service.ScheduleService;
+import com.adpro.remind.service.TodoListService;
 import com.adpro.remind.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,6 +23,8 @@ public class InitCommand {
 
     private CommandRepository commandRepository;
     private ScheduleService scheduleService;
+    @Autowired
+    private TodoListService todoListService;
     private TaskService taskService;
 
     @Autowired
@@ -47,6 +52,12 @@ public class InitCommand {
         commandRepository.addCommand("schedule updatedesc", new ScheduleDescriptionUpdateCommand(scheduleService));
         commandRepository.addCommand("schedule delete", new ScheduleDeleteCommand(scheduleService));
         commandRepository.addCommand("schedule show", new ScheduleShowCommand(scheduleService));
+        commandRepository.addCommand("list ADD", new ListAddTodoListCommand(todoListService));
+        commandRepository.addCommand("list ADDITEM", new ListAddTodoItemCommand(todoListService));
+        commandRepository.addCommand("list DELETE", new ListDeleteTodoListCommand(todoListService));
+        commandRepository.addCommand("list DELETEITEM", new ListDeleteTodoItemCommand(todoListService));
+        commandRepository.addCommand("list SHOWALL", new ListShowAllTodoListCommand(todoListService));
+        commandRepository.addCommand("list SHOW", new ListShowTodoListCommand(todoListService));
     }
 
 }
