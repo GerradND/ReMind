@@ -1,6 +1,6 @@
 package com.adpro.remind.command;
 
-import com.adpro.remind.command.schedule.ScheduleAddCommand;
+import com.adpro.remind.command.schedule.*;
 import com.adpro.remind.repository.CommandRepository;
 import com.adpro.remind.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,12 @@ public class InitCommand {
 
     @PostConstruct
     public void init() {
+        commandRepository.addCommand("ping", new PingCommand());
         commandRepository.addCommand("schedule add", new ScheduleAddCommand(scheduleService));
+        commandRepository.addCommand("schedule update", new ScheduleTimeUpdateCommand(scheduleService));
+        commandRepository.addCommand("schedule updatedesc", new ScheduleDescriptionUpdateCommand(scheduleService));
+        commandRepository.addCommand("schedule delete", new ScheduleDeleteCommand(scheduleService));
+        commandRepository.addCommand("schedule show", new ScheduleShowCommand(scheduleService));
     }
 
 }
