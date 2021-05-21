@@ -22,22 +22,26 @@ public class TodoListServiceImpl implements TodoListService{
     }
 
     @Override
-    public boolean deleteTodoList(int id){
-        if(todoListRepository.findById(id) == null) return false;
-        todoListRepository.deleteById(id);
-        return true;
-    }
-
-    @Override
-    public void addTodoItem(TodoItem todoItem){
+    public void addTodoItem(int idList, TodoItem todoItem){
+        TodoList todoList = todoListRepository.findById(idList);
+        todoItem.setTodoList(todoList);
         todoItemRepository.save(todoItem);
     }
 
     @Override
-    public boolean deleteTodoItem(int id){
-        if(todoItemRepository.findById(id) == null) return false;
-        todoItemRepository.deleteById(id);
-        return true;
+    public TodoList deleteTodoList(int id){
+        TodoList todoList = todoListRepository.findById(id);
+        if(todoList == null) return null;
+        todoListRepository.deleteById(id);
+        return todoList;
+    }
+
+    @Override
+    public TodoItem deleteTodoItem(int idList, int idItem){
+        TodoItem todoItem = todoItemRepository.findById(idItem);
+        if(todoItem == null) return null;
+        todoItemRepository.deleteById(idItem);
+        return todoItem;
     }
 
     @Override

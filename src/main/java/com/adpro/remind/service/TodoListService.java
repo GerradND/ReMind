@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 public interface TodoListService {
     void addTodoList(TodoList todoList);
-    void addTodoItem(TodoItem todoItem);
-    boolean deleteTodoItem(int id);
-    boolean deleteTodoList(int id);
+    void addTodoItem(int idList, TodoItem todoItem);
+    TodoList deleteTodoList(int id);
+    TodoItem deleteTodoItem(int idList, int idItem);
     TodoList showTodoList(int id);
     Iterable<TodoList> showAllTodoList();
 }
