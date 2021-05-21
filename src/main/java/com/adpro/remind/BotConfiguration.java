@@ -1,4 +1,5 @@
 package com.adpro.remind;
+<<<<<<< HEAD
 
 import com.adpro.remind.controller.schedule.ScheduleCommand;
 import com.adpro.remind.events.EventListener;
@@ -11,16 +12,26 @@ import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+=======
+import com.adpro.remind.event.InputEventListener;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
+>>>>>>> 2f72d3489f745ec377c15a4e5e4e3ffd915820f4
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+<<<<<<< HEAD
 
 import java.util.List;
+=======
+import javax.security.auth.login.LoginException;
+>>>>>>> 2f72d3489f745ec377c15a4e5e4e3ffd915820f4
 
 @Configuration
 public class BotConfiguration {
 
+<<<<<<< HEAD
     private static final Logger log = LoggerFactory.getLogger(BotConfiguration.class);
     private final char prefix = '-';
     private ScheduleCommand scheduleCommand;
@@ -78,7 +89,19 @@ public class BotConfiguration {
         catch ( Exception exception ) {
             log.error( "Be sure to use a valid bot token!", exception );
         }
+=======
+    @Value("${token}")
+    private String token;
 
-        return client;
+    @Autowired
+    private InputEventListener inputEventListener;
+>>>>>>> 2f72d3489f745ec377c15a4e5e4e3ffd915820f4
+
+    @Bean
+    public void configure() throws LoginException {
+        JDA jdaClient = JDABuilder.createDefault(token)
+                .addEventListeners(inputEventListener)
+                .build();
     }
+
 }
