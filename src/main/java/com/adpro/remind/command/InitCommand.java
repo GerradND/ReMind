@@ -1,5 +1,10 @@
 package com.adpro.remind.command;
 
+import com.adpro.remind.command.help.HelpCommand;
+import com.adpro.remind.command.help.HelpReminderCommand;
+import com.adpro.remind.command.help.HelpScheduleCommand;
+import com.adpro.remind.command.help.HelpToDoListCommand;
+import com.adpro.remind.command.schedule.ScheduleAddCommand;
 import com.adpro.remind.command.reminder.*;
 import com.adpro.remind.command.schedule.*;
 import com.adpro.remind.repository.CommandRepository;
@@ -26,6 +31,10 @@ public class InitCommand {
 
     @PostConstruct
     public void init() {
+        commandRepository.addCommand("help", new HelpCommand());
+        commandRepository.addCommand("help reminder", new HelpReminderCommand());
+        commandRepository.addCommand("help schedule", new HelpScheduleCommand());
+        commandRepository.addCommand("help list", new HelpToDoListCommand());
         commandRepository.addCommand("ping", new PingCommand());
         commandRepository.addCommand("schedule add", new ScheduleAddCommand(scheduleService));
         commandRepository.addCommand("reminder add", new ReminderAddCommand(taskService));
