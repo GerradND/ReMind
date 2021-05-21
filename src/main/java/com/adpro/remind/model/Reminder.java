@@ -1,7 +1,10 @@
 package com.adpro.remind.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -9,7 +12,8 @@ import java.time.LocalTime;
 
 @Entity
 @Table(name = "reminder")
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 public class Reminder {
     @Id
@@ -25,6 +29,7 @@ public class Reminder {
 
     @ManyToOne
     @JoinColumn(name="id_task", nullable = false)
+    @JsonIgnore
     private Task task;
 
     public Reminder(LocalDate date, LocalTime time){

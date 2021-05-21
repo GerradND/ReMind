@@ -1,7 +1,10 @@
 package com.adpro.remind.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -10,12 +13,13 @@ import java.util.Set;
 
 @Entity
 @Table(name = "task")
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "idTask")
+    @Column(name = "id_task")
     private Integer idTask;
 
     @Column(name = "name", nullable = false)
@@ -27,13 +31,27 @@ public class Task {
     @Column(name = "time", nullable = false)
     private LocalTime time;
 
-    @OneToMany(mappedBy = "task")
+    @OneToMany(targetEntity = Reminder.class, mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Reminder> reminders;
 
     public Task(String name, LocalDate date, LocalTime time){
         this.name = name;
         this.date = date;
         this.time = time;
+    }
+
+    public void setReminder(Reminder reminder){
+        reminders.add(reminder);
+    }
+
+    public String getAllReminders(){
+        String listReminder = "Reminder yang telah dipasang: \n";
+        if(reminders.size() > 0) {
+            for (Reminder reminder : reminders) {
+                listReminder += "- " + reminder.getDate() + " " + reminder.getTime() + "\n";
+            }
+        }
+        return listReminder;
     }
 
 

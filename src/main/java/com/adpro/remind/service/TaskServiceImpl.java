@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Service
 public class TaskServiceImpl implements TaskService{
@@ -34,9 +35,10 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public Task updateTask(Integer idTask, Task updateTask) {
+    public Task updateTask(Integer idTask, LocalDate date, LocalTime time) {
         Task task = taskRepository.findByIdTask(idTask);
-        task = updateTask;
+        task.setDate(date);
+        task.setTime(time);
         taskRepository.save(task);
 
         return task;
@@ -58,8 +60,16 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public Reminder setReminder(Reminder reminder) {
+    public Reminder setReminder(Reminder reminder, Task task) {
+        task.setReminder(reminder);
+        reminder.setTask(task);
         reminderRepository.save(reminder);
+        taskRepository.save(task);
         return reminder;
+    }
+
+    @Override
+    public Task findByIDTask(Integer idTask){
+        return taskRepository.findByIdTask(idTask);
     }
 }

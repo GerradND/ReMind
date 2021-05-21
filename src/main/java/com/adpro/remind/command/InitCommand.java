@@ -1,6 +1,6 @@
 package com.adpro.remind.command;
 
-import com.adpro.remind.command.reminder.ReminderAddCommand;
+import com.adpro.remind.command.reminder.*;
 import com.adpro.remind.command.schedule.ScheduleAddCommand;
 import com.adpro.remind.repository.CommandRepository;
 import com.adpro.remind.service.ScheduleService;
@@ -28,6 +28,11 @@ public class InitCommand {
     public void init() {
         commandRepository.addCommand("schedule add", new ScheduleAddCommand(scheduleService));
         commandRepository.addCommand("reminder add", new ReminderAddCommand(taskService));
+        commandRepository.addCommand("reminder delete", new ReminderDeleteCommand(taskService));
+        commandRepository.addCommand("reminder update", new ReminderUpdateCommand(taskService));
+        commandRepository.addCommand("reminder show", new ReminderShowCommand(taskService));
+        commandRepository.addCommand("reminder detail", new ReminderDetailCommand(taskService));
+        commandRepository.addCommand("reminder set", new ReminderSetCommand(taskService));
 
     }
 
