@@ -58,6 +58,9 @@ public class InitCommand {
         commandRepository.addCommand("list deleteitem", new ListDeleteTodoItemCommand(todoListService));
         commandRepository.addCommand("list showall", new ListShowAllTodoListCommand(todoListService));
         commandRepository.addCommand("list show", new ListShowTodoListCommand(todoListService));
+
+//        testing notify reminder
+        commandRepository.addCommand("send reminder", new SendReminderCommand());
     }
 
 }
