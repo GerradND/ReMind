@@ -4,7 +4,6 @@ package com.adpro.remind.command.list;
 import com.adpro.remind.command.Command;
 import com.adpro.remind.model.TodoList;
 import com.adpro.remind.service.TodoListService;
-import com.sun.tools.javac.comp.Todo;
 import net.dv8tion.jda.api.entities.Message;
 
 import java.util.Arrays;
