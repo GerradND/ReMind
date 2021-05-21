@@ -41,7 +41,8 @@ public class ReminderSetCommand implements Command {
         Reminder createdReminder = newReminder(date, time, id);
         String output = "Reminder pada " + createdReminder.getDate() + " " +
                         createdReminder.getTime() + " berhasil dibuat.";
-        System.out.println(output);
+
+        message.getChannel().sendMessage(output).queue();
 
     }
 }

@@ -27,8 +27,6 @@ public class ReminderUpdateCommand implements Command {
         Task updatedTask = taskService.updateTask(idTask, date, time);
 
         String output = "Tugas " + updatedTask.getName() + " berhasil diupdate.";
-        System.out.println(output);
-
-
+        message.getChannel().sendMessage(output).queue();
     }
 }

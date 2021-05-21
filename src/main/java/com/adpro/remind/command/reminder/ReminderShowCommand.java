@@ -11,12 +11,13 @@ import java.time.format.DateTimeFormatter;
 public class ReminderShowCommand implements Command {
     private TaskService taskService;
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
     public ReminderShowCommand(TaskService taskService){
         this.taskService = taskService;
     }
 
     private Iterable<Task> getListTasks(String type){
-        switch (type){
+        switch (type.toUpperCase()){
             case "ALL":
                 return taskService.showAllTask();
             default:
@@ -36,6 +37,6 @@ public class ReminderShowCommand implements Command {
                         "\n";
         }
 
-        System.out.println(output);
+        message.getChannel().sendMessage(output).queue();
     }
 }

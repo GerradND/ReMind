@@ -22,6 +22,7 @@ public class ReminderDetailCommand implements Command {
                         "Tanggal Deadline: " + task.getDate() + "\n" +
                         "Jam Deadline: " + task.getTime() + "\n" +
                         task.getAllReminders();
-        System.out.println(output);
+
+        message.getChannel().sendMessage(output).queue();
     }
 }

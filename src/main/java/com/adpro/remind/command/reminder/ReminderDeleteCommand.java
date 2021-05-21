@@ -17,6 +17,6 @@ public class ReminderDeleteCommand implements Command {
         taskService.deleteTask(idTask);
 
         String output = "Tugas dengan ID: " + idTask + " berhasil dihapus.";
-        System.out.println(output);
+        message.getChannel().sendMessage(output).queue();
     }
 }

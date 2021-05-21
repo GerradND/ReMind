@@ -41,7 +41,7 @@ public class ReminderAddCommand implements Command {
         Task createdTask = newTask();
 
         String output = "Tugas " + createdTask.getName() + " berhasil dibuat.";
-        System.out.println(output);
+        message.getChannel().sendMessage(output).queue();
 
     }
 }
