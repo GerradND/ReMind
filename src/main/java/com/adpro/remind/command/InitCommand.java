@@ -52,10 +52,10 @@ public class InitCommand {
         commandRepository.addCommand("schedule updatedesc", new ScheduleDescriptionUpdateCommand(scheduleService));
         commandRepository.addCommand("schedule delete", new ScheduleDeleteCommand(scheduleService));
         commandRepository.addCommand("schedule show", new ScheduleShowCommand(scheduleService));
-        commandRepository.addCommand("list ADD", new ListAddTodoListCommand(todoListService));
-        commandRepository.addCommand("list ADDITEM", new ListAddTodoItemCommand(todoListService));
-        commandRepository.addCommand("list DELETE", new ListDeleteTodoListCommand(todoListService));
-        commandRepository.addCommand("list DELETEITEM", new ListDeleteTodoItemCommand(todoListService));
+        commandRepository.addCommand("list add", new ListAddTodoListCommand(todoListService));
+        commandRepository.addCommand("list additem", new ListAddTodoItemCommand(todoListService));
+        commandRepository.addCommand("list delete", new ListDeleteTodoListCommand(todoListService));
+        commandRepository.addCommand("list deleteitem", new ListDeleteTodoItemCommand(todoListService));
         commandRepository.addCommand("list showall", new ListShowAllTodoListCommand(todoListService));
     }
 
