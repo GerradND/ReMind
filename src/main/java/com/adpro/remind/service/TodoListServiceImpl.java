@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 
 @Service
 public class TodoListServiceImpl implements TodoListService{
@@ -46,6 +48,9 @@ public class TodoListServiceImpl implements TodoListService{
 
     @Override
     public TodoList showTodoList(int id){
+        ArrayList <Integer> arr = new ArrayList<>();
+        arr.add(id);
+        System.out.println(todoItemRepository.findAllById(arr));
         return todoListRepository.findById(id);
     }
 

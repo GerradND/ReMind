@@ -3,12 +3,15 @@ package com.adpro.remind.command.schedule;
 import com.adpro.remind.command.Command;
 import com.adpro.remind.model.Schedule;
 import com.adpro.remind.service.ScheduleService;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 
+import java.awt.*;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
+import java.util.Date;
 import java.util.Locale;
 
 public class ScheduleAddCommand implements Command {
@@ -40,16 +43,37 @@ public class ScheduleAddCommand implements Command {
         return dateTime;
     }
 
+    @Override
     public void getOutputMessage(Message message, String[] inputContent) {
+        EmbedBuilder eb = new EmbedBuilder();
         String title = inputContent[2];
-        DayOfWeek day = getDayOfWeek(inputContent[3]);
-        LocalTime startTime = getTime(inputContent[4]);
-        LocalTime endTime = getTime(inputContent[5]);
+        String day = inputContent[3];
+        String startTime = inputContent[4];
+        String endTime = inputContent[5];
         String desc = formDescription(inputContent);
 
-        scheduleService.createSchedule(new Schedule(title, day, startTime, endTime, desc));
+        try {
+            Schedule schedule = scheduleService.createSchedule(new Schedule(title, getDayOfWeek(day),
+                    getTime(startTime), getTime(endTime), desc));
 
-        message.getChannel().sendMessage("Schedule " + title + " berhasil ditambahkan!").queue();
+            eb.setTitle(":white_check_mark: Schedule \"" + title + "\" berhasil ditambahkan!");
+            eb.addField(":id: Id:", schedule.getIdSchedule().toString(), true);
+            eb.addField(":writing_hand: Judul:", title, true);
+            eb.addBlankField(true);
+            eb.addField(":date: Hari:", day, true);
+            eb.addField(":alarm_clock: Jam:", startTime + "-" + endTime, true);
+            eb.addBlankField(true);
+            eb.addField(":memo: Deskripsi:", desc, true);
+            eb.setColor(Color.green);
+
+            message.getChannel().sendMessage(eb.build()).queue();
+
+        } catch (Exception e) {
+            eb.addField("Penambahan schedule gagal/terdapat kesalahan parameter. Silahkan coba lagi.","", false);
+            eb.setColor(Color.red);
+            message.getChannel().sendMessage(eb.build()).queue();
+        }
+
     }
 
 }

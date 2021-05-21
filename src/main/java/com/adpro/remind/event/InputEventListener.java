@@ -1,7 +1,6 @@
 package com.adpro.remind.event;
 
 import com.adpro.remind.command.help.HelpCommand;
-import com.adpro.remind.command.list.ToDoListCommand;
 import com.adpro.remind.command.reminder.ReminderCommand;
 import com.adpro.remind.command.schedule.ScheduleAddCommand;
 import com.adpro.remind.controller.FeatureCommand;
@@ -48,49 +47,14 @@ public class InputEventListener extends ListenerAdapter {
         if (message.getAuthor().isBot()) return;
 
         if (message.getContentRaw().startsWith(prefix)) {
-            if(content.length > 1){
-                try {
-                    if(content[0].equals("-list") && content[1].equals("ADD")){
-                        String namaList = content[2];
-                        todoListService.addTodoList(new TodoList(namaList));
-                        message.reply(String.format("TodoList %s telah ditambahkan", namaList)).queue();
-                    }
-                    else if(content[0].equals("-list") && content[1].equals("ADDITEM")){
-                        int idList = Integer.parseInt(content[2]);
-                        String namaItem = content[3];
-                        todoListService.addTodoItem(idList, new TodoItem(namaItem));
-                        message.reply(String.format("TodoItem %s telah ditambahkan", namaItem)).queue();
-                    }
-                    else if(content[0].equals("-list") && content[1].equals("DELETE")){
-                        TodoList todoList = todoListService.deleteTodoList(Integer.parseInt(content[2]));
-                        if(todoList != null){
-                            message.reply(String.format("TodoList %s telah dihapus", todoList.getTitle())).queue();
-                        }
-                    }
-                    else if(content[0].equals("-list") && content[1].equals("DELETEITEM")){
-                        TodoItem todoItem = todoListService.deleteTodoItem(Integer.parseInt(content[2]), Integer.parseInt(content[3]));
-                        if(todoItem != null){
-                            message.reply(String.format("TodoItem %s pada TodoList %s telah dihapus", todoItem.getName(), todoItem.getTodoList().getTitle())).queue();
-                        }
-                    }
-                    else if(content[0].equals("-list") && content[1].equals("SHOW") && content[2].equals("ALL")){
-                        Iterable<TodoList> todoLists = todoListService.showAllTodoList();
-                        for(TodoList todoList : todoLists){
-                            message.reply(String.format("%d %s", todoList.getId(), todoList.getTitle())).queue();
-                        }
-                    }
-                    else if(content[0].equals("-list") && content[1].equals("SHOW")){
-                        TodoList todoList = todoListService.showTodoList(Integer.parseInt(content[2]));
-                    }
-
-//                    featureCommand.outputMessage(message, content);
-                } catch (Exception ex) {
-                    message.getChannel().sendMessage(
-                            "There was an error in your command..."
-                    ).queue();
-                    logger.error("Failed to process message: " + message.getContentRaw());
-                    ex.printStackTrace();
-                }
+            try {
+                featureCommand.outputMessage(message, content);
+            } catch (Exception ex) {
+                message.getChannel().sendMessage(
+                        "There was an error in your command..."
+                ).queue();
+                logger.error("Failed to process message: " + message.getContentRaw());
+                ex.printStackTrace();
             }
         }
     }

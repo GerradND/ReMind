@@ -3,6 +3,8 @@ package com.adpro.remind.service;
 import com.adpro.remind.model.Schedule;
 import org.springframework.stereotype.Component;
 
+import java.time.DayOfWeek;
+
 public interface ScheduleService {
     Schedule createSchedule(Schedule schedule);
 

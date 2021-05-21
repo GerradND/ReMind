@@ -21,7 +21,7 @@ public class TodoList {
     @Column(nullable = false)
     private String title;
 
-    @OneToMany(mappedBy = "todoList")
+    @OneToMany(mappedBy = "todoList", fetch = FetchType.EAGER)
     private Set<TodoItem> todoItemSet;
 
     public TodoList(String title){
