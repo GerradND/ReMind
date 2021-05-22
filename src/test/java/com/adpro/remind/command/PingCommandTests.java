@@ -38,7 +38,7 @@ public class PingCommandTests {
     }
 
     @Test
-    public void testIonicBowOverrideGetOuputMessageMethod() throws Exception {
+    public void testPingCommandOverrideGetOuputMessageMethod() throws Exception {
         Class<?> stringInput = String[].class;
         Method getOutputMessage = pingCommandClass.getDeclaredMethod("getOutputMessage", messageClass, stringInput);
 
