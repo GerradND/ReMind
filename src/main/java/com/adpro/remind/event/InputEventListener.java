@@ -1,11 +1,6 @@
 package com.adpro.remind.event;
 
-import com.adpro.remind.command.help.HelpCommand;
-import com.adpro.remind.command.reminder.ReminderCommand;
-import com.adpro.remind.command.schedule.ScheduleAddCommand;
 import com.adpro.remind.controller.FeatureCommand;
-import com.adpro.remind.model.TodoItem;
-import com.adpro.remind.model.TodoList;
 import com.adpro.remind.service.ScheduleService;
 import com.adpro.remind.service.TodoListService;
 import com.adpro.remind.service.TaskService;
