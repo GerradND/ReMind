@@ -34,6 +34,7 @@ public class TaskServiceImplTest {
 
     private Task task;
 
+    /*
     @BeforeEach
     public void setUp(){
         LocalDate date = LocalDate.of(2021, 05, 31);
@@ -132,4 +133,5 @@ public class TaskServiceImplTest {
         Assertions.assertEquals(task.getReminders().size(), 1);
 
     }
+     */
 }

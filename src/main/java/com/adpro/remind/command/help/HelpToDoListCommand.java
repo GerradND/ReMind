@@ -3,10 +3,11 @@ package com.adpro.remind.command.help;
 import com.adpro.remind.command.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 
 public class HelpToDoListCommand implements Command {
     @Override
-    public void getOutputMessage(Message message, String[] inputContent) {
+    public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
         EmbedBuilder eb = new EmbedBuilder();
         eb.setTitle("ToDoList Command List");
         eb.appendDescription("`-list add [NAMA_LIST]`\n" +
@@ -20,6 +21,6 @@ public class HelpToDoListCommand implements Command {
                 "1. Untuk melihat ID suatu List, gunakan -list SHOW ALL\n"+
                 "2. Untuk melihat nomor suatu item pada list, gunakan -list SHOW [ID_LIST]\n");
 
-        message.getChannel().sendMessage(eb.build()).queue();
+        return eb.build();
     }
 }

@@ -5,14 +5,9 @@ import com.adpro.remind.model.Schedule;
 import com.adpro.remind.service.ScheduleService;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import java.awt.*;
-import java.time.DayOfWeek;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.TextStyle;
-import java.time.temporal.TemporalAccessor;
-import java.util.Locale;
 
 public class ScheduleDescriptionUpdateCommand implements Command {
 
@@ -38,7 +33,7 @@ public class ScheduleDescriptionUpdateCommand implements Command {
     }
 
     @Override
-    public void getOutputMessage(Message message, String[] inputContent) {
+    public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
         EmbedBuilder eb = new EmbedBuilder();
         try {
             int idSchedule = Integer.parseInt(inputContent[2]);
@@ -59,13 +54,13 @@ public class ScheduleDescriptionUpdateCommand implements Command {
                 eb.addField(":memo: Deskripsi: ", updatedSchedule.getDescription(), false);
             }
 
-            message.getChannel().sendMessage(eb.build()).queue();
+            return eb.build();
 
 
         } catch (NumberFormatException e) {
             eb.setColor(Color.red);
             eb.addField("Tolong masukan ID yang valid.", "", false);
-            message.getChannel().sendMessage(eb.build()).queue();
+            return eb.build();
 
         }
     }

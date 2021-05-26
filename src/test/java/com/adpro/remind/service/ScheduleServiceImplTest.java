@@ -28,6 +28,7 @@ public class ScheduleServiceImplTest {
 
     private Schedule schedule;
 
+    /*
     @BeforeEach
     public void setUp(){
         schedule = new Schedule("Adpro", DayOfWeek.MONDAY,
@@ -88,5 +89,7 @@ public class ScheduleServiceImplTest {
         lenient().when(scheduleService.getScheduleByID(idSchedule)).thenReturn(null);
         assertNull(scheduleService.getScheduleByID(idSchedule));
     }
+
+     */
 
 }

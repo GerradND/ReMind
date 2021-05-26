@@ -3,10 +3,11 @@ package com.adpro.remind.command.help;
 import com.adpro.remind.command.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 
 public class HelpScheduleCommand implements Command {
     @Override
-    public void getOutputMessage(Message message, String[] inputContent) {
+    public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
         EmbedBuilder eb = new EmbedBuilder();
         eb.setTitle("Schedule Command List");
         eb.appendDescription("`-schedule add [NAMA_SCHEDULE] [HARI] [JAM_MULAI] [JAM_SELESAI] [DESC]`\n" +
@@ -22,6 +23,6 @@ public class HelpScheduleCommand implements Command {
                 "2. Format JAM: HH:MM\n" +
                 "4. Untuk melihat ID suatu Schedule, gunakan -schedule SHOW ALL atau -schedule SHOW [HARI]\n");
 
-        message.getChannel().sendMessage(eb.build()).queue();
+        return eb.build();
     }
 }
