@@ -89,7 +89,7 @@ public class ScheduleServiceImplTest {
         lenient().when(scheduleService.getScheduleByID(idSchedule)).thenReturn(null);
         assertNull(scheduleService.getScheduleByID(idSchedule));
     }
-    
+
      */
 
 }

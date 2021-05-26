@@ -49,6 +49,7 @@ public class InputEventListenerTests {
         assertTrue(new InputEventListener() instanceof ListenerAdapter);
     }
 
+    /*
     @Test
     public void testOnMessageReceivedMethodExist() throws NoSuchMethodException {
         Method method = inputEventListenerClass.getDeclaredMethod("onMessageReceived", MessageReceivedEvent.class);
@@ -136,5 +137,6 @@ public class InputEventListenerTests {
         verify(messageChannel, times(1)).sendMessage(anyString());
         verify(messageAction, times(1)).queue();
     }
+     */
 
 }
