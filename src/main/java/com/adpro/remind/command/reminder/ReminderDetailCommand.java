@@ -4,6 +4,7 @@ import com.adpro.remind.command.Command;
 import com.adpro.remind.model.Task;
 import com.adpro.remind.service.TaskService;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 
 public class ReminderDetailCommand implements Command {
     private TaskService taskService;
@@ -12,7 +13,7 @@ public class ReminderDetailCommand implements Command {
     }
 
     @Override
-    public void getOutputMessage(Message message, String[] inputContent) {
+    public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
         Integer idTask = Integer.parseInt(inputContent[2]);
         Task task = taskService.detailTask(idTask);
 
@@ -24,5 +25,6 @@ public class ReminderDetailCommand implements Command {
                         task.getAllReminders();
 
         message.getChannel().sendMessage(output).queue();
+        return null;
     }
 }

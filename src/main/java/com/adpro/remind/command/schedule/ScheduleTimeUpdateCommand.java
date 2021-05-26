@@ -5,6 +5,7 @@ import com.adpro.remind.model.Schedule;
 import com.adpro.remind.service.ScheduleService;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import java.awt.*;
 import java.time.DayOfWeek;
@@ -42,7 +43,7 @@ public class ScheduleTimeUpdateCommand implements Command {
     }
 
     @Override
-    public void getOutputMessage(Message message, String[] inputContent) {
+    public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
         EmbedBuilder eb = new EmbedBuilder();
         try {
             int idSchedule = Integer.parseInt(inputContent[2]);
@@ -64,13 +65,12 @@ public class ScheduleTimeUpdateCommand implements Command {
             eb.addField("Hari, Jam",updatedSchedule.getDay().getDisplayName(TextStyle.FULL, Locale.getDefault()) + ", " +
                             updatedSchedule.getStartTime().toString() + "-" + updatedSchedule.getEndTime().toString(), true);
 
-            message.getChannel().sendMessage(eb.build()).queue();
+            return eb.build();
 
         } catch (NumberFormatException e) {
             eb.setColor(Color.red);
             eb.addField("Tolong masukan ID yang valid.", "", false);
-            message.getChannel().sendMessage(eb.build()).queue();
+            return eb.build();
         }
-
     }
 }

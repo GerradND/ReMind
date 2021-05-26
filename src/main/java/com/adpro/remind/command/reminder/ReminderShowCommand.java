@@ -4,6 +4,7 @@ import com.adpro.remind.command.Command;
 import com.adpro.remind.model.Task;
 import com.adpro.remind.service.TaskService;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -16,10 +17,10 @@ public class ReminderShowCommand implements Command {
         this.taskService = taskService;
     }
 
-    private Iterable<Task> getListTasks(String type){
+    private Iterable<Task> getListTasks(String type, String idGuild){
         switch (type.toUpperCase()){
             case "ALL":
-                return taskService.showAllTask();
+                return taskService.showAllTask(idGuild);
             default:
                 LocalDate date = LocalDate.parse(type, dateFormatter);
                 return taskService.showTaskAtDate(date);
@@ -27,8 +28,9 @@ public class ReminderShowCommand implements Command {
     }
 
     @Override
-    public void getOutputMessage(Message message, String[] inputContent) {
-        Iterable<Task> listTasks= getListTasks(inputContent[2]);
+    public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
+        String idGuild = message.getGuild().getId();
+        Iterable<Task> listTasks= getListTasks(inputContent[2], idGuild);
         String output = "Tugas yang telah ditambahkan: \n";
 
         for(Task task: listTasks){
@@ -38,5 +40,6 @@ public class ReminderShowCommand implements Command {
         }
 
         message.getChannel().sendMessage(output).queue();
+        return null;
     }
 }

@@ -1,8 +1,11 @@
 package com.adpro.remind.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -24,6 +27,12 @@ public class TodoList {
 
     @OneToMany(mappedBy = "todoList", fetch = FetchType.LAZY)
     private Set<TodoItem> todoItemSet;
+
+    @ManyToOne
+    @JoinColumn(name = "id_guild")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private Guild guild;
 
     public TodoList(String title){
         this.id = id;

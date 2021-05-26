@@ -3,10 +3,11 @@ package com.adpro.remind.command.help;
 import com.adpro.remind.command.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 
 public class HelpReminderCommand implements Command {
     @Override
-    public void getOutputMessage(Message message, String[] inputContent) {
+    public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
         EmbedBuilder eb = new EmbedBuilder();
         eb.setTitle("Reminder Command List");
         eb.appendDescription("`-reminder add [NAMA_REMINDER] [TANGGAL] [JAM]`\n" +
@@ -23,6 +24,6 @@ public class HelpReminderCommand implements Command {
                 "3. Format WAKTU: X Hari atau X Jam\n" +
                 "4. Untuk melihat ID suatu Reminder, gunakan -reminder SHOW ALL atau -reminder SHOW [TANGGAL]\n");
 
-        message.getChannel().sendMessage(eb.build()).queue();
+        return eb.build();
     }
 }

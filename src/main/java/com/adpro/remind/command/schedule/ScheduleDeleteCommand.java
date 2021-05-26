@@ -5,6 +5,7 @@ import com.adpro.remind.model.Schedule;
 import com.adpro.remind.service.ScheduleService;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import java.awt.*;
 
@@ -17,7 +18,7 @@ public class ScheduleDeleteCommand implements Command {
     }
     
     @Override
-    public void getOutputMessage(Message message, String[] inputContent) {
+    public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
         String outputMsg;
         EmbedBuilder eb = new EmbedBuilder();
         try {
@@ -33,12 +34,12 @@ public class ScheduleDeleteCommand implements Command {
             }
 
             eb.setTitle(outputMsg);
-            message.getChannel().sendMessage(eb.build()).queue();
+            return eb.build();
 
         } catch (NumberFormatException e) {
             eb.setColor(Color.red);
             eb.addField("Tolong masukan ID yang valid.", "", false);
-            message.getChannel().sendMessage(eb.build()).queue();
+            return eb.build();
         }
     }
 }
