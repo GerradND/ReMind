@@ -45,8 +45,6 @@ public class FeatureCommandImpl implements FeatureCommand {
             eb.addField("Perintah yang Anda masukan salah, coba lagi.","", false);
             message.getChannel().sendMessage(eb.build()).queue();
         }
-
     }
-
 
 }
