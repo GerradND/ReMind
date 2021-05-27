@@ -33,7 +33,7 @@ public class ScheduleDescriptionUpdateCommand implements Command {
     }
 
     @Override
-    public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
+    public void getOutputMessage(Message message, String[] inputContent) {
         EmbedBuilder eb = new EmbedBuilder();
         try {
             int idSchedule = Integer.parseInt(inputContent[2]);
@@ -54,14 +54,13 @@ public class ScheduleDescriptionUpdateCommand implements Command {
                 eb.addField(":memo: Deskripsi: ", updatedSchedule.getDescription(), false);
             }
 
-            return eb.build();
+            message.getChannel().sendMessage(eb.build()).queue();
 
 
         } catch (NumberFormatException e) {
             eb.setColor(Color.red);
             eb.addField("Tolong masukan ID yang valid.", "", false);
-            return eb.build();
-
+            message.getChannel().sendMessage(eb.build()).queue();
         }
     }
 }

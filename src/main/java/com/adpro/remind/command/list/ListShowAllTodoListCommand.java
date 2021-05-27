@@ -17,7 +17,7 @@ public class ListShowAllTodoListCommand implements Command {
     }
 
     @Override
-    public MessageEmbed getOutputMessage(Message message, String[] inputContent){
+    public void getOutputMessage(Message message, String[] inputContent){
         String idGuild = message.getGuild().getId();
         EmbedBuilder eb = new EmbedBuilder();
         eb.setColor(Color.GREEN);
@@ -27,6 +27,5 @@ public class ListShowAllTodoListCommand implements Command {
             eb.addField("", String.format("%d %s", todoList.getId(), todoList.getTitle()), false);
         }
         message.reply(eb.build()).queue();
-        return null;
     }
 }

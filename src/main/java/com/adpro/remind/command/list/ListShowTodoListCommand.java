@@ -18,7 +18,7 @@ public class ListShowTodoListCommand implements Command {
     }
 
     @Override
-    public MessageEmbed getOutputMessage(Message message, String[] inputContent){
+    public void getOutputMessage(Message message, String[] inputContent){
         EmbedBuilder eb = new EmbedBuilder();
         eb.setColor(Color.GREEN);
         TodoList todoList = todoListService.showTodoList(Integer.parseInt(inputContent[2]));
@@ -29,6 +29,5 @@ public class ListShowTodoListCommand implements Command {
             }
             message.reply(eb.build()).queue();
         }
-        return null;
     }
 }

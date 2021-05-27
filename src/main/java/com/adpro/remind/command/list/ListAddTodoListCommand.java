@@ -19,12 +19,11 @@ public class ListAddTodoListCommand implements Command {
    }
 
    @Override
-   public MessageEmbed getOutputMessage(Message message, String[] inputContent){
+   public void getOutputMessage(Message message, String[] inputContent){
        Guild guild = new Guild(message.getGuild().getId());
        System.out.println(Arrays.toString(inputContent));
        String namaList = inputContent[2];
        todoListService.addTodoList(new TodoList(namaList, guild));
        message.reply(String.format("TodoList %s telah ditambahkan", namaList)).queue();
-       return null;
    }
 }

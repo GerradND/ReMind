@@ -39,9 +39,7 @@ public class FeatureCommandImpl implements FeatureCommand {
 
         try {
             Command command = commandRepository.getCommand(formatCommand(inputContent));
-            MessageEmbed content = command.getOutputMessage(message, inputContent);
-            RestAction<Message> action = message.getChannel().sendMessage(content);
-            action.queue();
+            command.getOutputMessage(message, inputContent);
 
         } catch (Exception e) {
             e.printStackTrace();

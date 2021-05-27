@@ -45,7 +45,7 @@ public class ScheduleAddCommand implements Command {
     }
 
     @Override
-    public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
+    public void getOutputMessage(Message message, String[] inputContent) {
         Guild guild = new Guild(message.getGuild().getId());
         EmbedBuilder eb = new EmbedBuilder();
         String title = inputContent[2];
@@ -68,12 +68,12 @@ public class ScheduleAddCommand implements Command {
             eb.addField(":memo: Deskripsi:", desc, true);
             eb.setColor(Color.green);
 
-            return eb.build();
+            message.getChannel().sendMessage(eb.build()).queue();
 
         } catch (Exception e) {
             eb.addField("Penambahan schedule gagal/terdapat kesalahan parameter. Silahkan coba lagi.","", false);
             eb.setColor(Color.red);
-            return eb.build();
+            message.getChannel().sendMessage(eb.build()).queue();
         }
 
     }
