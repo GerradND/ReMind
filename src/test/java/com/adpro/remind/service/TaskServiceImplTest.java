@@ -123,7 +123,8 @@ public class TaskServiceImplTest {
     void testServiceSetReminder(){
         LocalDate dateReminder = LocalDate.of(2021, 05, 29);
         LocalTime timeReminder = LocalTime.of(20, 15);
-        Reminder reminder = new Reminder(dateReminder, timeReminder);
+        String randomIDChannel = "814323773696114690";
+        Reminder reminder = new Reminder(dateReminder, timeReminder, randomIDChannel);
 
         when(taskRepository.save(any(Task.class))).thenReturn(task);
         when(reminderRepository.save(any(Reminder.class))).thenReturn(reminder);

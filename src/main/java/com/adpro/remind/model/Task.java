@@ -46,7 +46,7 @@ public class Task {
     }
 
     public String getAllReminders(){
-        String listReminder = "Reminder yang telah dipasang: \n";
+        String listReminder = "";
         if(reminders.size() > 0) {
             for (Reminder reminder : reminders) {
                 listReminder += "- " + reminder.getDate() + " " + reminder.getTime() + "\n";
