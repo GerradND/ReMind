@@ -30,6 +30,6 @@ public class ReminderDeleteCommand implements Command {
         taskService.deleteTask(idTask);
 
         EmbedBuilder embedOutput = getEmbedOutput(idTask);
-        message.getChannel().sendMessage(embedOutput.build()).queue();
+        return embedOutput.build();
     }
 }

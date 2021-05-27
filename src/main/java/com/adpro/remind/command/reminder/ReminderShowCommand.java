@@ -25,7 +25,7 @@ public class ReminderShowCommand implements Command {
                 return taskService.showAllTask(idGuild);
             default:
                 LocalDate date = LocalDate.parse(type, dateFormatter);
-                return taskService.showTaskAtDate(date);
+                return taskService.showTaskAtDate(date, idGuild);
         }
     }
 
@@ -44,10 +44,11 @@ public class ReminderShowCommand implements Command {
     }
 
     @Override
-    public void getOutputMessage(Message message, String[] inputContent) {
-        Iterable<Task> listTasks= getListTasks(inputContent[2]);
+    public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
+        String idGuild = message.getGuild().getId();
+        Iterable<Task> listTasks= getListTasks(inputContent[2], idGuild);
         EmbedBuilder embedOutput = getEmbedOutput(listTasks);
 
-        message.getChannel().sendMessage(embedOutput.build()).queue();
+        return embedOutput.build();
     }
 }

@@ -18,6 +18,7 @@ public class TaskServiceImpl implements TaskService{
 
     private TaskRepository taskRepository;
     private ReminderRepository reminderRepository;
+
     @Autowired
     private GuildRepository guildRepository;
 
@@ -55,12 +56,16 @@ public class TaskServiceImpl implements TaskService{
         if (guild == null){
             return null;
         }
-        return taskRepository.findAll();
+        return taskRepository.findByGuild(guild);
     }
 
     @Override
-    public Iterable<Task> showTaskAtDate(LocalDate date) {
-        return taskRepository.findByDate(date);
+    public Iterable<Task> showTaskAtDate(LocalDate date, String idGuild) {
+        Guild guild = guildRepository.findById(idGuild).orElse(null);
+        if (guild == null){
+            return null;
+        }
+        return taskRepository.findByDateAndGuild(date, guild);
     }
 
     @Override

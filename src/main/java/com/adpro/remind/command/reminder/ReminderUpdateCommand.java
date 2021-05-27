@@ -39,6 +39,6 @@ public class ReminderUpdateCommand implements Command {
         Task updatedTask = taskService.updateTask(idTask, date, time);
 
         EmbedBuilder embedOutput = getEmbedOutput(updatedTask);
-        message.getChannel().sendMessage(embedOutput.build()).queue();
+        return embedOutput.build();
     }
 }

@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import java.awt.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -23,16 +24,33 @@ public class ReminderSetCommand implements Command {
         this.taskService = taskService;
     }
 
-    private Reminder newReminder(String dateText, String timeText, String idTask, String idChannel){
-        LocalDate date = LocalDate.parse(dateText, dateFormatter);
-        LocalTime time = LocalTime.parse(timeText, timeFormatter);
-
+    private Reminder newReminder(Integer time, String type, String idTask, String idChannel){
         Integer id = Integer.parseInt(idTask);
         Task task = taskService.findByIDTask(id);
 
-        Reminder reminder = new Reminder(date, time, idChannel);
+        LocalDate taskDate = task.getDate();
+        LocalTime taskHour = task.getTime();
+        LocalDateTime taskTime = LocalDateTime.of(taskDate, taskHour);
+
+        LocalDateTime reminderTime = getReminderDateTime(taskTime, time, type);
+        Reminder reminder = new Reminder(reminderTime.toLocalDate(), reminderTime.toLocalTime(), idChannel);
+
         taskService.setReminder(reminder, task);
         return reminder;
+    }
+
+    private LocalDateTime getReminderDateTime(LocalDateTime taskTime, Integer time, String type){
+        LocalDateTime reminderTime = taskTime;
+        switch(type.toUpperCase()){
+            case "HARI":
+                reminderTime = taskTime.minusDays(time);
+                break;
+            default:
+                reminderTime = taskTime.minusHours(time);
+        }
+
+        return reminderTime;
+
     }
 
     private EmbedBuilder getEmbedOutput(String id, Reminder reminder){
@@ -51,15 +69,13 @@ public class ReminderSetCommand implements Command {
     @Override
     public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
         String id =inputContent[2];
-        String date = inputContent[3];
-        String time = inputContent[4];
+        Integer time = Integer.parseInt(inputContent[3]);
+        String type = inputContent[4];
         String idChannel = message.getChannel().getId();
 
-        Reminder createdReminder = newReminder(date, time, id, idChannel);
+        Reminder createdReminder = newReminder(time, type, id, idChannel);
         EmbedBuilder embedOutput = getEmbedOutput(id, createdReminder);
 
-        message.getChannel().sendMessage(embedOutput.build()).queue();
-
-        return null;
+        return embedOutput.build();
     }
 }

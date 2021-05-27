@@ -40,15 +40,8 @@ public class ReminderDetailCommand implements Command {
         Integer idTask = Integer.parseInt(inputContent[2]);
         Task task = taskService.detailTask(idTask);
 
-//        String output = "Detail tugas [#" + task.getIdTask() + "] \n" +
-//                        "ID: " + task.getIdTask() + "\n" +
-//                        "Nama Tugas: " + task.getName() + "\n" +
-//                        "Tanggal Deadline: " + task.getDate() + "\n" +
-//                        "Jam Deadline: " + task.getTime() + "\n" +
-//                        task.getAllReminders();
-
         EmbedBuilder embedOutput = getEmbedOutput(task);
 
-        message.getChannel().sendMessage(embedOutput.build()).queue();
+        return embedOutput.build();
     }
 }

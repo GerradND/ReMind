@@ -11,7 +11,7 @@ public interface TaskService {
     void deleteTask(Integer idTask);
     Task updateTask(Integer idTask, LocalDate date, LocalTime time);
     Iterable<Task> showAllTask(String idGuild);
-    Iterable<Task> showTaskAtDate(LocalDate date);
+    Iterable<Task> showTaskAtDate(LocalDate date, String idGuild);
     Task detailTask(Integer idTask);
     Reminder setReminder(Reminder reminder, Task task);
     Task findByIDTask(Integer idTask);

@@ -12,6 +12,7 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.regex.Pattern;
 
 public class ReminderAddCommand implements Command {
 
@@ -55,7 +56,7 @@ public class ReminderAddCommand implements Command {
         embedBuilder.addField("", "Pasang reminder untuk tugas ini dengan:\n `-reminder set " +
                 task.getIdTask() + " [WAKTU_REMINDER]`", false);
 
-        embedBuilder.setColor(Color.yellow);
+        embedBuilder.setColor(Color.YELLOW);
 
 
         return embedBuilder;
