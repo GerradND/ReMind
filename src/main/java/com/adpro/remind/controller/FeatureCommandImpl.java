@@ -1,6 +1,7 @@
 package com.adpro.remind.controller;
 
 import com.adpro.remind.command.Command;
+import com.adpro.remind.command.PingCommand;
 import com.adpro.remind.repository.CommandRepository;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
@@ -52,7 +53,7 @@ public class FeatureCommandImpl implements FeatureCommand {
             action.queue();
         }
     }
-
+/*
     @Override
     public void outputPrivateMessage(Message message, String[] inputContent) {
         RestAction<PrivateChannel> action = message.getAuthor().openPrivateChannel();
@@ -70,5 +71,5 @@ public class FeatureCommandImpl implements FeatureCommand {
             action.queue((channel) -> channel.sendMessage(eb.build()).queue());
         }
     }
-
+ */
 }
