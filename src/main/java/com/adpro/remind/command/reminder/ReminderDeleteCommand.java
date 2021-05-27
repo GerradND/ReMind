@@ -3,6 +3,7 @@ package com.adpro.remind.command.reminder;
 import com.adpro.remind.command.Command;
 import com.adpro.remind.service.TaskService;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 
 public class ReminderDeleteCommand implements Command {
     private TaskService taskService;

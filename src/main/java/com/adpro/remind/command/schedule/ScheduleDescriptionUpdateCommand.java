@@ -5,14 +5,9 @@ import com.adpro.remind.model.Schedule;
 import com.adpro.remind.service.ScheduleService;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import java.awt.*;
-import java.time.DayOfWeek;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.TextStyle;
-import java.time.temporal.TemporalAccessor;
-import java.util.Locale;
 
 public class ScheduleDescriptionUpdateCommand implements Command {
 
@@ -66,7 +61,6 @@ public class ScheduleDescriptionUpdateCommand implements Command {
             eb.setColor(Color.red);
             eb.addField("Tolong masukan ID yang valid.", "", false);
             message.getChannel().sendMessage(eb.build()).queue();
-
         }
     }
 }

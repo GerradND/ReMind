@@ -5,6 +5,7 @@ import com.adpro.remind.model.Schedule;
 import com.adpro.remind.service.ScheduleService;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import java.awt.*;
 

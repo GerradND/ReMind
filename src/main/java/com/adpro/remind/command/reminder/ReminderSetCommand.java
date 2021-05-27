@@ -5,6 +5,7 @@ import com.adpro.remind.model.Reminder;
 import com.adpro.remind.model.Task;
 import com.adpro.remind.service.TaskService;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -43,6 +44,5 @@ public class ReminderSetCommand implements Command {
                         createdReminder.getTime() + " berhasil dibuat.";
 
         message.getChannel().sendMessage(output).queue();
-
     }
 }

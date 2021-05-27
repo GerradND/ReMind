@@ -1,9 +1,11 @@
 package com.adpro.remind.event;
 
 import com.adpro.remind.controller.FeatureCommand;
+import com.adpro.remind.service.GuildService;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,6 +33,9 @@ public class InputEventListenerTests {
     @Mock
     private FeatureCommand featureCommand;
 
+    @Mock
+    private GuildService guildService;
+
     @InjectMocks
     private InputEventListener inputEventListener;
 
@@ -49,73 +54,93 @@ public class InputEventListenerTests {
         assertTrue(new InputEventListener() instanceof ListenerAdapter);
     }
 
+
     @Test
-    public void testOnMessageReceivedMethodExist() throws NoSuchMethodException {
-        Method method = inputEventListenerClass.getDeclaredMethod("onMessageReceived", MessageReceivedEvent.class);
+    public void testOnGuildMessageReceivedMethodExist() throws NoSuchMethodException {
+        Method method = inputEventListenerClass.getDeclaredMethod("onGuildMessageReceived", GuildMessageReceivedEvent.class);
         int methodModifiers = method.getModifiers();
         assertTrue(Modifier.isPublic(methodModifiers));
     }
 
+
     @Test
     public void testAuthorIsBot() {
-        MessageReceivedEvent messageReceivedEvent = mock(MessageReceivedEvent.class);
+        GuildMessageReceivedEvent guildMessageReceivedEvent = mock(GuildMessageReceivedEvent.class);
         Message message = mock(Message.class);
+        Guild guild = mock(Guild.class);
+        String idGuild = "help";
         String messageContent = "-help reminder";
         String[] content = messageContent.split(" ");
         User author = mock(User.class);
 
-        when(messageReceivedEvent.getMessage()).thenReturn(message);
+        when(guildMessageReceivedEvent.getMessage()).thenReturn(message);
         when(message.getAuthor()).thenReturn(author);
         when(author.isBot()).thenReturn(true);
+        when(message.getGuild()).thenReturn(guild);
+        when(guild.getId()).thenReturn(idGuild);
         when(message.getContentRaw()).thenReturn(messageContent);
 
-        inputEventListener.onMessageReceived(messageReceivedEvent);
+        inputEventListener.onGuildMessageReceived(guildMessageReceivedEvent);
 
-        verify(messageReceivedEvent, times(1)).getMessage();
+        verify(guildMessageReceivedEvent, times(1)).getMessage();
         verify(message, times(1)).getAuthor();
         verify(author, times(1)).isBot();
+        verify(message, times(1)).getGuild();
+        verify(guild, times(1)).getId();
         verify(featureCommand, times(0)).outputMessage(message, content);
     }
 
     @Test
     public void testInputEventListenerCalledFeatureCommandGetOutputMessage() throws NoSuchFieldException, IllegalAccessException {
-        MessageReceivedEvent messageReceivedEvent = mock(MessageReceivedEvent.class);
+        GuildMessageReceivedEvent guildMessageReceivedEvent = mock(GuildMessageReceivedEvent.class);
         Message message = mock(Message.class);
-        User author = mock(User.class);
+        Guild guild = mock(Guild.class);
+        String idGuild = "help";
         String messageContent = "-help reminder";
         String[] content = messageContent.split(" ");
+        User author = mock(User.class);
 
-        when(messageReceivedEvent.getMessage()).thenReturn(message);
+        when(guildMessageReceivedEvent.getMessage()).thenReturn(message);
         when(message.getAuthor()).thenReturn(author);
         when(author.isBot()).thenReturn(false);
+        when(message.getGuild()).thenReturn(guild);
+        when(guild.getId()).thenReturn(idGuild);
         when(message.getContentRaw()).thenReturn(messageContent);
 
         Field prefixField = InputEventListener.class.getDeclaredField("prefix");
         prefixField.setAccessible(true);
         prefixField.set(inputEventListener, "-");
 
-        inputEventListener.onMessageReceived(messageReceivedEvent);
+        inputEventListener.onGuildMessageReceived(guildMessageReceivedEvent);
 
-        verify(messageReceivedEvent, times(1)).getMessage();
+        verify(guildMessageReceivedEvent, times(1)).getMessage();
         verify(message, times(1)).getAuthor();
         verify(author, times(1)).isBot();
+        verify(message, times(1)).getGuild();
+        verify(guild, times(1)).getId();
         verify(message, times(2)).getContentRaw();
+        verify(guildService).createGuild(idGuild);
         verify(featureCommand, times(1)).outputMessage(message, content);
     }
 
+
     @Test
     public void testInputEventListenerException() throws NoSuchFieldException, IllegalAccessException {
-        MessageReceivedEvent messageReceivedEvent = mock(MessageReceivedEvent.class);
+        GuildMessageReceivedEvent guildMessageReceivedEvent = mock(GuildMessageReceivedEvent.class);
         Message message = mock(Message.class);
+        Guild guild = mock(Guild.class);
+        String idGuild = "help";
         User author = mock(User.class);
         MessageChannel messageChannel = mock(MessageChannel.class);
         MessageAction messageAction = mock(MessageAction.class);
         String messageContent = "-help a b";
         String[] content = messageContent.split(" ");
 
-        when(messageReceivedEvent.getMessage()).thenReturn(message);
+        when(guildMessageReceivedEvent.getMessage()).thenReturn(message);
         when(message.getAuthor()).thenReturn(author);
         when(author.isBot()).thenReturn(false);
+        when(message.getGuild()).thenReturn(guild);
+        when(guild.getId()).thenReturn(idGuild);
         when(message.getContentRaw()).thenReturn(messageContent);
         doThrow(IllegalStateException.class).when(featureCommand).outputMessage(any(Message.class), any(String[].class));
         when(message.getChannel()).thenReturn(messageChannel);
@@ -125,11 +150,13 @@ public class InputEventListenerTests {
         prefixField.setAccessible(true);
         prefixField.set(inputEventListener, "-");
 
-        inputEventListener.onMessageReceived(messageReceivedEvent);
+        inputEventListener.onGuildMessageReceived(guildMessageReceivedEvent);
 
-        verify(messageReceivedEvent, times(1)).getMessage();
+        verify(guildMessageReceivedEvent, times(1)).getMessage();
         verify(message, times(1)).getAuthor();
         verify(author, times(1)).isBot();
+        verify(message, times(1)).getGuild();
+        verify(guild, times(1)).getId();
         verify(message, times(3)).getContentRaw();
         verify(featureCommand, times(1)).outputMessage(message, content);
         verify(message, times(1)).getChannel();

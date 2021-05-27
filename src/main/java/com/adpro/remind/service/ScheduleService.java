@@ -13,5 +13,5 @@ public interface ScheduleService {
 
     Iterable<Schedule> getScheduleByDay(String day);
 
-    Iterable<Schedule> getListSchedule();
+    Iterable<Schedule> getListSchedule(String idGuild);
 }

@@ -1,7 +1,9 @@
 package com.adpro.remind.service;
 
+import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Reminder;
 import com.adpro.remind.model.Task;
+import com.adpro.remind.repository.GuildRepository;
 import com.adpro.remind.repository.ReminderRepository;
 import com.adpro.remind.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +15,11 @@ import java.time.LocalTime;
 @Service
 public class TaskServiceImpl implements TaskService{
 
+
     private TaskRepository taskRepository;
     private ReminderRepository reminderRepository;
+    @Autowired
+    private GuildRepository guildRepository;
 
     @Autowired
     public TaskServiceImpl(TaskRepository taskRepository, ReminderRepository reminderRepository){
@@ -45,8 +50,12 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public Iterable<Task> showAllTask() {
-        return taskRepository.findAll();
+    public Iterable<Task> showAllTask(String idGuild) {
+        Guild guild = guildRepository.findById(idGuild).orElse(null);
+        if (guild == null){
+            return null;
+        }
+        return taskRepository.findByGuild(guild);
     }
 
     @Override
