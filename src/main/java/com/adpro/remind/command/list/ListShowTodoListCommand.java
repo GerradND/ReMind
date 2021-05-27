@@ -6,6 +6,7 @@ import com.adpro.remind.model.TodoList;
 import com.adpro.remind.service.TodoListService;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import java.awt.*;
 
@@ -17,7 +18,7 @@ public class ListShowTodoListCommand implements Command {
     }
 
     @Override
-    public void getOutputMessage(Message message, String[] inputContent){
+    public MessageEmbed getOutputMessage(Message message, String[] inputContent){
         EmbedBuilder eb = new EmbedBuilder();
         eb.setColor(Color.GREEN);
         TodoList todoList = todoListService.showTodoList(Integer.parseInt(inputContent[2]));
@@ -28,5 +29,6 @@ public class ListShowTodoListCommand implements Command {
             }
             message.reply(eb.build()).queue();
         }
+        return null;
     }
 }

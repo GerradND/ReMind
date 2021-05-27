@@ -5,15 +5,11 @@ import com.adpro.remind.model.Schedule;
 import com.adpro.remind.service.ScheduleService;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import java.awt.*;
-import java.time.DayOfWeek;
-import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
-import java.time.temporal.TemporalAccessor;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Locale;
 
 public class ScheduleShowCommand implements Command {
@@ -42,19 +38,20 @@ public class ScheduleShowCommand implements Command {
     }
 
     @Override
-    public void getOutputMessage(Message message, String[] inputContent) {
+    public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
+        String idGuild = message.getGuild().getId();
         String outputMsg = "";
         EmbedBuilder eb = new EmbedBuilder();
         eb.setColor(Color.YELLOW);
 
         if (inputContent[2].equals("all")) {    // semua schedule
             eb.setTitle(":calendar_spiral: List semua schedule");
-            Iterable<Schedule> list = scheduleService.getListSchedule();
+            Iterable<Schedule> list = scheduleService.getListSchedule(idGuild);
 
             if(list == null) {
                 eb.addField("Schedule Anda masih kosong!", "", false);
             } else {
-                for (Schedule schedule : scheduleService.getListSchedule()) {
+                for (Schedule schedule : scheduleService.getListSchedule(idGuild)) {
                     eb.addField(":bulb: \"" + schedule.getTitle() + "\" - <:id:: " + schedule.getIdSchedule() + ">",
                             String.format("(%s, %s-%s)",
                                     schedule.getDay().getDisplayName(TextStyle.FULL, Locale.getDefault()),
@@ -91,6 +88,6 @@ public class ScheduleShowCommand implements Command {
                 }
             }
         }
-        message.getChannel().sendMessage(eb.build()).queue();
+        return eb.build();
     }
 }

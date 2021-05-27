@@ -4,6 +4,7 @@ import com.adpro.remind.command.Command;
 import com.adpro.remind.model.TodoList;
 import com.adpro.remind.service.TodoListService;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 
 public class ListDeleteTodoListCommand implements Command {
     private TodoListService todoListService;
@@ -13,10 +14,11 @@ public class ListDeleteTodoListCommand implements Command {
     }
 
     @Override
-    public void getOutputMessage(Message message, String[]inputContent){
+    public MessageEmbed getOutputMessage(Message message, String[]inputContent){
         TodoList todoList = todoListService.deleteTodoList(Integer.parseInt(inputContent[2]));
         if(todoList != null){
             message.reply(String.format("TodoList %s telah dihapus", todoList.getTitle())).queue();
         }
+        return null;
     }
 }

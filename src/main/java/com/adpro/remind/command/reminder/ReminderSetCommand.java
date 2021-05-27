@@ -6,6 +6,7 @@ import com.adpro.remind.model.Task;
 import com.adpro.remind.service.TaskService;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import java.awt.*;
 import java.time.LocalDate;
@@ -48,7 +49,7 @@ public class ReminderSetCommand implements Command {
     }
 
     @Override
-    public void getOutputMessage(Message message, String[] inputContent) {
+    public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
         String id =inputContent[2];
         String date = inputContent[3];
         String time = inputContent[4];
@@ -59,5 +60,6 @@ public class ReminderSetCommand implements Command {
 
         message.getChannel().sendMessage(embedOutput.build()).queue();
 
+        return null;
     }
 }

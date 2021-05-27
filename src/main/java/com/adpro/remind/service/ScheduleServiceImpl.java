@@ -1,6 +1,8 @@
 package com.adpro.remind.service;
 
+import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Schedule;
+import com.adpro.remind.repository.GuildRepository;
 import com.adpro.remind.repository.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,6 +14,9 @@ import java.time.DayOfWeek;
 public class ScheduleServiceImpl implements ScheduleService {
 
     private ScheduleRepository scheduleRepository;
+
+    @Autowired
+    private GuildRepository guildRepository;
 
     @Autowired
     public ScheduleServiceImpl(ScheduleRepository scheduleRepository) {
@@ -48,8 +53,12 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public Iterable<Schedule> getListSchedule() {
-        return scheduleRepository.findAll();
+    public Iterable<Schedule> getListSchedule(String idGuild) {
+        Guild guild = guildRepository.findById(idGuild).orElse(null);
+        if (guild == null){
+            return null;
+        }
+        return scheduleRepository.findByGuild(guild);
     }
 
 }

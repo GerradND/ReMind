@@ -1,8 +1,11 @@
 package com.adpro.remind.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
@@ -31,6 +34,12 @@ public class Schedule {
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "id_guild")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private Guild guild;
+
 //    @JsonBackReference
 //    @ManyToOne
 //    @JoinColumn(name = "id_user")
@@ -41,11 +50,12 @@ public class Schedule {
 //    @JoinColumn(name = "id_guild")
 //    private Guild guild;
 
-    public Schedule(String title, DayOfWeek day, LocalTime startTime, LocalTime endTime, String description){
+    public Schedule(String title, DayOfWeek day, LocalTime startTime, LocalTime endTime, String description, Guild guild){
         this.title = title;
         this.day = day;
         this.startTime = startTime;
         this.endTime = endTime;
         this.description = description;
+        this.guild = guild;
     }
 }

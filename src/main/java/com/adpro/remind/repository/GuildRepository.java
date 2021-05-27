@@ -1,12 +1,10 @@
 package com.adpro.remind.repository;
 
 import com.adpro.remind.model.Guild;
-import com.adpro.remind.model.TodoList;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TodoListRepository extends JpaRepository<TodoList, Integer>{
-    TodoList findById(int id);
-    Iterable<TodoList> findByGuild(Guild guild);
+public interface GuildRepository extends JpaRepository<Guild,String> {
+    Guild findByIdGuild(String idGuild);
 }

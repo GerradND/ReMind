@@ -5,6 +5,7 @@ import com.adpro.remind.model.Task;
 import com.adpro.remind.service.TaskService;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import java.awt.*;
 import java.time.LocalDate;
@@ -18,10 +19,10 @@ public class ReminderShowCommand implements Command {
         this.taskService = taskService;
     }
 
-    private Iterable<Task> getListTasks(String type){
+    private Iterable<Task> getListTasks(String type, String idGuild){
         switch (type.toUpperCase()){
             case "ALL":
-                return taskService.showAllTask();
+                return taskService.showAllTask(idGuild);
             default:
                 LocalDate date = LocalDate.parse(type, dateFormatter);
                 return taskService.showTaskAtDate(date);
