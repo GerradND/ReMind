@@ -1,4 +1,4 @@
-package com.adpro.remind.command.schedule;
+package com.adpro.remind.command.list;
 
 import com.adpro.remind.command.Command;
 import com.adpro.remind.model.TodoItem;
