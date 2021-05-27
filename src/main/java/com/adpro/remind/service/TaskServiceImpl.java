@@ -55,7 +55,7 @@ public class TaskServiceImpl implements TaskService{
         if (guild == null){
             return null;
         }
-        return taskRepository.findAll();
+        return taskRepository.findByGuild(guild);
     }
 
     @Override

@@ -13,7 +13,7 @@ public class ReminderDetailCommand implements Command {
     }
 
     @Override
-    public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
+    public void getOutputMessage(Message message, String[] inputContent) {
         Integer idTask = Integer.parseInt(inputContent[2]);
         Task task = taskService.detailTask(idTask);
 
@@ -25,6 +25,5 @@ public class ReminderDetailCommand implements Command {
                         task.getAllReminders();
 
         message.getChannel().sendMessage(output).queue();
-        return null;
     }
 }

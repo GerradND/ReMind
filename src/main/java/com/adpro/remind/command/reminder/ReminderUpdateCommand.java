@@ -21,7 +21,7 @@ public class ReminderUpdateCommand implements Command {
 
 
     @Override
-    public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
+    public void getOutputMessage(Message message, String[] inputContent) {
         Integer idTask = Integer.parseInt(inputContent[2]);
         LocalDate date = LocalDate.parse(inputContent[3], dateFormatter);
         LocalTime time = LocalTime.parse(inputContent[4], timeFormatter);
@@ -29,6 +29,5 @@ public class ReminderUpdateCommand implements Command {
 
         String output = "Tugas " + updatedTask.getName() + " berhasil diupdate.";
         message.getChannel().sendMessage(output).queue();
-        return null;
     }
 }

@@ -13,12 +13,11 @@ public class ReminderDeleteCommand implements Command {
     }
 
     @Override
-    public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
+    public void getOutputMessage(Message message, String[] inputContent) {
         Integer idTask = Integer.parseInt(inputContent[2]);
         taskService.deleteTask(idTask);
 
         String output = "Tugas dengan ID: " + idTask + " berhasil dihapus.";
         message.getChannel().sendMessage(output).queue();
-        return null;
     }
 }

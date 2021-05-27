@@ -14,11 +14,10 @@ public class ListDeleteTodoItemCommand implements Command {
     }
 
     @Override
-    public MessageEmbed getOutputMessage(Message message, String[] inputContent){
+    public void getOutputMessage(Message message, String[] inputContent){
         TodoItem todoItem = todoListService.deleteTodoItem(Integer.parseInt(inputContent[2]), Integer.parseInt(inputContent[3]));
         if(todoItem != null){
             message.reply(String.format("TodoItem %s pada TodoList %s telah dihapus", todoItem.getName(), todoItem.getTodoList().getTitle())).queue();
         }
-        return null;
     }
 }

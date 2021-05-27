@@ -28,9 +28,9 @@ public class ReminderShowCommand implements Command {
     }
 
     @Override
-    public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
+    public void getOutputMessage(Message message, String[] inputContent) {
         String idGuild = message.getGuild().getId();
-        Iterable<Task> listTasks= getListTasks(inputContent[2], idGuild);
+        Iterable<Task> listTasks = this.getListTasks(inputContent[2], idGuild);
         String output = "Tugas yang telah ditambahkan: \n";
 
         for(Task task: listTasks){
@@ -40,6 +40,5 @@ public class ReminderShowCommand implements Command {
         }
 
         message.getChannel().sendMessage(output).queue();
-        return null;
     }
 }

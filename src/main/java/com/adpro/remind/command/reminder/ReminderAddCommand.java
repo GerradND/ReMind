@@ -38,13 +38,12 @@ public class ReminderAddCommand implements Command {
     }
 
     @Override
-    public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
+    public void getOutputMessage(Message message, String[] inputContent) {
         Guild guild = new Guild(message.getGuild().getId());
         this.inputContent = inputContent;
         Task createdTask = newTask(guild);
 
         String output = "Tugas " + createdTask.getName() + " berhasil dibuat.";
         message.getChannel().sendMessage(output).queue();
-        return null;
     }
 }

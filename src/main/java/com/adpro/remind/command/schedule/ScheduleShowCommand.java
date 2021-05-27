@@ -38,7 +38,7 @@ public class ScheduleShowCommand implements Command {
     }
 
     @Override
-    public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
+    public void getOutputMessage(Message message, String[] inputContent) {
         String idGuild = message.getGuild().getId();
         String outputMsg = "";
         EmbedBuilder eb = new EmbedBuilder();
@@ -88,6 +88,6 @@ public class ScheduleShowCommand implements Command {
                 }
             }
         }
-        return eb.build();
+        message.getChannel().sendMessage(eb.build()).queue();
     }
 }
