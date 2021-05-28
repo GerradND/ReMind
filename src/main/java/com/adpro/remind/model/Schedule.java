@@ -39,7 +39,7 @@ public class Schedule {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Guild guild;
-    
+
 
     public Schedule(String title, DayOfWeek day, LocalTime startTime, LocalTime endTime, String description){
         this.title = title;
