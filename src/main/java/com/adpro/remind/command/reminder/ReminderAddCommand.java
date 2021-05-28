@@ -1,19 +1,16 @@
 package com.adpro.remind.command.reminder;
 
 import com.adpro.remind.command.Command;
-import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Task;
 import com.adpro.remind.service.GuildService;
 import com.adpro.remind.service.TaskService;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.regex.Pattern;
 
 public class ReminderAddCommand implements Command {
 

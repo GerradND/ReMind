@@ -2,7 +2,6 @@ package com.adpro.remind.repository;
 
 import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Task;
-import jdk.vm.ci.meta.Local;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
