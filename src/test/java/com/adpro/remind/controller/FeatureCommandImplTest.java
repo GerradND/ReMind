@@ -1,10 +1,11 @@
 package com.adpro.remind.controller;
 
+import com.adpro.remind.repository.CommandRepository;
 import com.adpro.remind.repository.CommandRepositoryImpl;
+import com.adpro.remind.repository.CommandRepositoryImplTests;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 import java.util.Arrays;

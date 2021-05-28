@@ -10,6 +10,6 @@ import java.time.DayOfWeek;
 @Repository
 public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
     Schedule findByIdSchedule(Integer idSchedule);
-    Iterable<Schedule> findByGuild(Guild guild);
-    Iterable<Schedule> findByDay(DayOfWeek day);
+    Iterable<Schedule> findAllByGuild(Guild guild);
+    Iterable<Schedule> findByDayAndGuild(DayOfWeek day, Guild guild);
 }
