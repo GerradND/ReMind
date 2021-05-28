@@ -3,15 +3,18 @@ package com.adpro.remind.command.reminder;
 import com.adpro.remind.command.Command;
 import com.adpro.remind.model.Task;
 import com.adpro.remind.service.TaskService;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 
+import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class ReminderShowCommand implements Command {
     private TaskService taskService;
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    EmbedBuilder embedOutput;
 
     public ReminderShowCommand(TaskService taskService){
         this.taskService = taskService;
@@ -23,22 +26,30 @@ public class ReminderShowCommand implements Command {
                 return taskService.showAllTask(idGuild);
             default:
                 LocalDate date = LocalDate.parse(type, dateFormatter);
-                return taskService.showTaskAtDate(date);
+                return taskService.showTaskAtDate(date, idGuild);
         }
+    }
+
+
+    public EmbedBuilder getEmbedOutput(Iterable<Task> listTasks){
+        EmbedBuilder embedBuilder = new EmbedBuilder();
+        embedBuilder.setTitle("Tugas yang telah dibuat: ");
+        embedBuilder.setColor(Color.CYAN);
+
+        for(Task task:listTasks){
+            embedBuilder.addField(":id:", task.getIdTask().toString(), true);
+            embedBuilder.addField(":notepad_spiral: Nama Tugas: ", task.getName(), true);
+            embedBuilder.addBlankField(true);
+        }
+        return embedBuilder;
     }
 
     @Override
     public void getOutputMessage(Message message, String[] inputContent) {
         String idGuild = message.getGuild().getId();
-        Iterable<Task> listTasks = this.getListTasks(inputContent[2], idGuild);
-        String output = "Tugas yang telah ditambahkan: \n";
+        Iterable<Task> listTasks= getListTasks(inputContent[2], idGuild);
+        embedOutput = getEmbedOutput(listTasks);
 
-        for(Task task: listTasks){
-            output += "-ID: " + task.getIdTask() + "\n" +
-                        "Nama Tugas: " + task.getName() + "\n " +
-                        "\n";
-        }
-
-        message.getChannel().sendMessage(output).queue();
+        message.getChannel().sendMessage(embedOutput.build()).queue();
     }
 }
