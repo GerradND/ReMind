@@ -1,6 +1,8 @@
 package com.adpro.remind.service;
 
+import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Schedule;
+import com.adpro.remind.repository.GuildRepository;
 import com.adpro.remind.repository.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,15 +14,22 @@ import java.time.DayOfWeek;
 public class ScheduleServiceImpl implements ScheduleService {
 
     private ScheduleRepository scheduleRepository;
+    private GuildRepository guildRepository;
 
     @Autowired
-    public ScheduleServiceImpl(ScheduleRepository scheduleRepository) {
+    public ScheduleServiceImpl(ScheduleRepository scheduleRepository, GuildRepository guildRepository) {
         this.scheduleRepository = scheduleRepository;
+        this.guildRepository = guildRepository;
     }
 
     @Override
-    public Schedule createSchedule(Schedule schedule) {
+    public Schedule createSchedule(Schedule schedule, String idGuild) {
+        Guild guild = guildRepository.findByIdGuild(idGuild);
+        schedule.setGuild(guild);
+        guild.getScheduleList().add(schedule);
+
         scheduleRepository.save(schedule);
+        guildRepository.save(guild);
         return schedule;
     }
 
@@ -43,13 +52,15 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public Iterable<Schedule> getScheduleByDay(String day) {
-        return scheduleRepository.findByDay(DayOfWeek.valueOf(day));
+    public Iterable<Schedule> getScheduleByDay(String day, String idGuild) {
+        Guild guild = guildRepository.findByIdGuild(idGuild);
+        return scheduleRepository.findByDayAndGuild(DayOfWeek.valueOf(day), guild);
     }
 
     @Override
-    public Iterable<Schedule> getListSchedule() {
-        return scheduleRepository.findAll();
+    public Iterable<Schedule> getListSchedule(String idGuild) {
+        Guild guild = guildRepository.findByIdGuild(idGuild);
+        return scheduleRepository.findAllByGuild(guild);
     }
 
 }

@@ -1,12 +1,9 @@
 package com.adpro.remind.service;
 
 import com.adpro.remind.model.Schedule;
-import org.springframework.stereotype.Component;
-
-import java.time.DayOfWeek;
 
 public interface ScheduleService {
-    Schedule createSchedule(Schedule schedule);
+    Schedule createSchedule(Schedule schedule, String idGuild);
 
     Schedule getScheduleByID(Integer idSchedule);
 
@@ -14,7 +11,7 @@ public interface ScheduleService {
 
     void deleteSchedule(Integer idSchedule);
 
-    Iterable<Schedule> getScheduleByDay(String day);
+    Iterable<Schedule> getScheduleByDay(String day, String idGuild);
 
-    Iterable<Schedule> getListSchedule();
+    Iterable<Schedule> getListSchedule(String idGuild);
 }

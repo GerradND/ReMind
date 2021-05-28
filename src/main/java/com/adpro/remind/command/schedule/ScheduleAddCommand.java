@@ -1,17 +1,23 @@
 package com.adpro.remind.command.schedule;
 
 import com.adpro.remind.command.Command;
+import com.adpro.remind.event.InputEventListener;
+import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Schedule;
+import com.adpro.remind.service.GuildService;
 import com.adpro.remind.service.ScheduleService;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
+import org.hibernate.id.GUIDGenerator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
-import java.util.Date;
 import java.util.Locale;
 
 public class ScheduleAddCommand implements Command {
@@ -52,9 +58,11 @@ public class ScheduleAddCommand implements Command {
         String endTime = inputContent[5];
         String desc = formDescription(inputContent);
 
+        String idGuild = message.getGuild().getId();
+
         try {
             Schedule schedule = scheduleService.createSchedule(new Schedule(title, getDayOfWeek(day),
-                    getTime(startTime), getTime(endTime), desc));
+                    getTime(startTime), getTime(endTime), desc), idGuild);
 
             eb.setTitle(":white_check_mark: Schedule \"" + title + "\" berhasil ditambahkan!");
             eb.addField(":id: Id:", schedule.getIdSchedule().toString(), true);
@@ -69,6 +77,7 @@ public class ScheduleAddCommand implements Command {
             message.getChannel().sendMessage(eb.build()).queue();
 
         } catch (Exception e) {
+            e.printStackTrace();
             eb.addField("Penambahan schedule gagal/terdapat kesalahan parameter. Silahkan coba lagi.","", false);
             eb.setColor(Color.red);
             message.getChannel().sendMessage(eb.build()).queue();

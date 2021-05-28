@@ -11,5 +11,5 @@ public interface TodoListService {
     TodoList deleteTodoList(int id);
     TodoItem deleteTodoItem(int idList, int idItem);
     TodoList showTodoList(int id);
-    Iterable<TodoList> showAllTodoList();
+    Iterable<TodoList> showAllTodoList(String idGuild);
 }

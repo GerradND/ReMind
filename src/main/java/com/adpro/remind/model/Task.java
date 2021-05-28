@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -35,6 +37,12 @@ public class Task {
     @OneToMany(targetEntity = Reminder.class, mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Reminder> reminders = new HashSet<>();
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_guild")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private Guild guild;
+
     public Task(String name, LocalDate date, LocalTime time){
         this.name = name;
         this.date = date;
@@ -46,7 +54,7 @@ public class Task {
     }
 
     public String getAllReminders(){
-        String listReminder = "Reminder yang telah dipasang: \n";
+        String listReminder = "";
         if(reminders.size() > 0) {
             for (Reminder reminder : reminders) {
                 listReminder += "- " + reminder.getDate() + " " + reminder.getTime() + "\n";

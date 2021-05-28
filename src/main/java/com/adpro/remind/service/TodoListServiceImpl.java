@@ -1,6 +1,8 @@
 package com.adpro.remind.service;
 
+import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.TodoItem;
+import com.adpro.remind.repository.GuildRepository;
 import com.adpro.remind.repository.TodoItemRepository;
 import com.adpro.remind.repository.TodoListRepository;
 import com.adpro.remind.model.TodoList;
@@ -17,9 +19,12 @@ public class TodoListServiceImpl implements TodoListService{
     private TodoListRepository todoListRepository;
     @Autowired
     private TodoItemRepository todoItemRepository;
+    @Autowired
+    private GuildRepository guildRepository;
 
     @Override
     public void addTodoList(TodoList todoList){
+
         todoListRepository.save(todoList);
     }
 
@@ -55,7 +60,11 @@ public class TodoListServiceImpl implements TodoListService{
     }
 
     @Override
-    public Iterable<TodoList> showAllTodoList() {
-        return todoListRepository.findAll();
+    public Iterable<TodoList> showAllTodoList(String idGuild) {
+        Guild guild = guildRepository.findById(idGuild).orElse(null);
+        if (guild == null){
+            return null;
+        }
+        return todoListRepository.findByGuild(guild);
     }
 }

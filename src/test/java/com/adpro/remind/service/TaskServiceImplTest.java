@@ -1,7 +1,9 @@
 package com.adpro.remind.service;
 
+import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Reminder;
 import com.adpro.remind.model.Task;
+import com.adpro.remind.repository.GuildRepository;
 import com.adpro.remind.repository.ReminderRepository;
 import com.adpro.remind.repository.TaskRepository;
 import org.junit.jupiter.api.Assertions;
@@ -27,25 +29,33 @@ public class TaskServiceImplTest {
     TaskRepository taskRepository;
 
     @Mock
+    GuildRepository guildRepository;
+
+    @Mock
     ReminderRepository reminderRepository;
 
     @InjectMocks
     TaskServiceImpl taskServiceImpl;
 
     private Task task;
+    private Guild guild;
 
     @BeforeEach
     public void setUp(){
         LocalDate date = LocalDate.of(2021, 05, 31);
         LocalTime time = LocalTime.of(23, 55);
+
+        guild = new Guild("814323773107994655");
         task = new Task("Adpro", date, time);
     }
 
     @Test
     void testServiceCreateTask(){
         when(taskRepository.save(any(Task.class))).thenReturn(task);
+        String idGuild = guild.getIdGuild();
+        when(guildRepository.findByIdGuild(idGuild)).thenReturn(guild);
 
-        Task createdTask = taskServiceImpl.createTask(task);
+        Task createdTask = taskServiceImpl.createTask(task, guild.getIdGuild());
         Assertions.assertEquals(createdTask.getName(), task.getName());
     }
 
@@ -62,8 +72,12 @@ public class TaskServiceImplTest {
     @Test
     void testServiceUpdateTask(){
         when(taskRepository.save(any(Task.class))).thenReturn(task);
+
+        String idGuild = guild.getIdGuild();
+        when(guildRepository.findByIdGuild(idGuild)).thenReturn(guild);
+
         LocalDate oldDate = task.getDate();
-        Task savedTask = taskServiceImpl.createTask(task);
+        Task savedTask = taskServiceImpl.createTask(task, idGuild);
 
         Integer idTask = savedTask.getIdTask();
         LocalDate newDate = LocalDate.of(2021, 06, 05);
@@ -78,11 +92,14 @@ public class TaskServiceImplTest {
 
     @Test
     void testServiceShowAllTask(){
-        List<Task> listTasks = new ArrayList<Task>();
+        List<Task> listTasks = new ArrayList<>();
         listTasks.add(task);
 
-        when(taskRepository.findAll()).thenReturn(listTasks);
-        Iterable<Task> tasks = taskServiceImpl.showAllTask();
+        String idGuild = guild.getIdGuild();
+        when(guildRepository.findByIdGuild(idGuild)).thenReturn(guild);
+        when(taskRepository.findByGuild(guild)).thenReturn(listTasks);
+
+        Iterable<Task> tasks = taskServiceImpl.showAllTask(idGuild);
 
         List<Task> returnedTasks = (List<Task>) tasks;
         Assertions.assertEquals(listTasks, returnedTasks);
@@ -94,8 +111,12 @@ public class TaskServiceImplTest {
         listTasks.add(task);
 
         LocalDate date = task.getDate();
-        when(taskRepository.findByDate(date)).thenReturn(listTasks);
-        Iterable<Task> tasks = taskServiceImpl.showTaskAtDate(date);
+        String idGuild = guild.getIdGuild();
+
+        when(guildRepository.findByIdGuild(idGuild)).thenReturn(guild);
+        when(taskRepository.findByDateAndGuild(date, guild)).thenReturn(listTasks);
+
+        Iterable<Task> tasks = taskServiceImpl.showTaskAtDate(date, idGuild);
 
         List<Task> returnedTasks = (List<Task>) tasks;
         Assertions.assertEquals(listTasks, returnedTasks);
@@ -123,7 +144,8 @@ public class TaskServiceImplTest {
     void testServiceSetReminder(){
         LocalDate dateReminder = LocalDate.of(2021, 05, 29);
         LocalTime timeReminder = LocalTime.of(20, 15);
-        Reminder reminder = new Reminder(dateReminder, timeReminder);
+        String randomIDChannel = "814323773696114690";
+        Reminder reminder = new Reminder(dateReminder, timeReminder, randomIDChannel);
 
         when(taskRepository.save(any(Task.class))).thenReturn(task);
         when(reminderRepository.save(any(Reminder.class))).thenReturn(reminder);
@@ -132,4 +154,5 @@ public class TaskServiceImplTest {
         Assertions.assertEquals(task.getReminders().size(), 1);
 
     }
+
 }

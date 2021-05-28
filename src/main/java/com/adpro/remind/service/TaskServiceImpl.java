@@ -1,7 +1,9 @@
 package com.adpro.remind.service;
 
+import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Reminder;
 import com.adpro.remind.model.Task;
+import com.adpro.remind.repository.GuildRepository;
 import com.adpro.remind.repository.ReminderRepository;
 import com.adpro.remind.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,16 +17,23 @@ public class TaskServiceImpl implements TaskService{
 
     private TaskRepository taskRepository;
     private ReminderRepository reminderRepository;
+    private GuildRepository guildRepository;
 
     @Autowired
-    public TaskServiceImpl(TaskRepository taskRepository, ReminderRepository reminderRepository){
+    public TaskServiceImpl(TaskRepository taskRepository, ReminderRepository reminderRepository, GuildRepository guildRepository){
         this.taskRepository = taskRepository;
         this.reminderRepository = reminderRepository;
+        this.guildRepository = guildRepository;
     }
 
     @Override
-    public Task createTask(Task task) {
+    public Task createTask(Task task, String idGuild) {
+        Guild guild = guildRepository.findByIdGuild(idGuild);
+        task.setGuild(guild);
+        guild.getTaskList().add(task);
+
         taskRepository.save(task);
+        guildRepository.save(guild);
         return task;
     }
 
@@ -45,13 +54,21 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public Iterable<Task> showAllTask() {
-        return taskRepository.findAll();
+    public Iterable<Task> showAllTask(String idGuild) {
+        Guild guild = guildRepository.findByIdGuild(idGuild);
+        if (guild == null){
+            return null;
+        }
+        return taskRepository.findByGuild(guild);
     }
 
     @Override
-    public Iterable<Task> showTaskAtDate(LocalDate date) {
-        return taskRepository.findByDate(date);
+    public Iterable<Task> showTaskAtDate(LocalDate date, String idGuild) {
+        Guild guild = guildRepository.findByIdGuild(idGuild);
+        if (guild == null){
+            return null;
+        }
+        return taskRepository.findByDateAndGuild(date, guild);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.adpro.remind.command.help;
 import com.adpro.remind.command.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 
 public class HelpToDoListCommand implements Command {
     @Override
