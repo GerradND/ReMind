@@ -1,0 +1,86 @@
+package com.adpro.remind.command.reminder;
+
+import com.adpro.remind.model.Guild;
+import com.adpro.remind.model.Task;
+import com.adpro.remind.service.TaskService;
+import com.adpro.remind.service.TaskServiceImpl;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.MessageEmbed.Field;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+public class ReminderShowCommandTests {
+    @Mock
+    Message message;
+
+    @Mock
+    net.dv8tion.jda.api.entities.Guild DiscordGuild;
+
+    @Mock
+    private TaskService taskService;
+
+    @InjectMocks
+    private ReminderShowCommand reminderShowCommand;
+
+    private Task task;
+    private Guild guild;
+
+    @BeforeEach
+    public void setUp(){
+        guild = new Guild("814323773107994655");
+        LocalDate date = LocalDate.of(2021,05,28);
+        LocalTime time = LocalTime.of(12,00);
+        task = new Task("Adpro", date, time, guild);
+        task.setIdTask(1);
+    }
+
+    @Test
+    void testReminderShowAllOutput(){
+        String[] inputContent = {"-reminder", "show", "all"};
+
+        List<Task> tasks = new ArrayList<>();
+        tasks.add(task);
+
+        String idGuild = guild.getIdGuild();
+        when(taskService.showAllTask(idGuild)).thenReturn(tasks);
+        when(message.getGuild()).thenReturn(DiscordGuild);
+        when(DiscordGuild.getId()).thenReturn(idGuild);
+
+        MessageEmbed messageOutput = reminderShowCommand.getOutputMessage(message, inputContent);
+        Field firstTaskField1 = messageOutput.getFields().get(0);
+        Assertions.assertEquals(":id:", firstTaskField1.getName());
+        Assertions.assertEquals("1", firstTaskField1.getValue());
+    }
+
+    @Test
+    void testReminderShowDateOutput(){
+        String[] inputContent = {"-reminder", "show", "28/05/2021"};
+
+        List<Task> tasks = new ArrayList<>();
+        tasks.add(task);
+
+        String idGuild = guild.getIdGuild();
+        when(taskService.showTaskAtDate(task.getDate(), idGuild)).thenReturn(tasks);
+        when(message.getGuild()).thenReturn(DiscordGuild);
+        when(DiscordGuild.getId()).thenReturn(idGuild);
+
+        MessageEmbed messageOutput = reminderShowCommand.getOutputMessage(message, inputContent);
+        Field firstTaskField1 = messageOutput.getFields().get(0);
+        Assertions.assertEquals(":id:", firstTaskField1.getName());
+        Assertions.assertEquals("1", firstTaskField1.getValue());
+    }
+}

@@ -10,6 +10,7 @@ import com.adpro.remind.command.reminder.*;
 import com.adpro.remind.command.schedule.*;
 import com.adpro.remind.command.schedule.ListAddTodoItemCommand;
 import com.adpro.remind.repository.CommandRepository;
+import com.adpro.remind.service.GuildService;
 import com.adpro.remind.service.ScheduleService;
 import com.adpro.remind.service.TodoListService;
 import com.adpro.remind.service.TaskService;
@@ -26,12 +27,14 @@ public class InitCommand {
     @Autowired
     private TodoListService todoListService;
     private TaskService taskService;
+    private GuildService guildService;
 
     @Autowired
-    public InitCommand(CommandRepository commandRepository, ScheduleService scheduleService, TaskService taskService) {
+    public InitCommand(CommandRepository commandRepository, ScheduleService scheduleService, TaskService taskService, GuildService guildService) {
         this.commandRepository = commandRepository;
         this.scheduleService = scheduleService;
         this.taskService = taskService;
+        this.guildService = guildService;
     }
 
     @PostConstruct
@@ -42,7 +45,7 @@ public class InitCommand {
         commandRepository.addCommand("help list", new HelpToDoListCommand());
         commandRepository.addCommand("ping", new PingCommand());
         commandRepository.addCommand("schedule add", new ScheduleAddCommand(scheduleService));
-        commandRepository.addCommand("reminder add", new ReminderAddCommand(taskService));
+        commandRepository.addCommand("reminder add", new ReminderAddCommand(taskService, guildService));
         commandRepository.addCommand("reminder delete", new ReminderDeleteCommand(taskService));
         commandRepository.addCommand("reminder update", new ReminderUpdateCommand(taskService));
         commandRepository.addCommand("reminder show", new ReminderShowCommand(taskService));

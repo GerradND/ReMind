@@ -3,6 +3,7 @@ package com.adpro.remind.command.reminder;
 import com.adpro.remind.command.Command;
 import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Task;
+import com.adpro.remind.service.GuildService;
 import com.adpro.remind.service.TaskService;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
@@ -17,16 +18,17 @@ import java.util.regex.Pattern;
 public class ReminderAddCommand implements Command {
 
     private TaskService taskService;
-    private String[] inputContent;
+    private GuildService guildService;
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
-    public ReminderAddCommand(TaskService taskService){
+    public ReminderAddCommand(TaskService taskService, GuildService guildService){
         this.taskService = taskService;
+        this.guildService = guildService;
     }
 
-    private Task newTask(Guild guild){
+    public Task newTask(Guild guild, String[] inputContent){
         String name = inputContent[2].replace("\"", "");
         String dateText = inputContent[3];
         String timeText = inputContent[4];
@@ -40,7 +42,7 @@ public class ReminderAddCommand implements Command {
         return task;
     }
 
-    private EmbedBuilder getEmbedOutput(Task task){
+    public EmbedBuilder getEmbedOutput(Task task){
         EmbedBuilder embedBuilder = new EmbedBuilder();
 
         embedBuilder.setTitle("Tugas berhasil dibuat!");
@@ -64,10 +66,12 @@ public class ReminderAddCommand implements Command {
 
     @Override
     public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
-        Guild guild = new Guild(message.getGuild().getId());
-        this.inputContent = inputContent;
-        Task createdTask = newTask(guild);
+        String idGuild = message.getGuild().getId();
+        guildService.createGuild(idGuild);
+        Guild guild = guildService.getGuildByID(idGuild);
 
+        Task createdTask = newTask(guild, inputContent);
+        System.out.println(createdTask.getIdTask());
         EmbedBuilder embedOutput = getEmbedOutput(createdTask);
 
         return embedOutput.build();
