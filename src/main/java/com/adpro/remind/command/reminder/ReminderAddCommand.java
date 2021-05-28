@@ -3,6 +3,7 @@ package com.adpro.remind.command.reminder;
 import com.adpro.remind.command.Command;
 import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Task;
+import com.adpro.remind.service.GuildService;
 import com.adpro.remind.service.TaskService;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -14,13 +15,15 @@ import java.time.format.DateTimeFormatter;
 public class ReminderAddCommand implements Command {
 
     private TaskService taskService;
+    private GuildService guildService;
     private String[] inputContent;
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
-    public ReminderAddCommand(TaskService taskService){
+    public ReminderAddCommand(TaskService taskService, GuildService guildService){
         this.taskService = taskService;
+        this.guildService = guildService;
     }
 
     private Task newTask(Guild guild){
@@ -39,7 +42,7 @@ public class ReminderAddCommand implements Command {
 
     @Override
     public void getOutputMessage(Message message, String[] inputContent) {
-        Guild guild = new Guild(message.getGuild().getId());
+        Guild guild = guildService.getGuildByID(message.getGuild().getId());
         this.inputContent = inputContent;
         Task createdTask = newTask(guild);
 

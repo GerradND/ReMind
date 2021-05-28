@@ -9,7 +9,7 @@ import com.adpro.remind.service.ScheduleServiceImpl;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class InitCommandTests {
+public class InitCommandTest {
     private Class<?> initCommandClass;
     //private CommandRepositoryImpl commandRepositoryDummy;
     //private ScheduleServiceImpl scheduleServiceDummy;

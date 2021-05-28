@@ -1,12 +1,18 @@
 package com.adpro.remind.command.schedule;
 
 import com.adpro.remind.command.Command;
+import com.adpro.remind.event.InputEventListener;
 import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Schedule;
+import com.adpro.remind.repository.GuildRepository;
+import com.adpro.remind.service.GuildService;
 import com.adpro.remind.service.ScheduleService;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import org.hibernate.id.GUIDGenerator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.time.DayOfWeek;
@@ -18,9 +24,11 @@ import java.util.Locale;
 public class ScheduleAddCommand implements Command {
 
     private ScheduleService scheduleService;
+    private GuildService guildService;
 
-    public ScheduleAddCommand(ScheduleService scheduleService){
+    public ScheduleAddCommand(ScheduleService scheduleService, GuildService guildService){
         this.scheduleService = scheduleService;
+        this.guildService = guildService;
     }
 
     public String formDescription(String[] inputContent) {
@@ -46,7 +54,7 @@ public class ScheduleAddCommand implements Command {
 
     @Override
     public void getOutputMessage(Message message, String[] inputContent) {
-        Guild guild = new Guild(message.getGuild().getId());
+        Guild guild = guildService.getGuildByID(message.getGuild().getId());
         EmbedBuilder eb = new EmbedBuilder();
         String title = inputContent[2];
         String day = inputContent[3];

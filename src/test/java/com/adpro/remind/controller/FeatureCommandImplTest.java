@@ -12,7 +12,7 @@ import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class FeatureCommandImplTests {
+public class FeatureCommandImplTest {
     private Class<?> featureCommandImplClass;
     private FeatureCommandImpl featureCommandImplDummy;
     private CommandRepositoryImpl commandRepositoryDummy;
