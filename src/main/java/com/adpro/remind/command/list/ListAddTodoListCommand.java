@@ -23,7 +23,7 @@ public class ListAddTodoListCommand implements Command {
 
    @Override
    public void getOutputMessage(Message message, String[] inputContent){
-       Guild guild = guildService.getGuildByID(message.getGuild().getId());
+       Guild guild = new Guild(message.getGuild().getId());
        System.out.println(Arrays.toString(inputContent));
        String namaList = inputContent[2];
        todoListService.addTodoList(new TodoList(namaList, guild));

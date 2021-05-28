@@ -23,11 +23,9 @@ import java.util.Locale;
 public class ScheduleAddCommand implements Command {
 
     private ScheduleService scheduleService;
-    private GuildService guildService;
 
-    public ScheduleAddCommand(ScheduleService scheduleService, GuildService guildService){
+    public ScheduleAddCommand(ScheduleService scheduleService){
         this.scheduleService = scheduleService;
-        this.guildService = guildService;
     }
 
     public String formDescription(String[] inputContent) {
@@ -53,10 +51,6 @@ public class ScheduleAddCommand implements Command {
 
     @Override
     public void getOutputMessage(Message message, String[] inputContent) {
-<<<<<<< HEAD
-        Guild guild = guildService.getGuildByID(message.getGuild().getId());
-=======
->>>>>>> 7bea9ed16342ba17caf90fdb8b2179f208964cbc
         EmbedBuilder eb = new EmbedBuilder();
         String title = inputContent[2];
         String day = inputContent[3];

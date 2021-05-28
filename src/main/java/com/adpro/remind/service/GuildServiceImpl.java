@@ -9,8 +9,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class GuildServiceImpl implements GuildService{
 
-    @Autowired
     private GuildRepository guildRepository;
+
+    @Autowired
+    public GuildServiceImpl(GuildRepository guildRepository){
+        this.guildRepository = guildRepository;
+    }
 
     @Override
     public void createGuild(String idGuild) {

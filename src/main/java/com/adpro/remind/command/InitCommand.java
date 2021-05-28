@@ -41,7 +41,7 @@ public class InitCommand {
         commandRepository.addCommand("help schedule", new HelpScheduleCommand());
         commandRepository.addCommand("help list", new HelpToDoListCommand());
         commandRepository.addCommand("ping", new PingCommand());
-        commandRepository.addCommand("reminder add", new ReminderAddCommand(taskService));
+        commandRepository.addCommand("reminder add", new ReminderAddCommand(taskService, guildService));
         commandRepository.addCommand("reminder delete", new ReminderDeleteCommand(taskService));
         commandRepository.addCommand("reminder update", new ReminderUpdateCommand(taskService));
         commandRepository.addCommand("reminder show", new ReminderShowCommand(taskService));
@@ -53,7 +53,7 @@ public class InitCommand {
         commandRepository.addCommand("schedule delete", new ScheduleDeleteCommand(scheduleService));
         commandRepository.addCommand("schedule show", new ScheduleShowCommand(scheduleService));
         commandRepository.addCommand("schedule notify", new ScheduleNotifyCommand(guildService, scheduleService));
-        commandRepository.addCommand("list add", new ListAddTodoListCommand(todoListService));
+        commandRepository.addCommand("list add", new ListAddTodoListCommand(todoListService, guildService));
         commandRepository.addCommand("list additem", new ListAddTodoItemCommand(todoListService));
         commandRepository.addCommand("list delete", new ListDeleteTodoListCommand(todoListService));
         commandRepository.addCommand("list deleteitem", new ListDeleteTodoItemCommand(todoListService));
