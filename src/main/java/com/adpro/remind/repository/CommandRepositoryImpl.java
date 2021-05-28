@@ -10,6 +10,10 @@ import java.util.Map;
 public class CommandRepositoryImpl implements CommandRepository {
     static final Map<String, Command> feature = new HashMap<>();
 
+    public static Map<String, Command> getFeature() {
+        return feature;
+    }
+
     @Override
     public Command getCommand(String commandName) {
         return feature.get(commandName);
