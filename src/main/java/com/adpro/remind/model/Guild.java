@@ -15,19 +15,23 @@ public class Guild {
     @Column(name = "id_guild", updatable = false)
     private String idGuild;
 
-    @OneToMany(targetEntity = Schedule.class, mappedBy = "guild", cascade = CascadeType.ALL)
+    @Column(name = "isScheduleSubscribed")
+    private boolean isScheduleSubscribed;
+
+    @OneToMany(targetEntity = Schedule.class, mappedBy = "guild", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
-    List<Schedule> scheduleList;
+    private List<Schedule> scheduleList;
 
     @OneToMany(targetEntity = Task.class, mappedBy = "guild", cascade = CascadeType.ALL)
     @JsonIgnore
-    List<Task> taskList;
+    private List<Task> taskList;
 
     @OneToMany(targetEntity = TodoList.class, mappedBy = "guild", cascade = CascadeType.ALL)
     @JsonIgnore
-    List<TodoList> todoList;
+    private List<TodoList> todoList;
 
     public Guild(String idGuild){
         this.idGuild = idGuild;
+        this.isScheduleSubscribed = false;
     }
 }
