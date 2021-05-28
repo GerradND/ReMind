@@ -65,7 +65,7 @@ public class ReminderAddCommand implements Command {
     }
 
     @Override
-    public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
+    public void getOutputMessage(Message message, String[] inputContent) {
         String idGuild = message.getGuild().getId();
         guildService.createGuild(idGuild);
         Guild guild = guildService.getGuildByID(idGuild);
@@ -74,7 +74,7 @@ public class ReminderAddCommand implements Command {
         System.out.println(createdTask.getIdTask());
         EmbedBuilder embedOutput = getEmbedOutput(createdTask);
 
-        return embedOutput.build();
+        message.getChannel().sendMessage(embedOutput.build()).queue();
 
     }
 }

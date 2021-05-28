@@ -43,7 +43,7 @@ public class ScheduleTimeUpdateCommand implements Command {
     }
 
     @Override
-    public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
+    public void getOutputMessage(Message message, String[] inputContent) {
         EmbedBuilder eb = new EmbedBuilder();
         try {
             int idSchedule = Integer.parseInt(inputContent[2]);
@@ -65,12 +65,12 @@ public class ScheduleTimeUpdateCommand implements Command {
             eb.addField("Hari, Jam",updatedSchedule.getDay().getDisplayName(TextStyle.FULL, Locale.getDefault()) + ", " +
                             updatedSchedule.getStartTime().toString() + "-" + updatedSchedule.getEndTime().toString(), true);
 
-            return eb.build();
+            message.getChannel().sendMessage(eb.build()).queue();
 
         } catch (NumberFormatException e) {
             eb.setColor(Color.red);
             eb.addField("Tolong masukan ID yang valid.", "", false);
-            return eb.build();
+            message.getChannel().sendMessage(eb.build()).queue();
         }
     }
 }

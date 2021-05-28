@@ -62,6 +62,9 @@ public class TodoListServiceImpl implements TodoListService{
     @Override
     public Iterable<TodoList> showAllTodoList(String idGuild) {
         Guild guild = guildRepository.findById(idGuild).orElse(null);
-        return todoListRepository.findAll();
+        if (guild == null){
+            return null;
+        }
+        return todoListRepository.findByGuild(guild);
     }
 }

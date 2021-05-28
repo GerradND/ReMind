@@ -45,7 +45,7 @@ public class InputEventListener extends ListenerAdapter {
     @Autowired
     private TaskService taskService;
 
-    public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event)  {
+    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event)  {
         Message message = event.getMessage();
         String idGuild = message.getGuild().getId();
         guildService.createGuild(idGuild);
@@ -65,7 +65,7 @@ public class InputEventListener extends ListenerAdapter {
             }
         }
     }
-
+/*
     public void onPrivateMessageReceived(@NotNull PrivateMessageReceivedEvent event) {
         Message privateMessage = event.getMessage();
         content = privateMessage.getContentRaw().split(" ");
@@ -83,4 +83,5 @@ public class InputEventListener extends ListenerAdapter {
             }
         }
     }
+ */
 }

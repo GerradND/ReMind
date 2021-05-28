@@ -25,11 +25,11 @@ public class ReminderDeleteCommand implements Command {
         return embedBuilder;
     }
     @Override
-    public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
+    public void getOutputMessage(Message message, String[] inputContent) {
         Integer idTask = Integer.parseInt(inputContent[2]);
         taskService.deleteTask(idTask);
 
         EmbedBuilder embedOutput = getEmbedOutput(idTask);
-        return embedOutput.build();
+        message.getChannel().sendMessage(embedOutput.build()).queue();
     }
 }

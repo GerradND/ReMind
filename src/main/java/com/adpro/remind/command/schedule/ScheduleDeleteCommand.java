@@ -18,7 +18,7 @@ public class ScheduleDeleteCommand implements Command {
     }
     
     @Override
-    public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
+    public void getOutputMessage(Message message, String[] inputContent) {
         String outputMsg;
         EmbedBuilder eb = new EmbedBuilder();
         try {
@@ -34,12 +34,12 @@ public class ScheduleDeleteCommand implements Command {
             }
 
             eb.setTitle(outputMsg);
-            return eb.build();
+            message.getChannel().sendMessage(eb.build()).queue();
 
         } catch (NumberFormatException e) {
             eb.setColor(Color.red);
             eb.addField("Tolong masukan ID yang valid.", "", false);
-            return eb.build();
+            message.getChannel().sendMessage(eb.build()).queue();
         }
     }
 }

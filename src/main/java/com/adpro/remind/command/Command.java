@@ -4,6 +4,5 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 
 public interface Command{
-    MessageEmbed getOutputMessage(Message message, String[] inputContent);
-
+    void getOutputMessage(Message message, String[] inputContent);
 }

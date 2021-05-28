@@ -3,6 +3,7 @@ package com.adpro.remind.command.schedule;
 import com.adpro.remind.command.Command;
 import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Schedule;
+import com.adpro.remind.service.GuildService;
 import com.adpro.remind.service.ScheduleService;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
@@ -45,8 +46,7 @@ public class ScheduleAddCommand implements Command {
     }
 
     @Override
-    public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
-        Guild guild = new Guild(message.getGuild().getId());
+    public void getOutputMessage(Message message, String[] inputContent) {
         EmbedBuilder eb = new EmbedBuilder();
         String title = inputContent[2];
         String day = inputContent[3];
@@ -54,9 +54,11 @@ public class ScheduleAddCommand implements Command {
         String endTime = inputContent[5];
         String desc = formDescription(inputContent);
 
+        String idGuild = message.getGuild().getId();
+
         try {
             Schedule schedule = scheduleService.createSchedule(new Schedule(title, getDayOfWeek(day),
-                    getTime(startTime), getTime(endTime), desc, guild));
+                    getTime(startTime), getTime(endTime), desc), idGuild);
 
             eb.setTitle(":white_check_mark: Schedule \"" + title + "\" berhasil ditambahkan!");
             eb.addField(":id: Id:", schedule.getIdSchedule().toString(), true);
@@ -68,12 +70,13 @@ public class ScheduleAddCommand implements Command {
             eb.addField(":memo: Deskripsi:", desc, true);
             eb.setColor(Color.green);
 
-            return eb.build();
+            message.getChannel().sendMessage(eb.build()).queue();
 
         } catch (Exception e) {
+            e.printStackTrace();
             eb.addField("Penambahan schedule gagal/terdapat kesalahan parameter. Silahkan coba lagi.","", false);
             eb.setColor(Color.red);
-            return eb.build();
+            message.getChannel().sendMessage(eb.build()).queue();
         }
 
     }

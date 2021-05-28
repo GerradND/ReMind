@@ -34,28 +34,18 @@ public class Schedule {
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_guild")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Guild guild;
 
-//    @JsonBackReference
-//    @ManyToOne
-//    @JoinColumn(name = "id_user")
-//    private User user;
-//
-//    @JsonBackReference
-//    @ManyToOne
-//    @JoinColumn(name = "id_guild")
-//    private Guild guild;
 
-    public Schedule(String title, DayOfWeek day, LocalTime startTime, LocalTime endTime, String description, Guild guild){
+    public Schedule(String title, DayOfWeek day, LocalTime startTime, LocalTime endTime, String description){
         this.title = title;
         this.day = day;
         this.startTime = startTime;
         this.endTime = endTime;
         this.description = description;
-        this.guild = guild;
     }
 }

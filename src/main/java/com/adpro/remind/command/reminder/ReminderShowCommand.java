@@ -44,11 +44,11 @@ public class ReminderShowCommand implements Command {
     }
 
     @Override
-    public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
+    public void getOutputMessage(Message message, String[] inputContent) {
         String idGuild = message.getGuild().getId();
         Iterable<Task> listTasks= getListTasks(inputContent[2], idGuild);
         EmbedBuilder embedOutput = getEmbedOutput(listTasks);
 
-        return embedOutput.build();
+        message.getChannel().sendMessage(embedOutput.build()).queue();
     }
 }

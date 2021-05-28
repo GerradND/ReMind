@@ -67,7 +67,7 @@ public class ReminderSetCommand implements Command {
     }
 
     @Override
-    public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
+    public void getOutputMessage(Message message, String[] inputContent) {
         String id =inputContent[2];
         Integer time = Integer.parseInt(inputContent[3]);
         String type = inputContent[4];
@@ -76,6 +76,6 @@ public class ReminderSetCommand implements Command {
         Reminder createdReminder = newReminder(time, type, id, idChannel);
         EmbedBuilder embedOutput = getEmbedOutput(id, createdReminder);
 
-        return embedOutput.build();
+        message.getChannel().sendMessage(embedOutput.build()).queue();
     }
 }

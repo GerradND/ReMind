@@ -39,4 +39,12 @@ public class GuildServiceImpl implements GuildService{
         Guild guild = guildRepository.findByIdGuild(idGuild);
         guildRepository.delete(guild);
     }
+
+    @Override
+    public Guild notifySchedule(String idGuild) {
+        Guild guild = guildRepository.findByIdGuild(idGuild);
+        guild.setScheduleSubscribed(!guild.isScheduleSubscribed());
+        guildRepository.save(guild);
+        return guild;
+    }
 }

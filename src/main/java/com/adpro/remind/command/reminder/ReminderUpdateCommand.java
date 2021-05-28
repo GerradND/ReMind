@@ -32,13 +32,13 @@ public class ReminderUpdateCommand implements Command {
 
 
     @Override
-    public MessageEmbed getOutputMessage(Message message, String[] inputContent) {
+    public void getOutputMessage(Message message, String[] inputContent) {
         Integer idTask = Integer.parseInt(inputContent[2]);
         LocalDate date = LocalDate.parse(inputContent[3], dateFormatter);
         LocalTime time = LocalTime.parse(inputContent[4], timeFormatter);
         Task updatedTask = taskService.updateTask(idTask, date, time);
 
         EmbedBuilder embedOutput = getEmbedOutput(updatedTask);
-        return embedOutput.build();
+        message.getChannel().sendMessage(embedOutput.build()).queue();
     }
 }

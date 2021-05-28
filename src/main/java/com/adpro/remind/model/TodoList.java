@@ -34,8 +34,9 @@ public class TodoList {
     @JsonIgnore
     private Guild guild;
 
-    public TodoList(String title){
+    public TodoList(String title, Guild guild){
         this.id = id;
         this.title = title;
+        this.guild = guild;
     }
 }

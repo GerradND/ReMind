@@ -1,4 +1,4 @@
-package com.adpro.remind.command.schedule;
+package com.adpro.remind.command.list;
 
 import com.adpro.remind.command.Command;
 import com.adpro.remind.model.TodoItem;
@@ -14,11 +14,10 @@ public class ListAddTodoItemCommand implements Command {
     }
 
     @Override
-    public MessageEmbed getOutputMessage(Message message, String[] inputContent){
+    public void getOutputMessage(Message message, String[] inputContent){
         int idList = Integer.parseInt(inputContent[2]);
         String namaItem = inputContent[3];
         todoListService.addTodoItem(idList, new TodoItem(namaItem));
         message.reply(String.format("TodoItem %s telah ditambahkan", namaItem)).queue();
-        return null;
     }
 }
