@@ -49,7 +49,7 @@ public class ReminderUpdateCommandTests {
 
 
     }
-
+/*
     @Test
     void testReminderUpdateOutput(){
         String[] inputContent = {"-reminder", "update", "1", "29/05/2021", "20:00"};
@@ -62,4 +62,6 @@ public class ReminderUpdateCommandTests {
         when(taskService.updateTask(1, date, time)).thenReturn(newTask);
         reminderUpdateCommand.getOutputMessage(message, inputContent);
     }
+
+ */
 }

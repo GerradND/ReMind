@@ -1,8 +1,11 @@
 package com.adpro.remind.command.reminder;
 
 import com.adpro.remind.service.TaskService;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.requests.restaction.MessageAction;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,13 +17,20 @@ import java.awt.*;
 
 import static org.mockito.Mockito.when;
 
+
 @ExtendWith(MockitoExtension.class)
 public class ReminderDeleteCommandTests {
     @Mock
-    Message message;
+    private Message message;
 
     @Mock
-    TaskService taskService;
+    private MessageChannel messageChannel;
+
+    @Mock
+    private TaskService taskService;
+
+    @Mock
+    private MessageAction messageAction;
 
     @InjectMocks
     private ReminderDeleteCommand reminderDeleteCommand;
@@ -28,8 +38,15 @@ public class ReminderDeleteCommandTests {
     @Test
     void testReminderDeleteOutput(){
         String[] inputContent = {"-reminder", "-delete", "1"};
-        MessageEmbed output = reminderDeleteCommand.getOutputMessage(message, inputContent);
-        Assertions.assertEquals(output.getTitle(), ":x:  Tugas dengan ID 1 telah dihapus.");
-        Assertions.assertEquals(output.getColor(), Color.RED);
+
+        EmbedBuilder embedOutput = reminderDeleteCommand.getEmbedOutput(1);
+        when(message.getChannel()).thenReturn(messageChannel);
+        when(messageChannel.sendMessage(embedOutput.build())).thenReturn(messageAction);
+
+        reminderDeleteCommand.getOutputMessage(message, inputContent);
+
+        MessageEmbed output = reminderDeleteCommand.embedOutput.build();
+        Assertions.assertEquals(":x:  Tugas dengan ID 1 telah dihapus.", output.getTitle());
+        Assertions.assertEquals(Color.RED, output.getColor());
     }
 }

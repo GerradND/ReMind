@@ -4,18 +4,18 @@ import com.adpro.remind.command.Command;
 import com.adpro.remind.service.TaskService;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import java.awt.*;
 
 public class ReminderDeleteCommand implements Command {
     private TaskService taskService;
+    EmbedBuilder embedOutput;
 
     public ReminderDeleteCommand(TaskService taskService){
         this.taskService = taskService;
     }
 
-    private EmbedBuilder getEmbedOutput(Integer id){
+    public EmbedBuilder getEmbedOutput(Integer id){
         EmbedBuilder embedBuilder = new EmbedBuilder();
 
         embedBuilder.setTitle(":x:  Tugas dengan ID "+ id + " telah dihapus.");
@@ -29,7 +29,7 @@ public class ReminderDeleteCommand implements Command {
         Integer idTask = Integer.parseInt(inputContent[2]);
         taskService.deleteTask(idTask);
 
-        EmbedBuilder embedOutput = getEmbedOutput(idTask);
+        embedOutput = getEmbedOutput(idTask);
         message.getChannel().sendMessage(embedOutput.build()).queue();
     }
 }

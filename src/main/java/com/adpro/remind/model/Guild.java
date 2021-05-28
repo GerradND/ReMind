@@ -22,7 +22,7 @@ public class Guild {
     @JsonIgnore
     private List<Schedule> scheduleList;
 
-    @OneToMany(targetEntity = Task.class, mappedBy = "guild", cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = Task.class, mappedBy = "guild", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Task> taskList;
 

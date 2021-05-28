@@ -14,6 +14,7 @@ import java.time.format.DateTimeFormatter;
 public class ReminderShowCommand implements Command {
     private TaskService taskService;
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    EmbedBuilder embedOutput;
 
     public ReminderShowCommand(TaskService taskService){
         this.taskService = taskService;
@@ -30,7 +31,7 @@ public class ReminderShowCommand implements Command {
     }
 
 
-    private EmbedBuilder getEmbedOutput(Iterable<Task> listTasks){
+    public EmbedBuilder getEmbedOutput(Iterable<Task> listTasks){
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle("Tugas yang telah dibuat: ");
         embedBuilder.setColor(Color.CYAN);
@@ -47,7 +48,7 @@ public class ReminderShowCommand implements Command {
     public void getOutputMessage(Message message, String[] inputContent) {
         String idGuild = message.getGuild().getId();
         Iterable<Task> listTasks= getListTasks(inputContent[2], idGuild);
-        EmbedBuilder embedOutput = getEmbedOutput(listTasks);
+        embedOutput = getEmbedOutput(listTasks);
 
         message.getChannel().sendMessage(embedOutput.build()).queue();
     }

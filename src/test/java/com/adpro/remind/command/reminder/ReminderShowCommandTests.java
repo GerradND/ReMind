@@ -4,9 +4,12 @@ import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Task;
 import com.adpro.remind.service.TaskService;
 import com.adpro.remind.service.TaskServiceImpl;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.MessageEmbed.Field;
+import net.dv8tion.jda.api.requests.restaction.MessageAction;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,13 +28,19 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class ReminderShowCommandTests {
     @Mock
-    Message message;
+    private Message message;
 
     @Mock
-    net.dv8tion.jda.api.entities.Guild DiscordGuild;
+    private net.dv8tion.jda.api.entities.Guild DiscordGuild;
 
     @Mock
     private TaskService taskService;
+
+    @Mock
+    private MessageChannel messageChannel;
+
+    @Mock
+    private MessageAction messageAction;
 
     @InjectMocks
     private ReminderShowCommand reminderShowCommand;
@@ -60,8 +69,13 @@ public class ReminderShowCommandTests {
         when(message.getGuild()).thenReturn(DiscordGuild);
         when(DiscordGuild.getId()).thenReturn(idGuild);
 
-        MessageEmbed messageOutput = reminderShowCommand.getOutputMessage(message, inputContent);
-        Field firstTaskField1 = messageOutput.getFields().get(0);
+        EmbedBuilder embedOutput = reminderShowCommand.getEmbedOutput(tasks);
+        when(message.getChannel()).thenReturn(messageChannel);
+        when(messageChannel.sendMessage(embedOutput.build())).thenReturn(messageAction);
+
+        reminderShowCommand.getOutputMessage(message, inputContent);
+        MessageEmbed output = reminderShowCommand.embedOutput.build();
+        Field firstTaskField1 = output.getFields().get(0);
         Assertions.assertEquals(":id:", firstTaskField1.getName());
         Assertions.assertEquals("1", firstTaskField1.getValue());
     }
@@ -78,8 +92,13 @@ public class ReminderShowCommandTests {
         when(message.getGuild()).thenReturn(DiscordGuild);
         when(DiscordGuild.getId()).thenReturn(idGuild);
 
-        MessageEmbed messageOutput = reminderShowCommand.getOutputMessage(message, inputContent);
-        Field firstTaskField1 = messageOutput.getFields().get(0);
+        EmbedBuilder embedOutput = reminderShowCommand.getEmbedOutput(tasks);
+        when(message.getChannel()).thenReturn(messageChannel);
+        when(messageChannel.sendMessage(embedOutput.build())).thenReturn(messageAction);
+
+        reminderShowCommand.getOutputMessage(message, inputContent);
+        MessageEmbed output = reminderShowCommand.embedOutput.build();
+        Field firstTaskField1 = output.getFields().get(0);
         Assertions.assertEquals(":id:", firstTaskField1.getName());
         Assertions.assertEquals("1", firstTaskField1.getValue());
     }

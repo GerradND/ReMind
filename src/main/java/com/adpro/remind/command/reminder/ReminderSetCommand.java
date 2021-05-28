@@ -20,6 +20,8 @@ public class ReminderSetCommand implements Command {
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
+    EmbedBuilder embedOutput;
+
     public ReminderSetCommand(TaskService taskService){
         this.taskService = taskService;
     }
@@ -74,7 +76,7 @@ public class ReminderSetCommand implements Command {
         String idChannel = message.getChannel().getId();
 
         Reminder createdReminder = newReminder(time, type, id, idChannel);
-        EmbedBuilder embedOutput = getEmbedOutput(id, createdReminder);
+        embedOutput = getEmbedOutput(id, createdReminder);
 
         message.getChannel().sendMessage(embedOutput.build()).queue();
     }

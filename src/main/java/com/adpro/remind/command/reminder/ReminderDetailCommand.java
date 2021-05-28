@@ -11,8 +11,9 @@ import java.awt.*;
 
 public class ReminderDetailCommand implements Command {
     private TaskService taskService;
+    EmbedBuilder embedOutput;
 
-    private EmbedBuilder getEmbedOutput(Task task){
+    public EmbedBuilder getEmbedOutput(Task task){
         EmbedBuilder embedBuilder = new EmbedBuilder();
 
         embedBuilder.setTitle("Detail Tugas [#" + task.getIdTask() + "]");
@@ -40,7 +41,7 @@ public class ReminderDetailCommand implements Command {
         Integer idTask = Integer.parseInt(inputContent[2]);
         Task task = taskService.detailTask(idTask);
 
-        EmbedBuilder embedOutput = getEmbedOutput(task);
+        embedOutput = getEmbedOutput(task);
 
         message.getChannel().sendMessage(embedOutput.build()).queue();
     }

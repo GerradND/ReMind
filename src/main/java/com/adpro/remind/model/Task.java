@@ -37,7 +37,7 @@ public class Task {
     @OneToMany(targetEntity = Reminder.class, mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Reminder> reminders = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_guild")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
