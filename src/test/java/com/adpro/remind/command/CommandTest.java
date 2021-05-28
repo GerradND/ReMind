@@ -10,7 +10,7 @@ import java.lang.reflect.Modifier;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class CommandTests {
+public class CommandTest {
     private Class<?> commandClass;
     private Class<?> messageClass;
 

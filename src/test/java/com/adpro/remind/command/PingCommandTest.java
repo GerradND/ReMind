@@ -11,7 +11,7 @@ import java.util.Collection;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class PingCommandTests {
+public class PingCommandTest {
     private Class<?> pingCommandClass;
     private Class<?> messageClass;
     private PingCommand dummyPingCommand;

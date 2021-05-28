@@ -12,7 +12,7 @@ public class GuildServiceImpl implements GuildService{
     private GuildRepository guildRepository;
 
     @Autowired
-    public GuildServiceImpl(GuildRepository guildRepository) {
+    public GuildServiceImpl(GuildRepository guildRepository){
         this.guildRepository = guildRepository;
     }
 
