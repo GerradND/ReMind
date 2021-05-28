@@ -24,7 +24,7 @@ import static org.mockito.Mockito.lenient;
 
 
 @ExtendWith(MockitoExtension.class)
-public class ScheduleServiceImplTest {
+public class ScheduleServiceImplTests {
 
     @Mock
     private ScheduleRepository scheduleRepository;
