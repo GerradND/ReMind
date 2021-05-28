@@ -1,15 +1,12 @@
 package com.adpro.remind.command;
 
 import com.adpro.remind.command.list.*;
-import com.adpro.remind.command.help.HelpCommand;
-import com.adpro.remind.command.help.HelpReminderCommand;
-import com.adpro.remind.command.help.HelpScheduleCommand;
-import com.adpro.remind.command.help.HelpToDoListCommand;
-import com.adpro.remind.command.schedule.ScheduleAddCommand;
+import com.adpro.remind.command.help.*;
 import com.adpro.remind.command.reminder.*;
 import com.adpro.remind.command.schedule.*;
-import com.adpro.remind.command.schedule.ListAddTodoItemCommand;
+import com.adpro.remind.model.Guild;
 import com.adpro.remind.repository.CommandRepository;
+import com.adpro.remind.service.GuildService;
 import com.adpro.remind.service.ScheduleService;
 import com.adpro.remind.service.TodoListService;
 import com.adpro.remind.service.TaskService;
@@ -22,16 +19,19 @@ import javax.annotation.PostConstruct;
 public class InitCommand {
 
     private CommandRepository commandRepository;
+    private GuildService guildService;
     private ScheduleService scheduleService;
-    @Autowired
-    private TodoListService todoListService;
     private TaskService taskService;
+    private TodoListService todoListService;
 
     @Autowired
-    public InitCommand(CommandRepository commandRepository, ScheduleService scheduleService, TaskService taskService) {
+    public InitCommand(CommandRepository commandRepository, GuildService guildService, ScheduleService scheduleService,
+                       TaskService taskService, TodoListService todoListService) {
         this.commandRepository = commandRepository;
+        this.guildService = guildService;
         this.scheduleService = scheduleService;
         this.taskService = taskService;
+        this.todoListService = todoListService;
     }
 
     @PostConstruct
@@ -41,17 +41,18 @@ public class InitCommand {
         commandRepository.addCommand("help schedule", new HelpScheduleCommand());
         commandRepository.addCommand("help list", new HelpToDoListCommand());
         commandRepository.addCommand("ping", new PingCommand());
-        commandRepository.addCommand("schedule add", new ScheduleAddCommand(scheduleService));
         commandRepository.addCommand("reminder add", new ReminderAddCommand(taskService));
         commandRepository.addCommand("reminder delete", new ReminderDeleteCommand(taskService));
         commandRepository.addCommand("reminder update", new ReminderUpdateCommand(taskService));
         commandRepository.addCommand("reminder show", new ReminderShowCommand(taskService));
         commandRepository.addCommand("reminder detail", new ReminderDetailCommand(taskService));
         commandRepository.addCommand("reminder set", new ReminderSetCommand(taskService));
+        commandRepository.addCommand("schedule add", new ScheduleAddCommand(scheduleService));
         commandRepository.addCommand("schedule update", new ScheduleTimeUpdateCommand(scheduleService));
         commandRepository.addCommand("schedule updatedesc", new ScheduleDescriptionUpdateCommand(scheduleService));
         commandRepository.addCommand("schedule delete", new ScheduleDeleteCommand(scheduleService));
         commandRepository.addCommand("schedule show", new ScheduleShowCommand(scheduleService));
+        commandRepository.addCommand("schedule notify", new ScheduleNotifyCommand(guildService, scheduleService));
         commandRepository.addCommand("list add", new ListAddTodoListCommand(todoListService));
         commandRepository.addCommand("list additem", new ListAddTodoItemCommand(todoListService));
         commandRepository.addCommand("list delete", new ListDeleteTodoListCommand(todoListService));
