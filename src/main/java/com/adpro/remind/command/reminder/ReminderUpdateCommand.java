@@ -3,9 +3,11 @@ package com.adpro.remind.command.reminder;
 import com.adpro.remind.command.Command;
 import com.adpro.remind.model.Task;
 import com.adpro.remind.service.TaskService;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 
+import java.awt.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -19,6 +21,15 @@ public class ReminderUpdateCommand implements Command {
         this.taskService = taskService;
     }
 
+    public EmbedBuilder getEmbedOutput(Task task){
+        EmbedBuilder embedBuilder = new EmbedBuilder();
+        embedBuilder.setColor(Color.GREEN);
+        embedBuilder.setTitle(":white_check_mark:  Tugas dengan ID: " + task.getIdTask() + " berhasil diupdate.");
+
+        return embedBuilder;
+
+    }
+
 
     @Override
     public void getOutputMessage(Message message, String[] inputContent) {
@@ -27,7 +38,7 @@ public class ReminderUpdateCommand implements Command {
         LocalTime time = LocalTime.parse(inputContent[4], timeFormatter);
         Task updatedTask = taskService.updateTask(idTask, date, time);
 
-        String output = "Tugas " + updatedTask.getName() + " berhasil diupdate.";
-        message.getChannel().sendMessage(output).queue();
+        EmbedBuilder embedOutput = getEmbedOutput(updatedTask);
+        message.getChannel().sendMessage(embedOutput.build()).queue();
     }
 }

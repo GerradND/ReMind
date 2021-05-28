@@ -15,21 +15,25 @@ import java.time.LocalTime;
 @Service
 public class TaskServiceImpl implements TaskService{
 
-
     private TaskRepository taskRepository;
     private ReminderRepository reminderRepository;
-    @Autowired
     private GuildRepository guildRepository;
 
     @Autowired
-    public TaskServiceImpl(TaskRepository taskRepository, ReminderRepository reminderRepository){
+    public TaskServiceImpl(TaskRepository taskRepository, ReminderRepository reminderRepository, GuildRepository guildRepository){
         this.taskRepository = taskRepository;
         this.reminderRepository = reminderRepository;
+        this.guildRepository = guildRepository;
     }
 
     @Override
-    public Task createTask(Task task) {
+    public Task createTask(Task task, String idGuild) {
+        Guild guild = guildRepository.findByIdGuild(idGuild);
+        task.setGuild(guild);
+        guild.getTaskList().add(task);
+
         taskRepository.save(task);
+        guildRepository.save(guild);
         return task;
     }
 
@@ -51,7 +55,7 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     public Iterable<Task> showAllTask(String idGuild) {
-        Guild guild = guildRepository.findById(idGuild).orElse(null);
+        Guild guild = guildRepository.findByIdGuild(idGuild);
         if (guild == null){
             return null;
         }
@@ -59,8 +63,12 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public Iterable<Task> showTaskAtDate(LocalDate date) {
-        return taskRepository.findByDate(date);
+    public Iterable<Task> showTaskAtDate(LocalDate date, String idGuild) {
+        Guild guild = guildRepository.findByIdGuild(idGuild);
+        if (guild == null){
+            return null;
+        }
+        return taskRepository.findByDateAndGuild(date, guild);
     }
 
     @Override

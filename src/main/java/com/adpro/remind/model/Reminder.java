@@ -27,13 +27,17 @@ public class Reminder {
     @Column(name = "time")
     private LocalTime time;
 
+    @Column(name="id_channel")
+    private String idChannel;
+
     @ManyToOne
     @JoinColumn(name="id_task", nullable = false)
     @JsonIgnore
     private Task task;
 
-    public Reminder(LocalDate date, LocalTime time){
+    public Reminder(LocalDate date, LocalTime time, String idChannel){
         this.date = date;
         this.time = time;
+        this.idChannel = idChannel;
     }
 }

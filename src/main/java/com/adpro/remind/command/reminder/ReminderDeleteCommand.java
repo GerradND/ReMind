@@ -2,22 +2,34 @@ package com.adpro.remind.command.reminder;
 
 import com.adpro.remind.command.Command;
 import com.adpro.remind.service.TaskService;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageEmbed;
+
+import java.awt.*;
 
 public class ReminderDeleteCommand implements Command {
     private TaskService taskService;
+    EmbedBuilder embedOutput;
 
     public ReminderDeleteCommand(TaskService taskService){
         this.taskService = taskService;
     }
 
+    public EmbedBuilder getEmbedOutput(Integer id){
+        EmbedBuilder embedBuilder = new EmbedBuilder();
+
+        embedBuilder.setTitle(":x:  Tugas dengan ID "+ id + " telah dihapus.");
+        embedBuilder.setColor(Color.RED);
+
+
+        return embedBuilder;
+    }
     @Override
     public void getOutputMessage(Message message, String[] inputContent) {
         Integer idTask = Integer.parseInt(inputContent[2]);
         taskService.deleteTask(idTask);
 
-        String output = "Tugas dengan ID: " + idTask + " berhasil dihapus.";
-        message.getChannel().sendMessage(output).queue();
+        embedOutput = getEmbedOutput(idTask);
+        message.getChannel().sendMessage(embedOutput.build()).queue();
     }
 }
