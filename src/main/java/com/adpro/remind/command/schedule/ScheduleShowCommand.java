@@ -40,7 +40,6 @@ public class ScheduleShowCommand implements Command {
     @Override
     public void getOutputMessage(Message message, String[] inputContent) {
         String idGuild = message.getGuild().getId();
-        String outputMsg = "";
         EmbedBuilder eb = new EmbedBuilder();
         eb.setColor(Color.YELLOW);
 
@@ -74,7 +73,7 @@ public class ScheduleShowCommand implements Command {
 
 
         } else if (stringContainsItemFromList(inputContent[2], arrHari)) {  // schedule per hari
-            Iterable<Schedule> listScheduleDay = scheduleService.getScheduleByDay(inputContent[2].toUpperCase());
+            Iterable<Schedule> listScheduleDay = scheduleService.getScheduleByDay(inputContent[2].toUpperCase(), idGuild);
             eb.setTitle(":yellow_square: " + inputContent[2]);
 
             if(listScheduleDay.spliterator().getExactSizeIfKnown() == 0) {
