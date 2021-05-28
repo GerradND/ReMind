@@ -1,8 +1,10 @@
 package com.adpro.remind.controller;
 
+import com.adpro.remind.command.Command;
 import com.adpro.remind.repository.CommandRepository;
 import com.adpro.remind.repository.CommandRepositoryImpl;
 import com.adpro.remind.repository.CommandRepositoryImplTests;
+import net.dv8tion.jda.api.entities.Message;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,11 +14,13 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
-public class FeatureCommandImplTests {
+public class FeatureCommandImplTest {
     private Class<?> featureCommandImplClass;
     private FeatureCommandImpl featureCommandImplDummy;
     private CommandRepositoryImpl commandRepositoryDummy;
+    private Command command;
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -51,4 +55,5 @@ public class FeatureCommandImplTests {
         String[] myString = "-help aku".split(" ");
         assertEquals("help aku", featureCommandImplDummy.formatCommand(myString));
     }
+
 }

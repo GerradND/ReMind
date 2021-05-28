@@ -28,7 +28,7 @@ import net.dv8tion.jda.api.requests.restaction.MessageAction;
 
 
 @ExtendWith(MockitoExtension.class)
-public class InputEventListenerTests {
+public class InputEventListenerTest {
 
     @Mock
     private FeatureCommand featureCommand;
