@@ -41,7 +41,7 @@ public class InputEventListener extends ListenerAdapter {
         Message message = event.getMessage();
         content = message.getContentRaw().split(" ");
 
-        System.out.println(message.getAuthor());
+        System.out.println(message.getAuthor() + " " + message.getContentRaw());
         if (message.getAuthor().isBot()) return;
 
         if (message.getContentRaw().startsWith(prefix)) {
