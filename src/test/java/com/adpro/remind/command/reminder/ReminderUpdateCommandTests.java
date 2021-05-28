@@ -15,8 +15,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import static org.mockito.Mockito.when;
-
 @ExtendWith(MockitoExtension.class)
 public class ReminderUpdateCommandTests {
     @Mock
@@ -44,24 +42,8 @@ public class ReminderUpdateCommandTests {
         String[] inputContent = {"-reminder", "add", "Adpro", "29/05/2021", "20:00"};
         LocalDate date = LocalDate.of(2021, 05, 31);
         LocalTime time = LocalTime.of(19,00);
-        oldTask = new Task("Adpro", date, time, guild);
+        oldTask = new Task("Adpro", date, time);
         oldTask.setIdTask(1);
-
-
-    }
-/*
-    @Test
-    void testReminderUpdateOutput(){
-        String[] inputContent = {"-reminder", "update", "1", "29/05/2021", "20:00"};
-
-        LocalDate date = LocalDate.of(2021, 05, 29);
-        LocalTime time = LocalTime.of(20,00);
-        Task newTask = new Task("Adpro", date, time, guild);
-        newTask.setIdTask(1);
-
-        when(taskService.updateTask(1, date, time)).thenReturn(newTask);
-        reminderUpdateCommand.getOutputMessage(message, inputContent);
     }
 
- */
 }

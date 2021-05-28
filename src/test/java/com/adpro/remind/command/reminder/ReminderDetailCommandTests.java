@@ -47,7 +47,7 @@ public class ReminderDetailCommandTests {
     public void setUp(){
         LocalDate date = LocalDate.of(2021,05,28);
         LocalTime time = LocalTime.of(12,00);
-        task = new Task("Adpro", date, time, guild);
+        task = new Task("Adpro", date, time);
         task.setIdTask(1);
     }
 

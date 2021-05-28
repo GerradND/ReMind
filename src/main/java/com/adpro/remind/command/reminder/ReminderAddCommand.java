@@ -28,7 +28,7 @@ public class ReminderAddCommand implements Command {
         this.guildService = guildService;
     }
 
-    public Task newTask(Guild guild, String[] inputContent){
+    public Task newTask(String idGuild, String[] inputContent){
         String name = inputContent[2].replace("\"", "");
         String dateText = inputContent[3];
         String timeText = inputContent[4];
@@ -36,8 +36,8 @@ public class ReminderAddCommand implements Command {
         LocalDate date = LocalDate.parse(dateText, dateFormatter);
         LocalTime time = LocalTime.parse(timeText, timeFormatter);
 
-        Task task = new Task(name, date, time, guild);
-        taskService.createTask(task);
+        Task task = new Task(name, date, time);
+        taskService.createTask(task, idGuild);
 
         return task;
     }
@@ -67,11 +67,8 @@ public class ReminderAddCommand implements Command {
     @Override
     public void getOutputMessage(Message message, String[] inputContent) {
         String idGuild = message.getGuild().getId();
-        guildService.createGuild(idGuild);
-        Guild guild = guildService.getGuildByID(idGuild);
 
-        Task createdTask = newTask(guild, inputContent);
-        System.out.println(createdTask.getIdTask());
+        Task createdTask = newTask(idGuild, inputContent);
         EmbedBuilder embedOutput = getEmbedOutput(createdTask);
 
         message.getChannel().sendMessage(embedOutput.build()).queue();

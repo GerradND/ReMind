@@ -43,11 +43,10 @@ public class Task {
     @JsonIgnore
     private Guild guild;
 
-    public Task(String name, LocalDate date, LocalTime time, Guild guild){
+    public Task(String name, LocalDate date, LocalTime time){
         this.name = name;
         this.date = date;
         this.time = time;
-        this.guild = guild;
     }
 
     public void setReminder(Reminder reminder){

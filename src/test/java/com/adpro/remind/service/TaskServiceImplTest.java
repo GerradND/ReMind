@@ -46,14 +46,16 @@ public class TaskServiceImplTest {
         LocalTime time = LocalTime.of(23, 55);
 
         guild = new Guild("814323773107994655");
-        task = new Task("Adpro", date, time, guild);
+        task = new Task("Adpro", date, time);
     }
 
     @Test
     void testServiceCreateTask(){
         when(taskRepository.save(any(Task.class))).thenReturn(task);
+        String idGuild = guild.getIdGuild();
+        when(guildRepository.findByIdGuild(idGuild)).thenReturn(guild);
 
-        Task createdTask = taskServiceImpl.createTask(task);
+        Task createdTask = taskServiceImpl.createTask(task, guild.getIdGuild());
         Assertions.assertEquals(createdTask.getName(), task.getName());
     }
 
@@ -70,8 +72,12 @@ public class TaskServiceImplTest {
     @Test
     void testServiceUpdateTask(){
         when(taskRepository.save(any(Task.class))).thenReturn(task);
+
+        String idGuild = guild.getIdGuild();
+        when(guildRepository.findByIdGuild(idGuild)).thenReturn(guild);
+
         LocalDate oldDate = task.getDate();
-        Task savedTask = taskServiceImpl.createTask(task);
+        Task savedTask = taskServiceImpl.createTask(task, idGuild);
 
         Integer idTask = savedTask.getIdTask();
         LocalDate newDate = LocalDate.of(2021, 06, 05);

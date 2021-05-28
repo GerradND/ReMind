@@ -15,7 +15,6 @@ import java.time.LocalTime;
 @Service
 public class TaskServiceImpl implements TaskService{
 
-
     private TaskRepository taskRepository;
     private ReminderRepository reminderRepository;
     private GuildRepository guildRepository;
@@ -28,8 +27,13 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public Task createTask(Task task) {
+    public Task createTask(Task task, String idGuild) {
+        Guild guild = guildRepository.findByIdGuild(idGuild);
+        task.setGuild(guild);
+        guild.getTaskList().add(task);
+
         taskRepository.save(task);
+        guildRepository.save(guild);
         return task;
     }
 

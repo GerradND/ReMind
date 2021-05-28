@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public interface TaskService {
-    Task createTask(Task task);
+    Task createTask(Task task, String idGuild);
     void deleteTask(Integer idTask);
     Task updateTask(Integer idTask, LocalDate date, LocalTime time);
     Iterable<Task> showAllTask(String idGuild);

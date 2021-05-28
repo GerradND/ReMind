@@ -53,7 +53,7 @@ public class ReminderShowCommandTests {
         guild = new Guild("814323773107994655");
         LocalDate date = LocalDate.of(2021,05,28);
         LocalTime time = LocalTime.of(12,00);
-        task = new Task("Adpro", date, time, guild);
+        task = new Task("Adpro", date, time);
         task.setIdTask(1);
     }
 
