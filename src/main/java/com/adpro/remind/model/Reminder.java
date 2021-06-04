@@ -33,7 +33,7 @@ public class Reminder {
     private String idChannel;
 
     @ManyToOne
-    @JoinColumn(name="id_task", nullable = false)
+    @JoinColumn(name="id_task")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Task task;
