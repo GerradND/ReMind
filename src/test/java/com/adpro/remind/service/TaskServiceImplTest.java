@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -39,6 +40,7 @@ public class TaskServiceImplTest {
 
     private Task task;
     private Guild guild;
+    private Reminder reminder;
 
     @BeforeEach
     public void setUp(){
@@ -47,6 +49,11 @@ public class TaskServiceImplTest {
 
         guild = new Guild("814323773107994655");
         task = new Task("Adpro", date, time);
+
+        LocalDate dateReminder = LocalDate.of(2021, 05, 29);
+        LocalTime timeReminder = LocalTime.of(20, 15);
+        String randomIDChannel = "814323773696114690";
+        reminder = new Reminder(dateReminder, timeReminder, randomIDChannel);
     }
 
     @Test
@@ -61,12 +68,14 @@ public class TaskServiceImplTest {
 
     @Test
     void testServiceDeleteTask(){
+        task.setGuild(guild);
         Integer idTask = task.getIdTask();
-        taskRepository.save(task);
+        when(taskRepository.findByIdTask(idTask)).thenReturn(task);
 
         taskServiceImpl.deleteTask(idTask);
-        Task foundTask = taskRepository.findByIdTask(idTask);
-        Assertions.assertNull(foundTask);
+
+        List<Task> listTasks = guild.getTaskList();
+        Assertions.assertEquals(0, listTasks.size());
     }
 
     @Test
@@ -142,17 +151,43 @@ public class TaskServiceImplTest {
 
     @Test
     void testServiceSetReminder(){
-        LocalDate dateReminder = LocalDate.of(2021, 05, 29);
-        LocalTime timeReminder = LocalTime.of(20, 15);
-        String randomIDChannel = "814323773696114690";
-        Reminder reminder = new Reminder(dateReminder, timeReminder, randomIDChannel);
-
         when(taskRepository.save(any(Task.class))).thenReturn(task);
         when(reminderRepository.save(any(Reminder.class))).thenReturn(reminder);
 
         taskServiceImpl.setReminder(reminder, task);
         Assertions.assertEquals(task.getReminders().size(), 1);
 
+    }
+
+    @Test
+    void testReminderFindByID(){
+        Integer id = reminder.getIdReminder();
+        when(reminderRepository.findByIdReminder(id)).thenReturn(reminder);
+
+        Reminder returnedReminder = taskServiceImpl.findByIDReminder(id);
+        Assertions.assertEquals(reminder, returnedReminder);
+    }
+
+    @Test
+    void testReminderFindAllReminder(){
+        List<Reminder> listReminder = new ArrayList<>();
+        listReminder.add(reminder);
+        when(reminderRepository.findAll()).thenReturn(listReminder);
+
+        List<Reminder> returnedList = taskServiceImpl.findAllReminder();
+        Assertions.assertEquals(listReminder, returnedList);
+    }
+
+    @Test
+    void testReminderDeleteByID(){
+        reminder.setTask(task);
+        Integer idReminder = reminder.getIdReminder();
+        when(reminderRepository.findByIdReminder(idReminder)).thenReturn(reminder);
+
+        taskServiceImpl.deleteReminder(idReminder);
+
+        Set<Reminder> listReminders = task.getReminders();
+        Assertions.assertEquals(0, listReminders.size());
     }
 
 }

@@ -1,7 +1,6 @@
 package com.adpro.remind.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,7 +33,7 @@ public class Task {
     @Column(name = "time", nullable = false)
     private LocalTime time;
 
-    @OneToMany(targetEntity = Reminder.class, mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Reminder.class, mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private Set<Reminder> reminders = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER)

@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -19,7 +21,7 @@ public class Reminder {
     @Id
     @GeneratedValue
     @Column(name = "id")
-    private Integer id;
+    private Integer idReminder;
 
     @Column(name = "date")
     private LocalDate date;
@@ -32,6 +34,7 @@ public class Reminder {
 
     @ManyToOne
     @JoinColumn(name="id_task", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Task task;
 
