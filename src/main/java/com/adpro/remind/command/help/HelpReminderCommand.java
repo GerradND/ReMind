@@ -22,7 +22,7 @@ public class HelpReminderCommand implements Command {
                 "1. Format TANGGAL: DD/MM/YYYY\n" +
                 "2. Format JAM: HH:MM\n" +
                 "3. Format WAKTU: X Hari atau X Jam\n" +
-                "4. Untuk melihat ID suatu Reminder, gunakan -reminder SHOW ALL atau -reminder SHOW [TANGGAL]\n");
+                "4. Untuk melihat ID suatu Reminder, gunakan `-reminder show all` atau `-reminder show [TANGGAL]`\n");
 
         message.getChannel().sendMessage(eb.build()).queue();
     }
