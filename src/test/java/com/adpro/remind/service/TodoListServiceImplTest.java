@@ -12,6 +12,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.ArrayList;
+
 import static org.mockito.Mockito.lenient;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -66,11 +69,24 @@ public class TodoListServiceImplTest {
         assertEquals(todoList, retrievedTodoList);
     }
 
+     @Test
+     void testServiceShowAllTodoList(){
+         Iterable<TodoList> todoLists = new ArrayList<>();
+         lenient().when(todoListRepository.findByGuild(guild)).thenReturn(todoLists);
+         Iterable<TodoList> retrievedTodoLists = todoListService.showAllTodoList(guild);
+         assertEquals(todoLists, retrievedTodoLists);
+     }
+
     @Test
     void testServiceDeleteTodoList(){
         todoListService.deleteTodoList(todoList.getId());
         assertNull(todoListService.showTodoList(todoList.getId()));
     }
 
+    @Test
+    void testServiceDeleteTodoItem(){
+        todoListService.deleteTodoItem(todoList.getId(), todoItem.getId());
+        assertNull(todoListService.showTodoList(todoList.getId()));
+    }
 
 }
