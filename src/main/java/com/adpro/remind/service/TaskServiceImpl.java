@@ -19,6 +19,7 @@ public class TaskServiceImpl implements TaskService{
     private TaskRepository taskRepository;
     private ReminderRepository reminderRepository;
     private GuildRepository guildRepository;
+    private GuildService guildService;
 
     @Autowired
     public TaskServiceImpl(TaskRepository taskRepository, ReminderRepository reminderRepository, GuildRepository guildRepository){
@@ -41,7 +42,12 @@ public class TaskServiceImpl implements TaskService{
     @Override
     public void deleteTask(Integer idTask) {
         Task task = taskRepository.findByIdTask(idTask);
+        Guild guild = task.getGuild();
+        guild.getTaskList().remove(task);
+        task.setGuild(null);
+
         taskRepository.delete(task);
+        guildRepository.save(guild);
     }
 
     @Override
@@ -104,7 +110,12 @@ public class TaskServiceImpl implements TaskService{
     @Override
     public void deleteReminder(Integer id) {
         Reminder reminder = reminderRepository.findByIdReminder(id);
+        Task task = reminder.getTask();
+        task.getReminders().remove(reminder);
+        reminder.setTask(null);
+
         reminderRepository.delete(reminder);
+        taskRepository.save(task);
     }
 
 }

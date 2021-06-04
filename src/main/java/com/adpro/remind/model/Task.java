@@ -34,7 +34,7 @@ public class Task {
     @Column(name = "time", nullable = false)
     private LocalTime time;
 
-    @OneToMany(targetEntity = Reminder.class, mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Reminder.class, mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private Set<Reminder> reminders = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
