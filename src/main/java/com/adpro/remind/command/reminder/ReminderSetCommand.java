@@ -6,7 +6,6 @@ import com.adpro.remind.model.Task;
 import com.adpro.remind.service.TaskService;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import java.awt.*;
 import java.time.LocalDate;
@@ -55,7 +54,7 @@ public class ReminderSetCommand implements Command {
 
     }
 
-    private EmbedBuilder getEmbedOutput(String id, Reminder reminder){
+    public EmbedBuilder getEmbedOutput(String id, Reminder reminder){
         EmbedBuilder embedBuilder = new EmbedBuilder();
 
         embedBuilder.setTitle("Reminder untuk tugas dengan ID "+ id + " telah dipasang.");

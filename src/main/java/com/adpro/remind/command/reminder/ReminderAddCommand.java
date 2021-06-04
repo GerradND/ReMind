@@ -16,6 +16,7 @@ public class ReminderAddCommand implements Command {
 
     private TaskService taskService;
     private GuildService guildService;
+    EmbedBuilder embedOutput;
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -34,7 +35,7 @@ public class ReminderAddCommand implements Command {
         LocalTime time = LocalTime.parse(timeText, timeFormatter);
 
         Task task = new Task(name, date, time);
-        taskService.createTask(task, idGuild);
+        task = taskService.createTask(task, idGuild);
 
         return task;
     }
@@ -66,7 +67,7 @@ public class ReminderAddCommand implements Command {
         String idGuild = message.getGuild().getId();
 
         Task createdTask = newTask(idGuild, inputContent);
-        EmbedBuilder embedOutput = getEmbedOutput(createdTask);
+        embedOutput = getEmbedOutput(createdTask);
 
         message.getChannel().sendMessage(embedOutput.build()).queue();
 
