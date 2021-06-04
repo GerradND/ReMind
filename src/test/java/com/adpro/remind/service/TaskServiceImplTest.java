@@ -65,15 +65,15 @@ public class TaskServiceImplTest {
         Assertions.assertEquals(createdTask.getName(), task.getName());
     }
 
-    @Test
-    void testServiceDeleteTask(){
-        Integer idTask = task.getIdTask();
-        taskRepository.save(task);
-
-        taskServiceImpl.deleteTask(idTask);
-        Task foundTask = taskRepository.findByIdTask(idTask);
-        Assertions.assertNull(foundTask);
-    }
+//    @Test
+//    void testServiceDeleteTask(){
+//        Integer idTask = task.getIdTask();
+//        taskRepository.save(task);
+//
+//        taskServiceImpl.deleteTask(idTask);
+//        Task foundTask = taskRepository.findByIdTask(idTask);
+//        Assertions.assertNull(foundTask);
+//    }
 
     @Test
     void testServiceUpdateTask(){

@@ -110,8 +110,12 @@ public class TaskServiceImpl implements TaskService{
     @Override
     public void deleteReminder(Integer id) {
         Reminder reminder = reminderRepository.findByIdReminder(id);
+        Task task = reminder.getTask();
+        task.getReminders().remove(reminder);
+        reminder.setTask(null);
 
         reminderRepository.delete(reminder);
+        taskRepository.save(task);
     }
 
 }
