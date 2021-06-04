@@ -1,6 +1,5 @@
 package com.adpro.remind.command.reminder;
 
-import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Task;
 import com.adpro.remind.service.TaskService;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -28,9 +27,6 @@ public class ReminderDetailCommandTests {
 
     @Mock
     private TaskService taskService;
-
-    @Mock
-    private Guild guild;
 
     @Mock
     private MessageChannel messageChannel;

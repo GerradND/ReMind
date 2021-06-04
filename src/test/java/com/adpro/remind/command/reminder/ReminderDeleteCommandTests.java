@@ -17,7 +17,6 @@ import java.awt.*;
 
 import static org.mockito.Mockito.when;
 
-
 @ExtendWith(MockitoExtension.class)
 public class ReminderDeleteCommandTests {
     @Mock

@@ -3,7 +3,6 @@ package com.adpro.remind.command.reminder;
 import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Task;
 import com.adpro.remind.service.TaskService;
-import com.adpro.remind.service.TaskServiceImpl;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
