@@ -15,6 +15,7 @@ public class ReminderUpdateCommand implements Command {
     private TaskService taskService;
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+    EmbedBuilder embedOutput;
 
     public ReminderUpdateCommand(TaskService taskService){
         this.taskService = taskService;
@@ -29,7 +30,6 @@ public class ReminderUpdateCommand implements Command {
 
     }
 
-
     @Override
     public void getOutputMessage(Message message, String[] inputContent) {
         Integer idTask = Integer.parseInt(inputContent[2]);
@@ -37,7 +37,7 @@ public class ReminderUpdateCommand implements Command {
         LocalTime time = LocalTime.parse(inputContent[4], timeFormatter);
         Task updatedTask = taskService.updateTask(idTask, date, time);
 
-        EmbedBuilder embedOutput = getEmbedOutput(updatedTask);
+        embedOutput = getEmbedOutput(updatedTask);
         message.getChannel().sendMessage(embedOutput.build()).queue();
     }
 }
