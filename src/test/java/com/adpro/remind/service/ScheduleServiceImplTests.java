@@ -40,8 +40,12 @@ public class ScheduleServiceImplTests {
 
     @BeforeEach
     public void setUp(){
-        schedule = new Schedule("Adpro", DayOfWeek.MONDAY,
-               LocalTime.of(8,0), LocalTime.of(10,0), "Kelas pagi");
+        schedule = new Schedule();
+        schedule.setTitle("Adpro");
+        schedule.setDay(DayOfWeek.MONDAY);
+        schedule.setStartTime(LocalTime.of(8,0));
+        schedule.setEndTime(LocalTime.of(10,0));
+        schedule.setDescription("Kelas pagi");
         guild = new Guild("123");
         guild.setScheduleList(new ArrayList<>());
 
@@ -53,7 +57,7 @@ public class ScheduleServiceImplTests {
         lenient().when(scheduleRepository.save(schedule)).thenReturn(schedule);
         Schedule newSchedule = scheduleService.createSchedule(schedule, "123");
 
-        assertEquals(schedule, newSchedule);
+        assertEquals(schedule.getTitle(), newSchedule.getTitle());
     }
 
     @Test
@@ -113,7 +117,10 @@ public class ScheduleServiceImplTests {
     @Test
     void testServiceDeleteSchedule() {
         Integer idSchedule = schedule.getIdSchedule();
-        scheduleService.deleteSchedule(idSchedule);
+        lenient().when(guildRepository.findByIdGuild("123")).thenReturn(guild);
+        lenient().when(scheduleRepository.save(schedule)).thenReturn(schedule);
+        scheduleService.createSchedule(schedule, "123");
+        scheduleService.deleteSchedule(idSchedule, "123");
         lenient().when(scheduleService.getScheduleByID(idSchedule)).thenReturn(null);
         assertNull(scheduleService.getScheduleByID(idSchedule));
     }

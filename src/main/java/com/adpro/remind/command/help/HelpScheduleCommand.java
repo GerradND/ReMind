@@ -14,14 +14,15 @@ public class HelpScheduleCommand implements Command {
                 "`-schedule delete [ID_SCHEDULE]`\n" +
                 "`-schedule update [ID_SCHEDULE] [HARI_BARU] [JAM_MULAI] [JAM_SELESAI]`\n" +
                 "`-schedule updatedesc [ID_SCHEDULE] [JUDUL_BARU] [DESC_BARU]`\n" +
-                "`-schedule SHOW [ID_SCHEDULE]`\n" +
-                "`-schedule SHOW [HARI]`\n" +
-                "`-schedule SHOW ALL`\n" +
+                "`-schedule show [ID_SCHEDULE]`\n" +
+                "`-schedule show [HARI]`\n" +
+                "`-schedule show all`\n" +
+                "`-schedule notify`\n" +
                 "\n" +
                 "Notes:\n" +
                 "1. Format HARI: Monday, Tuesday, .., Sunday\n" +
                 "2. Format JAM: HH:MM\n" +
-                "4. Untuk melihat ID suatu Schedule, gunakan -schedule SHOW ALL atau -schedule SHOW [HARI]\n");
+                "4. Untuk melihat ID suatu Schedule, gunakan `-schedule show all` atau `-schedule show [HARI]`\n");
 
         message.getChannel().sendMessage(eb.build()).queue();
     }

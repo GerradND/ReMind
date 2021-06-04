@@ -9,47 +9,58 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import java.awt.*;
 
-public class ScheduleDescriptionUpdateCommand implements Command {
+public class ScheduleUpdateDescriptionCommand implements Command {
 
     private ScheduleService scheduleService;
+    private EmbedBuilder eb;
+    private String outputMsg;
 
-    public ScheduleDescriptionUpdateCommand(ScheduleService scheduleService) {
+    public ScheduleUpdateDescriptionCommand(ScheduleService scheduleService) {
         this.scheduleService = scheduleService;
     }
 
     public Schedule updateSchedule(int idSchedule, String title, String desc) {
-        Schedule schedule = scheduleService.getScheduleByID(idSchedule);
-        schedule.setTitle(title);
-        schedule.setDescription(desc);
-        return schedule;
+        Schedule ongoingSchedule = null;
+        if(scheduleService.getScheduleByID(idSchedule) != null) {
+            ongoingSchedule = scheduleService.getScheduleByID(idSchedule);
+            ongoingSchedule.setTitle(title);
+            ongoingSchedule.setDescription(desc);
+        }
+        return ongoingSchedule;
     }
 
     public String formDescription(String[] inputContent, int start) {
-        String desc = "";
-        for(int i = start; i < inputContent.length; i++) {
-            desc += inputContent[i] + " ";
+        StringBuilder desc = new StringBuilder();
+        for(int i = start; i < inputContent.length-1; i++) {
+            desc.append(inputContent[i]).append(" ");
         }
-        return desc;
+        desc.append(inputContent[inputContent.length-1]);
+        return desc.toString();
+    }
+
+    public String getOutputMsg() {
+        return outputMsg;
     }
 
     @Override
     public void getOutputMessage(Message message, String[] inputContent) {
-        EmbedBuilder eb = new EmbedBuilder();
+        eb = new EmbedBuilder();
         try {
             int idSchedule = Integer.parseInt(inputContent[2]);
             String title = inputContent[3];
             String desc = formDescription(inputContent, 4);
 
-            Schedule updatedSchedule = this.updateSchedule(idSchedule, title, desc);
-
-            if(updatedSchedule == null) {
+            if(updateSchedule(idSchedule, title, desc) == null) {
                 eb.setColor(Color.orange);
-                eb.addField("Schedule dengan ID: " + idSchedule + "tidak ditemukan!", "", false);
+                outputMsg = "Schedule dengan ID: " + idSchedule + " tidak ditemukan!";
+                eb.addField(outputMsg, "", false);
 
             } else {
+                Schedule updatedSchedule = updateSchedule(idSchedule, title, desc);
                 scheduleService.updateSchedule(idSchedule, updatedSchedule);
                 eb.setColor(Color.green);
-                eb.setTitle(":pencil2: Keterangan schedule \"" + updatedSchedule.getTitle() + "\" berhasil diubah!");
+                outputMsg = ":pencil2: Keterangan schedule \"" + updatedSchedule.getTitle() + "\" berhasil diubah!";
+                eb.setTitle(outputMsg);
                 eb.addField("✍ Judul: ", updatedSchedule.getTitle(), false);
                 eb.addField(":memo: Deskripsi: ", updatedSchedule.getDescription(), false);
             }
@@ -59,7 +70,8 @@ public class ScheduleDescriptionUpdateCommand implements Command {
 
         } catch (NumberFormatException e) {
             eb.setColor(Color.red);
-            eb.addField("Tolong masukan ID yang valid.", "", false);
+            outputMsg = "Tolong masukan ID yang valid.";
+            eb.addField(outputMsg, "", false);
             message.getChannel().sendMessage(eb.build()).queue();
         }
     }
