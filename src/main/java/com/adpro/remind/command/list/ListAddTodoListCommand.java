@@ -32,11 +32,16 @@ public class ListAddTodoListCommand implements Command {
        this.message = message;
        Guild guild = new Guild(message.getGuild().getId());
        String namaList = inputContent[2];
-       todoListService.addTodoList(new TodoList(namaList, guild));
-       message.reply(String.format("TodoList %s telah ditambahkan", namaList)).queue();
+       TodoList todoList = todoListService.addTodoList(new TodoList(namaList, guild));
+
+       EmbedBuilder eb = new EmbedBuilder();
+       eb.setColor(Color.GREEN);
+       eb.setTitle("TodoList Added Successfully");
+       eb.addField("", String.format("Id TodoList: %d\nTitle TodoList: %s", todoList.getId(), todoList.getTitle()), false);
+       message.reply(eb.build()).queue();
    }
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 600000)
     public void sendNotificationToReadTodoList(){
         if (message==null) return;
         Guild guild = new Guild(message.getGuild().getId());
