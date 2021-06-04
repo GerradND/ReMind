@@ -4,12 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="todo_list")
@@ -25,8 +27,9 @@ public class TodoList {
     @Column(nullable = false)
     private String title;
 
-    @OneToMany(mappedBy = "todoList", fetch = FetchType.LAZY)
-    private Set<TodoItem> todoItemSet;
+    @OneToMany(mappedBy = "todoList")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<TodoItem> todoItemSet = new ArrayList<>() ;
 
     @ManyToOne
     @JoinColumn(name = "id_guild")
