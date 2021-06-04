@@ -57,23 +57,4 @@ public class FeatureCommandImpl implements FeatureCommand {
             message.getChannel().sendMessage(eb.build()).queue();
         }
     }
-/*
-    @Override
-    public void outputPrivateMessage(Message message, String[] inputContent) {
-        RestAction<PrivateChannel> action = message.getAuthor().openPrivateChannel();
-        try {
-            Command command = commandRepository.getCommand(formatCommand(inputContent));
-            MessageEmbed content = command.getOutputMessage(message, inputContent);
-            action.queue((channel) -> channel.sendMessage(content).queue());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-
-            EmbedBuilder eb = new EmbedBuilder();
-            eb.setColor(Color.red);
-            eb.addField("Perintah yang Anda masukan salah, coba lagi.","", false);
-            action.queue((channel) -> channel.sendMessage(eb.build()).queue());
-        }
-    }
- */
 }
