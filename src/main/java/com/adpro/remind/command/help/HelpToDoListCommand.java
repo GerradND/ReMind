@@ -18,8 +18,8 @@ public class HelpToDoListCommand implements Command {
                 "`-list showall`\n" +
                 "\n" +
                 "Notes:\n" +
-                "1. Untuk melihat ID suatu List, gunakan -list SHOW ALL\n"+
-                "2. Untuk melihat nomor suatu item pada list, gunakan -list SHOW [ID_LIST]\n");
+                "1. Untuk melihat ID suatu List, gunakan `-list show all`\n"+
+                "2. Untuk melihat nomor suatu item pada list, gunakan `-list show [ID_LIST]`\n");
 
         message.getChannel().sendMessage(eb.build()).queue();
     }

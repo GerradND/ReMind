@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.security.auth.login.LoginException;
 
 @Component
 public class InitCommand {
@@ -35,7 +36,7 @@ public class InitCommand {
     }
 
     @PostConstruct
-    public void init() {
+    public void init() throws LoginException {
         commandRepository.addCommand("help", new HelpCommand());
         commandRepository.addCommand("help reminder", new HelpReminderCommand());
         commandRepository.addCommand("help schedule", new HelpScheduleCommand());
@@ -47,6 +48,7 @@ public class InitCommand {
         commandRepository.addCommand("reminder show", new ReminderShowCommand(taskService));
         commandRepository.addCommand("reminder detail", new ReminderDetailCommand(taskService));
         commandRepository.addCommand("reminder set", new ReminderSetCommand(taskService));
+        commandRepository.addCommand("reminder notify", new ReminderNotifyCommand(guildService, taskService));
         commandRepository.addCommand("schedule add", new ScheduleAddCommand(scheduleService));
         commandRepository.addCommand("schedule update", new ScheduleTimeUpdateCommand(scheduleService));
         commandRepository.addCommand("schedule updatedesc", new ScheduleDescriptionUpdateCommand(scheduleService));
