@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -65,15 +66,17 @@ public class TaskServiceImplTest {
         Assertions.assertEquals(createdTask.getName(), task.getName());
     }
 
-//    @Test
-//    void testServiceDeleteTask(){
-//        Integer idTask = task.getIdTask();
-//        taskRepository.save(task);
-//
-//        taskServiceImpl.deleteTask(idTask);
-//        Task foundTask = taskRepository.findByIdTask(idTask);
-//        Assertions.assertNull(foundTask);
-//    }
+    @Test
+    void testServiceDeleteTask(){
+        task.setGuild(guild);
+        Integer idTask = task.getIdTask();
+        when(taskRepository.findByIdTask(idTask)).thenReturn(task);
+
+        taskServiceImpl.deleteTask(idTask);
+
+        List<Task> listTasks = guild.getTaskList();
+        Assertions.assertEquals(0, listTasks.size());
+    }
 
     @Test
     void testServiceUpdateTask(){
@@ -177,12 +180,14 @@ public class TaskServiceImplTest {
 
     @Test
     void testReminderDeleteByID(){
-        Integer id = reminder.getIdReminder();
-        reminderRepository.save(reminder);
+        reminder.setTask(task);
+        Integer idReminder = reminder.getIdReminder();
+        when(reminderRepository.findByIdReminder(idReminder)).thenReturn(reminder);
 
-        taskServiceImpl.deleteReminder(id);
-        Reminder foundReminder = taskServiceImpl.findByIDReminder(id);
-        Assertions.assertNull(foundReminder);
+        taskServiceImpl.deleteReminder(idReminder);
+
+        Set<Reminder> listReminders = task.getReminders();
+        Assertions.assertEquals(0, listReminders.size());
     }
 
 }

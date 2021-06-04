@@ -31,7 +31,7 @@ public class Guild {
     @OneToMany(targetEntity = Task.class, mappedBy = "guild", cascade = CascadeType.ALL, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     @JsonIgnore
-    private List<Task> taskList;
+    private List<Task> taskList = new ArrayList<>();
 
     @OneToMany(targetEntity = TodoList.class, mappedBy = "guild", cascade = CascadeType.ALL)
     @JsonIgnore
