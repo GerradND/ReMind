@@ -19,7 +19,7 @@ public class Reminder {
     @Id
     @GeneratedValue
     @Column(name = "id")
-    private Integer id;
+    private Integer idReminder;
 
     @Column(name = "date")
     private LocalDate date;

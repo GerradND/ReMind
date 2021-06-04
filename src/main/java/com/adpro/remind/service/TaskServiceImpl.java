@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Service
 public class TaskServiceImpl implements TaskService{
@@ -77,6 +78,11 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
+    public Task findByIDTask(Integer idTask){
+        return taskRepository.findByIdTask(idTask);
+    }
+
+    @Override
     public Reminder setReminder(Reminder reminder, Task task) {
         task.setReminder(reminder);
         reminder.setTask(task);
@@ -86,7 +92,19 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public Task findByIDTask(Integer idTask){
-        return taskRepository.findByIdTask(idTask);
+    public Reminder findByIDReminder(Integer idReminder) {
+        return reminderRepository.findByIdReminder(idReminder);
     }
+
+    @Override
+    public List<Reminder> findAllReminder() {
+        return reminderRepository.findAll();
+    }
+
+    @Override
+    public void deleteReminder(Integer id) {
+        Reminder reminder = reminderRepository.findByIdReminder(id);
+        reminderRepository.delete(reminder);
+    }
+
 }

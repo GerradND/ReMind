@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ReminderRepository extends JpaRepository<Reminder,Integer> {
-
+    Reminder findByIdReminder(Integer id);
 }
