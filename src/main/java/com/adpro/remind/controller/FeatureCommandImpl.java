@@ -54,8 +54,7 @@ public class FeatureCommandImpl implements FeatureCommand {
             EmbedBuilder eb = new EmbedBuilder();
             eb.setColor(Color.red);
             eb.addField("Perintah yang Anda masukan salah, coba lagi.","", false);
-            RestAction<Message> action = message.getChannel().sendMessage(eb.build());
-            action.queue();
+            message.getChannel().sendMessage(eb.build()).queue();
         }
     }
 /*
