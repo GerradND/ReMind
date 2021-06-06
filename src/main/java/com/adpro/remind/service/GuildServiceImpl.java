@@ -12,7 +12,7 @@ public class GuildServiceImpl implements GuildService{
     private GuildRepository guildRepository;
 
     @Autowired
-    public GuildServiceImpl(GuildRepository guildRepository){
+    public GuildServiceImpl(GuildRepository guildRepository) {
         this.guildRepository = guildRepository;
     }
 
@@ -22,7 +22,7 @@ public class GuildServiceImpl implements GuildService{
         if (guild != null) {
             return;
         }
-        else{
+        else {
             guild = new Guild(idGuild);
             guildRepository.save(guild);
         }
