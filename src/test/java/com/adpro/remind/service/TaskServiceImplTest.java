@@ -44,13 +44,13 @@ public class TaskServiceImplTest {
 
     @BeforeEach
     public void setUp(){
-        LocalDate date = LocalDate.of(2021, 05, 31);
+        LocalDate date = LocalDate.of(2021, 5, 31);
         LocalTime time = LocalTime.of(23, 55);
 
         guild = new Guild("1234567890");
         task = new Task("Adpro", date, time);
 
-        LocalDate dateReminder = LocalDate.of(2021, 05, 29);
+        LocalDate dateReminder = LocalDate.of(2021, 5, 29);
         LocalTime timeReminder = LocalTime.of(20, 15);
         String randomIDChannel = "1234567890";
         reminder = new Reminder(dateReminder, timeReminder, randomIDChannel);
@@ -89,7 +89,7 @@ public class TaskServiceImplTest {
         Task savedTask = taskServiceImpl.createTask(task, idGuild);
 
         Integer idTask = savedTask.getIdTask();
-        LocalDate newDate = LocalDate.of(2021, 06, 05);
+        LocalDate newDate = LocalDate.of(2021, 6, 5);
         LocalTime oldTime = savedTask.getTime();
 
         when(taskRepository.findByIdTask(idTask)).thenReturn(savedTask);

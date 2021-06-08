@@ -14,16 +14,14 @@ import java.time.format.DateTimeFormatter;
 
 public class ReminderAddCommand implements Command {
 
-    private TaskService taskService;
-    private GuildService guildService;
+    private final TaskService taskService;
     EmbedBuilder embedOutput;
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
-    public ReminderAddCommand(TaskService taskService, GuildService guildService){
+    public ReminderAddCommand(TaskService taskService){
         this.taskService = taskService;
-        this.guildService = guildService;
     }
 
     public Task newTask(String idGuild, String[] inputContent){

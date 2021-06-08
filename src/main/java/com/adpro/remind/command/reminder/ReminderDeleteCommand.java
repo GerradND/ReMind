@@ -8,7 +8,7 @@ import net.dv8tion.jda.api.entities.Message;
 import java.awt.*;
 
 public class ReminderDeleteCommand implements Command {
-    private TaskService taskService;
+    private final TaskService taskService;
     EmbedBuilder embedOutput;
 
     public ReminderDeleteCommand(TaskService taskService){

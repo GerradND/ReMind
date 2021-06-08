@@ -9,7 +9,7 @@ import net.dv8tion.jda.api.entities.Message;
 import java.awt.*;
 
 public class ReminderDetailCommand implements Command {
-    private TaskService taskService;
+    private final TaskService taskService;
     EmbedBuilder embedOutput;
 
     public EmbedBuilder getEmbedOutput(Task task){

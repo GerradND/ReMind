@@ -11,13 +11,9 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
 public class ReminderSetCommand implements Command {
-    private TaskService taskService;
-
-    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+    private final TaskService taskService;
 
     EmbedBuilder embedOutput;
 
@@ -41,16 +37,13 @@ public class ReminderSetCommand implements Command {
     }
 
     private LocalDateTime getReminderDateTime(LocalDateTime taskTime, Integer time, String type){
-        LocalDateTime reminderTime = taskTime;
-        switch(type.toUpperCase()){
-            case "HARI":
-                reminderTime = taskTime.minusDays(time);
-                break;
-            default:
-                reminderTime = taskTime.minusHours(time);
+        if(type.equalsIgnoreCase("HARI")) {
+            taskTime = taskTime.minusDays(time);
+        } else {
+            taskTime = taskTime.minusHours(time);
         }
 
-        return reminderTime;
+        return taskTime;
 
     }
 

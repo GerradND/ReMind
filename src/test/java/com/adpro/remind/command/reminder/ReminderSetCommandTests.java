@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.requests.restaction.MessageAction;
 import org.junit.jupiter.api.Assertions;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -50,12 +51,12 @@ public class ReminderSetCommandTests {
 
     private Task task;
     private Reminder reminder;
-    private String channelID = "1234567890";
+    private final String channelID = "1234567890";
 
     @BeforeEach
     void setUp(){
-        LocalDate date = LocalDate.of(2021,05,28);
-        LocalTime time = LocalTime.of(12,00);
+        LocalDate date = LocalDate.of(2021, 5,28);
+        LocalTime time = LocalTime.of(12, 0);
         task = new Task("Adpro", date, time);
         task.setIdTask(1);
     }
@@ -64,7 +65,7 @@ public class ReminderSetCommandTests {
     void testReminderSetDaysOutput(){
         String[] inputContent = {"-reminder", "set", "1", "2", "hari"};
 
-        LocalDate newDate = LocalDate.of(2021,05,26);
+        LocalDate newDate = LocalDate.of(2021, 5,26);
         reminder = new Reminder(newDate, task.getTime(), channelID);
 
         when(message.getChannel()).thenReturn(messageChannel);
@@ -87,11 +88,11 @@ public class ReminderSetCommandTests {
     void testReminderSetHoursOutput(){
         String[] inputContent = {"-reminder", "set", "1", "2", "jam"};
 
-        LocalTime newTime = LocalTime.of(10,00);
+        LocalTime newTime = LocalTime.of(10, 0);
         reminder = new Reminder(task.getDate(), newTime, channelID);
 
         when(message.getChannel()).thenReturn(messageChannel);
-        when(messageChannel.getId()).thenReturn(channelID);
+        when(messageChannel.getId()).thenReturn(reminder.getIdChannel());
 
         when(taskService.findByIDTask(1)).thenReturn(task);
         lenient().when(taskRepository.save(any(Task.class))).thenReturn(task);

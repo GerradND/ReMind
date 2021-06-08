@@ -41,8 +41,8 @@ public class ReminderDetailCommandTests {
 
     @BeforeEach
     public void setUp(){
-        LocalDate date = LocalDate.of(2021,05,28);
-        LocalTime time = LocalTime.of(12,00);
+        LocalDate date = LocalDate.of(2021, 5,28);
+        LocalTime time = LocalTime.of(12, 0);
         task = new Task("Adpro", date, time);
         task.setIdTask(1);
     }
@@ -58,6 +58,7 @@ public class ReminderDetailCommandTests {
 
         reminderDetailCommand.getOutputMessage(message, inputContent);
         MessageEmbed output = reminderDetailCommand.embedOutput.build();
+
         Assertions.assertEquals("Detail Tugas [#1]", output.getTitle());
     }
 }

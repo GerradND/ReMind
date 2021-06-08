@@ -4,7 +4,6 @@ import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Task;
 import com.adpro.remind.repository.GuildRepository;
 import com.adpro.remind.repository.TaskRepository;
-import com.adpro.remind.service.GuildService;
 import com.adpro.remind.service.TaskService;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
@@ -17,7 +16,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
@@ -61,11 +59,10 @@ public class ReminderAddCommandTests {
 
     @BeforeEach
     public void setUp(){
-        MockitoAnnotations.initMocks(this);
         guild = new Guild("1234567890");
 
-        LocalDate date = LocalDate.of(2021,05,28);
-        LocalTime time = LocalTime.of(12,00);
+        LocalDate date = LocalDate.of(2021, 5,28);
+        LocalTime time = LocalTime.of(12, 0);
         task = new Task("Adpro", date, time);
     }
 

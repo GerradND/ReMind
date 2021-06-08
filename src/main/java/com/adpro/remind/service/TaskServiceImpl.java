@@ -16,10 +16,9 @@ import java.util.List;
 @Service
 public class TaskServiceImpl implements TaskService{
 
-    private TaskRepository taskRepository;
-    private ReminderRepository reminderRepository;
-    private GuildRepository guildRepository;
-    private GuildService guildService;
+    private final TaskRepository taskRepository;
+    private final ReminderRepository reminderRepository;
+    private final GuildRepository guildRepository;
 
     @Autowired
     public TaskServiceImpl(TaskRepository taskRepository, ReminderRepository reminderRepository, GuildRepository guildRepository){

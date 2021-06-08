@@ -39,13 +39,11 @@ public class ReminderUpdateCommandTests {
     private ReminderUpdateCommand reminderUpdateCommand;
 
     private Task oldTask;
-    private LocalDate date;
-    private LocalTime time;
 
     @BeforeEach
     public void setUp(){
-        date = LocalDate.of(2021, 05, 31);
-        time = LocalTime.of(19,00);
+        LocalDate date = LocalDate.of(2021, 5, 31);
+        LocalTime time = LocalTime.of(19, 0);
         oldTask = new Task("Adpro", date, time);
         oldTask.setIdTask(1);
     }
@@ -54,8 +52,8 @@ public class ReminderUpdateCommandTests {
     public void testReminderUpdateOutput(){
         String[] inputContent = {"-reminder", "update", "1", "29/05/2021", "20:00"};
 
-        LocalDate newDate = LocalDate.of(2021, 05, 29);
-        LocalTime newTime = LocalTime.of(20, 00);
+        LocalDate newDate = LocalDate.of(2021, 5, 29);
+        LocalTime newTime = LocalTime.of(20, 0);
         Task newTask = oldTask;
         newTask.setDate(newDate);
         newTask.setTime(newTime);
