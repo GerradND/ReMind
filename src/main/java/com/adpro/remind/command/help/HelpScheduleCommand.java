@@ -18,10 +18,12 @@ public class HelpScheduleCommand implements Command {
                 "`-schedule show [HARI]`\n" +
                 "`-schedule show all`\n" +
                 "`-schedule notify`\n" +
+                "`-schedule notifyset [JAM]`\n" +
                 "\n" +
                 "Notes:\n" +
                 "1. Format HARI: Monday, Tuesday, .., Sunday\n" +
                 "2. Format JAM: HH:MM\n" +
+                "3. Disclaimer: Waktu dalam WIB :flag_id:\n" +
                 "4. Untuk melihat ID suatu Schedule, gunakan `-schedule show all` atau `-schedule show [HARI]`\n");
 
         message.getChannel().sendMessage(eb.build()).queue();

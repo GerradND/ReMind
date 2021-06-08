@@ -47,7 +47,6 @@ public class InitCommand {
         commandRepository.addCommand("reminder show", new ReminderShowCommand(taskService));
         commandRepository.addCommand("reminder detail", new ReminderDetailCommand(taskService));
         commandRepository.addCommand("reminder set", new ReminderSetCommand(taskService));
-        commandRepository.addCommand("reminder notify", new ReminderNotifyCommand(guildService, taskService));
         commandRepository.addCommand("schedule add", new ScheduleAddCommand(scheduleService));
         commandRepository.addCommand("schedule update", new ScheduleUpdateTimeCommand(scheduleService));
         commandRepository.addCommand("schedule updatedesc", new ScheduleUpdateDescriptionCommand(scheduleService));
