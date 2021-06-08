@@ -47,12 +47,12 @@ public class TaskServiceImplTest {
         LocalDate date = LocalDate.of(2021, 05, 31);
         LocalTime time = LocalTime.of(23, 55);
 
-        guild = new Guild("814323773107994655");
+        guild = new Guild("1234567890");
         task = new Task("Adpro", date, time);
 
         LocalDate dateReminder = LocalDate.of(2021, 05, 29);
         LocalTime timeReminder = LocalTime.of(20, 15);
-        String randomIDChannel = "814323773696114690";
+        String randomIDChannel = "1234567890";
         reminder = new Reminder(dateReminder, timeReminder, randomIDChannel);
     }
 

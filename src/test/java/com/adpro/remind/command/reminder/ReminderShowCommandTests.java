@@ -49,7 +49,7 @@ public class ReminderShowCommandTests {
 
     @BeforeEach
     public void setUp(){
-        guild = new Guild("814323773107994655");
+        guild = new Guild("1234567890");
         LocalDate date = LocalDate.of(2021,05,28);
         LocalTime time = LocalTime.of(12,00);
         task = new Task("Adpro", date, time);

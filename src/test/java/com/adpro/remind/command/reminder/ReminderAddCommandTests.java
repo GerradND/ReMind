@@ -62,7 +62,7 @@ public class ReminderAddCommandTests {
     @BeforeEach
     public void setUp(){
         MockitoAnnotations.initMocks(this);
-        guild = new Guild("814323773107994655");
+        guild = new Guild("1234567890");
 
         LocalDate date = LocalDate.of(2021,05,28);
         LocalTime time = LocalTime.of(12,00);
@@ -74,14 +74,14 @@ public class ReminderAddCommandTests {
         String[] inputContent = {"-reminder", "add", "Adpro", "28/05/2021", "12:00"};
 
         when(message.getGuild()).thenReturn(DiscordGuild);
-        when(DiscordGuild.getId()).thenReturn("814323773107994655");
+        when(DiscordGuild.getId()).thenReturn("1234567890");
 
         lenient().when(guildRepository.findByIdGuild(guild.getIdGuild())).thenReturn(guild);
 
         lenient().when(guildRepository.save(any(Guild.class))).thenReturn(guild);
         lenient().when(taskRepository.save(any(Task.class))).thenReturn(task);
 
-        when(taskService.createTask(any(Task.class), eq("814323773107994655"))).thenReturn(task);
+        when(taskService.createTask(any(Task.class), eq("1234567890"))).thenReturn(task);
         task.setIdTask(1);
 
         EmbedBuilder embedOutput = reminderAddCommand.getEmbedOutput(task);
