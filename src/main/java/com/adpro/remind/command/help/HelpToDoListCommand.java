@@ -12,7 +12,7 @@ public class HelpToDoListCommand implements Command {
         eb.setTitle("ToDoList Command List");
         eb.appendDescription("`-list add [NAMA_LIST]`\n" +
                 "`-list additem [ID_LIST] [NAMA_ITEM]`\n" +
-                "`-list delete [ID_LIST] [NOMOR_ITEM]`\n" +
+                "`-list deleteitem [ID_LIST] [NOMOR_ITEM]`\n" +
                 "`-list delete [ID_LIST]`\n" +
                 "`-list show [ID_LIST]`\n" +
                 "`-list showall`\n" +
