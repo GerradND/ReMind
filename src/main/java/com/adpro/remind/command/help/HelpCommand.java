@@ -14,6 +14,7 @@ public class HelpCommand implements Command {
                 "`-help reminder` untuk menampilkan list command untuk fitur reminder\n" +
                 "`-help schedule` untuk menampilkan list command untuk fitur schedule\n" +
                 "`-help list` untuk menampilkan list command untuk fitur todolist\n");
+                "`-ping` untuk mengecek respond time\n");
 
         message.getChannel().sendMessage(eb.build()).queue();
     }
