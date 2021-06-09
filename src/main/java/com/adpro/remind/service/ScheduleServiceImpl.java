@@ -54,7 +54,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public List<Schedule> getScheduleByDay(String day, String idGuild) {
         Guild guild = guildRepository.findByIdGuild(idGuild);
-        return scheduleRepository.findByDayAndGuild(DayOfWeek.valueOf(day), guild);
+        return scheduleRepository.findByDayAndGuild(DayOfWeek.valueOf(day.toUpperCase()), guild);
     }
 
     @Override
