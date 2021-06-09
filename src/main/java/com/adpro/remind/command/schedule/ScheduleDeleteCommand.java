@@ -15,8 +15,7 @@ public class ScheduleDeleteCommand implements Command {
 
     private ScheduleService scheduleService;
     private String outputMsg;
-    private EmbedBuilder eb;
-    
+
     public ScheduleDeleteCommand(ScheduleService scheduleService) {
         this.scheduleService = scheduleService;
     }
@@ -27,7 +26,7 @@ public class ScheduleDeleteCommand implements Command {
 
     @Override
     public void getOutputMessage(Message message, String[] inputContent) {
-        eb = new EmbedBuilder();
+        EmbedBuilder eb = new EmbedBuilder();
         String idGuild = message.getGuild().getId();
         try {
             int idSchedule = Integer.parseInt(inputContent[2]);

@@ -23,7 +23,6 @@ import java.util.Locale;
 public class ScheduleAddCommand implements Command {
 
     private ScheduleService scheduleService;
-    private EmbedBuilder eb;
     private String outputMsg;
 
     public ScheduleAddCommand(ScheduleService scheduleService){
@@ -58,7 +57,7 @@ public class ScheduleAddCommand implements Command {
 
     @Override
     public void getOutputMessage(Message message, String[] inputContent) {
-        eb = new EmbedBuilder();
+        EmbedBuilder eb = new EmbedBuilder();
         String title = inputContent[2];
         String day = inputContent[3];
         String startTime = inputContent[4];
@@ -89,7 +88,7 @@ public class ScheduleAddCommand implements Command {
         } catch (Exception e) {
             e.printStackTrace();
             outputMsg = "Penambahan schedule gagal/terdapat kesalahan parameter. Silahkan coba lagi.";
-            eb.addField(outputMsg,"", false);
+            eb.addField(outputMsg, "", false);
             eb.setColor(Color.red);
             message.getChannel().sendMessage(eb.build()).queue();
         }
