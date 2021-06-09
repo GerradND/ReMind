@@ -30,13 +30,11 @@ public class ScheduleShowCommand implements Command {
 
     public boolean IsInt_ByException(String str)
     {
-        try
-        {
+        try {
             Integer.parseInt(str);
             return true;
         }
-        catch(NumberFormatException nfe)
-        {
+        catch(NumberFormatException nfe) {
             return false;
         }
     }
@@ -88,7 +86,7 @@ public class ScheduleShowCommand implements Command {
 
 
         } else if (stringContainsItemFromList(inputContent[2], arrHari)) {  // schedule per hari
-            scheduleList = scheduleService.getScheduleByDay(inputContent[2].toUpperCase(), idGuild);
+            scheduleList = scheduleService.getScheduleByDay(inputContent[2], idGuild);
             eb.setTitle(":yellow_square: " + inputContent[2]);
 
             if (scheduleList.size() == 0) {
@@ -102,6 +100,9 @@ public class ScheduleShowCommand implements Command {
                                     schedule.getEndTime().toString()), false);
                 }
             }
+        } else {
+            outputMsg = "Command 'Show' yang Anda masukan salah! Silahkan coba lagi.";
+            eb.addField(outputMsg, "", false);
         }
         message.getChannel().sendMessage(eb.build()).queue();
     }
