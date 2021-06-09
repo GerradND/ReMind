@@ -11,6 +11,7 @@ import java.awt.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.HashMap;
 import java.util.Locale;
@@ -19,10 +20,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
-
-
-public class ScheduleNotifyCommand implements Command {
+public class ScheduleNotifySetTimeCommand implements Command {
     private GuildService guildService;
     private ScheduleService scheduleService;
     private final ScheduledExecutorService scheduler =
@@ -30,17 +28,17 @@ public class ScheduleNotifyCommand implements Command {
     private HashMap<String, ScheduledFuture<?>> subscriber;
     private ScheduledFuture<?> notifyHandle;
 
-
-    public ScheduleNotifyCommand(GuildService guildService, ScheduleService scheduleService){
+    public ScheduleNotifySetTimeCommand(GuildService guildService, ScheduleService scheduleService) {
         this.guildService = guildService;
         this.scheduleService = scheduleService;
     }
 
     public ScheduledFuture<?> notifyOn(Message message, String idGuild) {
         LocalDateTime now = LocalDateTime.now();
-        LocalTime notifyTime = guildService.getNotifyTimeSchedule(idGuild);
+        int hours = guildService.getNotifyTimeSchedule(idGuild).getHour();
+        int minute = guildService.getNotifyTimeSchedule(idGuild).getMinute();
 
-        LocalDateTime nextRun = now.withHour(notifyTime.getHour()).withMinute(notifyTime.getHour()).withSecond(0);
+        LocalDateTime nextRun = now.withHour(hours).withMinute(minute).withSecond(0);
         if(now.compareTo(nextRun) > 0)
             nextRun = nextRun.plusDays(1);
 
@@ -68,7 +66,6 @@ public class ScheduleNotifyCommand implements Command {
                 message.getChannel().sendMessage(eb.build()).queue();
             }
         };
-//        this.notifyHandle = scheduler.scheduleAtFixedRate(notifier, 10, 10, SECONDS);
         this.notifyHandle = scheduler.scheduleAtFixedRate(notifier, initalDelay, TimeUnit.DAYS.toSeconds(1), TimeUnit.SECONDS); // -> set sesuai timer
         return notifyHandle;
 
@@ -78,29 +75,41 @@ public class ScheduleNotifyCommand implements Command {
         notifyHandle.cancel(true);
     }
 
+    public static LocalTime getTime(String time) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        return LocalTime.parse(time, formatter);
+    }
+
+    public void changeNotifyTime(Message message, String idGuild) {
+        EmbedBuilder eb = new EmbedBuilder();
+
+        if (subscriber.containsKey(idGuild))
+        {
+            notifyOff(subscriber.get(idGuild));
+            subscriber.replace(idGuild, notifyOn(message, idGuild));
+            eb.setColor(Color.ORANGE);
+            eb.setDescription("Notifikasi berhasil diubah menjadi jam " +
+                    guildService.getNotifyTimeSchedule(idGuild).toString() + " tiap harinya.");
+
+        } else {
+            subscriber.put(idGuild, notifyOn(message, idGuild));
+            guildService.notifySchedule(idGuild);
+            eb.setColor(Color.GREEN);
+            eb.setDescription("Notifikasi aktif! Schedule Anda akan dinotifikasikan jam " +
+                    guildService.getNotifyTimeSchedule(idGuild).toString() + " tiap harinya.");
+        }
+        message.getChannel().sendMessage(eb.build()).queue();
+
+    }
+
     @Override
     public void getOutputMessage(Message message, String[] inputContent) {
         this.subscriber = guildService.getScheduleSubscriber();
+
         String idGuild = message.getGuild().getId();
+        String time = inputContent[2];
 
-        if (!subscriber.containsKey(idGuild)) {
-            subscriber.put(idGuild, notifyHandle);
-        }
-
-        EmbedBuilder eb = new EmbedBuilder();
-
-        if (guildService.getGuildByID(idGuild).isScheduleSubscribed()) {
-            notifyOff(subscriber.get(idGuild));
-            eb.setColor(Color.RED);
-            eb.setDescription("Notifikasi dinonaktifkan!");
-        } else {
-            subscriber.replace(idGuild, notifyOn(message, idGuild));
-            eb.setColor(Color.GREEN);
-            eb.setDescription("Notifikasi aktif! Schedule Anda akan dinotifikasikan jam 00:00 tiap harinya.");
-        }
-
-        message.getChannel().sendMessage(eb.build()).queue();
-        guildService.notifySchedule(idGuild);
-
+        guildService.setNotifyTimeSchedule(idGuild, getTime(time));
+        changeNotifyTime(message, idGuild);
     }
 }

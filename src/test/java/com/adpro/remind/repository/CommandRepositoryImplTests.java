@@ -46,7 +46,7 @@ public class CommandRepositoryImplTests {
 //    public void testAddCommandMethod() throws Exception {
 //        CommandRepositoryImpl commandRepository = new CommandRepositoryImpl();
 //        commandRepository.addCommand("dummyPing", new PingCommand());
-//        assertEquals(1, commandRepository.getFeature().size());
+//        assertEquals(24, commandRepository.getFeature().size());
 //    }
 
     @Test

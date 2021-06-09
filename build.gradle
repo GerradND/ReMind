@@ -13,6 +13,20 @@ group = 'com.adpro'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
+
+checkstyle {
+	toolVersion '8.31'
+	config = resources.text.fromFile(configDirectory.file("checkstyle.xml"))
+}
+
+checkstyleMain {
+	source ='src/main/java'
+}
+
+checkstyleTest {
+	source ='src/test/java'
+}
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor

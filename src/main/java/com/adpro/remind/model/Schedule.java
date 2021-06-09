@@ -3,7 +3,9 @@ package com.adpro.remind.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -13,7 +15,8 @@ import java.time.LocalTime;
 
 @Entity
 @Table(name = "schedule")
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 public class Schedule {
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -34,12 +37,10 @@ public class Schedule {
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonBackReference
+    @ManyToOne
     @JoinColumn(name = "id_guild")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     private Guild guild;
-
 
     public Schedule(String title, DayOfWeek day, LocalTime startTime, LocalTime endTime, String description){
         this.title = title;
@@ -48,4 +49,5 @@ public class Schedule {
         this.endTime = endTime;
         this.description = description;
     }
+
 }

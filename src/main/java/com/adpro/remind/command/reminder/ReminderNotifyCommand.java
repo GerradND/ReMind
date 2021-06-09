@@ -23,14 +23,19 @@ import java.util.concurrent.ScheduledFuture;
 
 import com.adpro.remind.service.GuildService;
 import net.dv8tion.jda.api.entities.TextChannel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.security.auth.login.LoginException;
 
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-public class ReminderNotifyCommand implements Command {
+@Component
+public class ReminderNotifyCommand {
     private JDA jda;
     private GuildService guildService;
     private TaskService taskService;
@@ -39,12 +44,17 @@ public class ReminderNotifyCommand implements Command {
     private HashMap<String, ScheduledFuture<?>> subscriber = new HashMap<>();
     private ScheduledFuture<?> notifyHandle;
 
-//    @Value("${token}")
-    private String token = "ODM2MDg3NDY0NDUyMDMwNDY0.YIY5IQ.nLEk_v3_ArzDmuFCKLF8ChImhN0";
+    @Value("${token}")
+    private String token;
 
-    public ReminderNotifyCommand(GuildService guildService, TaskService taskService) throws LoginException {
+    @Autowired
+    public ReminderNotifyCommand(GuildService guildService, TaskService taskService) {
         this.guildService = guildService;
         this.taskService = taskService;
+    }
+
+    @PostConstruct
+    public void setUpNotify() throws LoginException {
         this.jda = JDABuilder.createDefault(token).build();
         notifyHandle = notifyOn();
     }
@@ -64,9 +74,7 @@ public class ReminderNotifyCommand implements Command {
                     LocalTime time = reminder.getTime();
                     LocalDateTime dateTime = LocalDateTime.of(date, time);
 
-                    System.out.println("Masuk run: " + dateTimeNow + " -- " + dateTime);
                     if (dateTime.isBefore(dateTimeNow)) {
-                        System.out.println("output reminder");
                         Task task = reminder.getTask();
                         Integer id = reminder.getIdReminder();
                         String idChannel = reminder.getIdChannel();
@@ -76,6 +84,7 @@ public class ReminderNotifyCommand implements Command {
                         eb.addField("Task Name", task.getName(), false);
                         eb.appendDescription("Pesan ini adalah reminder untuk " + task.getName() + " pada "
                                 + task.getDate() + " " + task.getTime());
+                        eb.setColor(Color.RED);
 
                         TextChannel textChannel = jda.getTextChannelById(idChannel);
 
@@ -88,11 +97,6 @@ public class ReminderNotifyCommand implements Command {
         };
         this.notifyHandle = scheduler.scheduleAtFixedRate(notifier, 60, 60, SECONDS);
         return notifyHandle;
-
-    }
-
-    @Override
-    public void getOutputMessage(Message message, String[] inputContent) {
 
     }
 }
