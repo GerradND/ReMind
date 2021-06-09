@@ -91,7 +91,6 @@ public class ScheduleAddCommandTests {
         lenient().when(messageChannel.sendMessage(any(MessageEmbed.class))).thenReturn(messageAction);
         doNothing().when(messageAction).queue();
 
-        System.out.println(schedule.getIdSchedule());
 
         scheduleAddCommand.getOutputMessage(message, inputContent);
 
@@ -109,8 +108,6 @@ public class ScheduleAddCommandTests {
 
         lenient().when(messageChannel.sendMessage(any(MessageEmbed.class))).thenReturn(messageAction);
         doNothing().when(messageAction).queue();
-
-        System.out.println(schedule.getIdSchedule());
 
         scheduleAddCommand.getOutputMessage(message, inputContent);
 

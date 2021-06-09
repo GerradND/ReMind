@@ -1,5 +1,6 @@
 package com.adpro.remind.command.schedule;
 
+import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Schedule;
 import com.adpro.remind.service.ScheduleService;
 import net.dv8tion.jda.api.entities.Message;
@@ -16,6 +17,7 @@ import org.springframework.util.Assert;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -45,6 +47,7 @@ public class ScheduleUpdateDescriptionCommandTests {
     private ScheduleUpdateDescriptionCommand scheduleUpdateDescriptionCommand;
 
     private Schedule schedule;
+    private Guild guild;
 
     @BeforeEach
     public void setUp() {
@@ -54,6 +57,9 @@ public class ScheduleUpdateDescriptionCommandTests {
         schedule.setStartTime(LocalTime.of(8,0));
         schedule.setEndTime(LocalTime.of(10,0));
         schedule.setDescription("Kelas pagi");
+        guild = new Guild("123");
+        guild.setScheduleList(new ArrayList<>());
+        schedule.setGuild(guild);
     }
 
     @Test
@@ -64,7 +70,7 @@ public class ScheduleUpdateDescriptionCommandTests {
     }
 
     @Test
-    public void testScheduleDeleteSuccessOutput() {
+    public void testScheduleUpdateSuccessOutput() {
         String[] inputContent = {"-schedule", "updatedesc", "1", "Advanced_Programming", "Kelas", "pagi", "banget"};
 
         lenient().when(message.getGuild()).thenReturn(guildDC);
@@ -78,12 +84,12 @@ public class ScheduleUpdateDescriptionCommandTests {
 
         scheduleUpdateDescriptionCommand.getOutputMessage(message, inputContent);
 
-        assertEquals(":pencil2: Keterangan schedule \"Advanced_Programming\" berhasil diubah!",
+        assertEquals(":pencil2: Keterangan schedule \"Adpro\" berhasil diubah!",
                 scheduleUpdateDescriptionCommand.getOutputMsg());
     }
 
     @Test
-    public void testScheduleDeleteNotFoundOutput() {
+    public void testScheduleUpdateNotFoundOutput() {
         String[] inputContent = {"-schedule", "updatedesc", "2", "Lol", "get", "rekt", "banget"};
 
         lenient().when(message.getGuild()).thenReturn(guildDC);
@@ -102,7 +108,7 @@ public class ScheduleUpdateDescriptionCommandTests {
     }
 
     @Test
-    public void testScheduleDeleteWrongIDFormatOutput() {
+    public void testScheduleUpdateWrongIDFormatOutput() {
         String[] inputContent = {"-schedule", "delete", "lol"};
 
         lenient().when(message.getGuild()).thenReturn(guildDC);
