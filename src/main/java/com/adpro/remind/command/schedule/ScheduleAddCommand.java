@@ -65,7 +65,7 @@ public class ScheduleAddCommand implements Command {
         String desc = formDescription(inputContent);
 
         String idGuild = message.getGuild().getId();
-        System.out.println(idGuild);
+        
 
         try {
             Schedule schedule = new Schedule(title, getDayOfWeek(day), getTime(startTime), getTime(endTime), desc);
