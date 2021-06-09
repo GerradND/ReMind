@@ -127,7 +127,7 @@ public class ScheduleShowCommandTests {
         lenient().when(message.getGuild()).thenReturn(guildDC);
         lenient().when(guildDC.getId()).thenReturn("123");
 
-        lenient().when(scheduleService.getScheduleByDay(any(String.class), any(String.class))).thenReturn(scheduleListMonday);
+        lenient().when(scheduleService.getScheduleByDay("Monday", "123")).thenReturn(scheduleListMonday);
         lenient().when(message.getChannel()).thenReturn(messageChannel);
 
         lenient().when(messageChannel.sendMessage(any(MessageEmbed.class))).thenReturn(messageAction);
@@ -192,6 +192,24 @@ public class ScheduleShowCommandTests {
 
         scheduleShowCommand.getOutputMessage(message, inputContent);
         assertEquals("Schedule dengan ID: 2 tidak dapat ditemukan!", scheduleShowCommand.getOutputMsg());
+
+    }
+
+    @Test
+    public void testWrongScheduleShowCommandOutput() {
+        String[] inputContent = {"-schedule", "show", "test"};
+
+        lenient().when(message.getGuild()).thenReturn(guildDC);
+        lenient().when(guildDC.getId()).thenReturn("123");
+
+        lenient().when(message.getChannel()).thenReturn(messageChannel);
+
+        lenient().when(messageChannel.sendMessage(any(MessageEmbed.class))).thenReturn(messageAction);
+        doNothing().when(messageAction).queue();
+
+
+        scheduleShowCommand.getOutputMessage(message, inputContent);
+        assertEquals("Command 'Show' yang Anda masukan salah! Silahkan coba lagi.", scheduleShowCommand.getOutputMsg());
 
     }
 }

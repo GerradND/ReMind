@@ -1,5 +1,6 @@
 package com.adpro.remind.command.schedule;
 
+import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Schedule;
 import com.adpro.remind.service.ScheduleService;
 import net.dv8tion.jda.api.entities.Message;
@@ -16,6 +17,7 @@ import org.springframework.util.Assert;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -45,6 +47,7 @@ public class ScheduleUpdateTimeCommandTests {
     private ScheduleUpdateTimeCommand scheduleUpdateTimeCommand;
 
     private Schedule schedule;
+    private Guild guild;
 
     @BeforeEach
     public void setUp() {
@@ -54,6 +57,9 @@ public class ScheduleUpdateTimeCommandTests {
         schedule.setStartTime(LocalTime.of(8,0));
         schedule.setEndTime(LocalTime.of(10,0));
         schedule.setDescription("Kelas pagi");
+        guild = new Guild("123");
+        guild.setScheduleList(new ArrayList<>());
+        schedule.setGuild(guild);
     }
 
     @Test
