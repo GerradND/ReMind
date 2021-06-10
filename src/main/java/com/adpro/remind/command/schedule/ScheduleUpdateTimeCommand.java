@@ -18,22 +18,10 @@ import java.util.Locale;
 public class ScheduleUpdateTimeCommand implements Command {
 
     private ScheduleService scheduleService;
-    private EmbedBuilder eb;
     private String outputMsg;
 
     public ScheduleUpdateTimeCommand(ScheduleService scheduleService) {
         this.scheduleService = scheduleService;
-    }
-
-    public Schedule updateSchedule(int idSchedule, DayOfWeek day, LocalTime startTime, LocalTime endTime) {
-        Schedule ongoingSchedule = null;
-        if (scheduleService.getScheduleByID(idSchedule) != null) {
-            ongoingSchedule = scheduleService.getScheduleByID(idSchedule);
-            ongoingSchedule.setDay(day);
-            ongoingSchedule.setStartTime(startTime);
-            ongoingSchedule.setEndTime(endTime);
-        }
-        return ongoingSchedule;
     }
 
     public LocalTime getTime(String time) {
@@ -54,25 +42,28 @@ public class ScheduleUpdateTimeCommand implements Command {
     @Override
     public void getOutputMessage(Message message, String[] inputContent) {
         EmbedBuilder eb = new EmbedBuilder();
+        String idGuild = message.getGuild().getId();
         try {
             int idSchedule = Integer.parseInt(inputContent[2]);
-            DayOfWeek newDay = getDayOfWeek(inputContent[3]);
-            LocalTime newStartTime = getTime(inputContent[4]);
-            LocalTime newEndTime = getTime(inputContent[5]);
+            String newDay = inputContent[3];
+            String newStartTime = inputContent[4];
+            String newEndTime = inputContent[5];
+            Schedule schedule = scheduleService.getScheduleByID(idSchedule);
 
-            Schedule updatedSchedule = this.updateSchedule(idSchedule, newDay, newStartTime, newEndTime);
-
-            if (updateSchedule(idSchedule, newDay, newStartTime, newEndTime) == null) {
-                eb.setColor(Color.orange);
+            if (schedule == null || !schedule.getGuild().getIdGuild().equals(idGuild)) {
                 outputMsg = "Schedule dengan ID: " + idSchedule + " tidak ditemukan!";
+                eb.setColor(Color.orange);
                 eb.addField(outputMsg, "", false);
+
             } else {
-                scheduleService.updateSchedule(idSchedule, updatedSchedule);
+                schedule.setDay(getDayOfWeek(newDay));
+                schedule.setStartTime(getTime(newStartTime));
+                schedule.setEndTime(getTime(newEndTime));
+                scheduleService.updateSchedule(idSchedule, schedule);
+                outputMsg = ":clock2: Waktu schedule \"" + schedule.getTitle() + "\" berhasil diubah!";
                 eb.setColor(Color.green);
-                outputMsg = ":clock2: Waktu schedule \"" + updatedSchedule.getTitle() + "\" berhasil diubah!";
                 eb.setTitle(outputMsg);
-                eb.addField("Hari, Jam", updatedSchedule.getDay().getDisplayName(TextStyle.FULL, Locale.getDefault()) + ", " +
-                        updatedSchedule.getStartTime().toString() + "-" + updatedSchedule.getEndTime().toString(), true);
+                eb.addField("Hari, Jam",  newDay + ", " + newStartTime + "-" + newEndTime, true);
 
             }
             message.getChannel().sendMessage(eb.build()).queue();

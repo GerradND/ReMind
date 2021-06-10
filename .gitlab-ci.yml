@@ -36,6 +36,12 @@ test:
     SPRING_DATASOURCE_USER: postgres
     SPRING_DATASOURCE_PASSWORD: postgres
 
+checkstyle:
+  image: gradle:jdk11
+  stage: test
+  script:
+    - ./gradlew checkstyleMain checkstyleTest
+
 cache:
   key: "$CI_COMMIT_REF_NAME"
   paths:

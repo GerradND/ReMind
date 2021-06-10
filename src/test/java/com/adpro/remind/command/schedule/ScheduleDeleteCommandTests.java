@@ -2,44 +2,19 @@ package com.adpro.remind.command.schedule;
 
 import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Schedule;
-import com.adpro.remind.repository.GuildRepository;
-import com.adpro.remind.repository.ScheduleRepository;
 import com.adpro.remind.service.ScheduleServiceImpl;
-import com.adpro.remind.service.TaskService;
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.Region;
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.managers.AudioManager;
-import net.dv8tion.jda.api.managers.GuildManager;
-import net.dv8tion.jda.api.requests.RestAction;
 import net.dv8tion.jda.api.requests.restaction.*;
-import net.dv8tion.jda.api.requests.restaction.order.CategoryOrderAction;
-import net.dv8tion.jda.api.requests.restaction.order.ChannelOrderAction;
-import net.dv8tion.jda.api.requests.restaction.order.RoleOrderAction;
-import net.dv8tion.jda.api.requests.restaction.pagination.AuditLogPaginationAction;
-import net.dv8tion.jda.api.utils.cache.MemberCacheView;
-import net.dv8tion.jda.api.utils.cache.SnowflakeCacheView;
-import net.dv8tion.jda.api.utils.cache.SortedSnowflakeCacheView;
-import net.dv8tion.jda.api.utils.concurrent.Task;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.awt.*;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.*;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.function.Consumer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -58,9 +33,6 @@ public class ScheduleDeleteCommandTests {
 
     @Mock
     private MessageAction messageAction;
-
-    @Mock
-    private MessageEmbed messageEmbed;
 
     @Mock
     private ScheduleServiceImpl scheduleService;
