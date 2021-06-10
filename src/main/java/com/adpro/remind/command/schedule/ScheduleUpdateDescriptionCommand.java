@@ -12,21 +12,10 @@ import java.awt.*;
 public class ScheduleUpdateDescriptionCommand implements Command {
 
     private ScheduleService scheduleService;
-    private EmbedBuilder eb;
     private String outputMsg;
 
     public ScheduleUpdateDescriptionCommand(ScheduleService scheduleService) {
         this.scheduleService = scheduleService;
-    }
-
-    public Schedule updateSchedule(int idSchedule, String title, String desc) {
-        Schedule ongoingSchedule = null;
-        if(scheduleService.getScheduleByID(idSchedule) != null) {
-            ongoingSchedule = scheduleService.getScheduleByID(idSchedule);
-            ongoingSchedule.setTitle(title);
-            ongoingSchedule.setDescription(desc);
-        }
-        return ongoingSchedule;
     }
 
     public String formDescription(String[] inputContent, int start) {
@@ -44,33 +33,37 @@ public class ScheduleUpdateDescriptionCommand implements Command {
 
     @Override
     public void getOutputMessage(Message message, String[] inputContent) {
-        eb = new EmbedBuilder();
+        EmbedBuilder eb = new EmbedBuilder();
+        String idGuild = message.getGuild().getId();
         try {
             int idSchedule = Integer.parseInt(inputContent[2]);
-            String title = inputContent[3];
-            String desc = formDescription(inputContent, 4);
+            String newTitle = inputContent[3];
+            String newDesc = formDescription(inputContent, 4);
+            Schedule schedule = scheduleService.getScheduleByID(idSchedule);
 
-            if(updateSchedule(idSchedule, title, desc) == null) {
-                eb.setColor(Color.orange);
+            if (schedule == null || !schedule.getGuild().getIdGuild().equals(idGuild)) {
                 outputMsg = "Schedule dengan ID: " + idSchedule + " tidak ditemukan!";
+                eb.setColor(Color.orange);
                 eb.addField(outputMsg, "", false);
 
             } else {
-                Schedule updatedSchedule = updateSchedule(idSchedule, title, desc);
-                scheduleService.updateSchedule(idSchedule, updatedSchedule);
+                String oldTitle = schedule.getTitle();
+                schedule.setTitle(newTitle);
+                schedule.setDescription(newDesc);
+                scheduleService.updateSchedule(idSchedule, schedule);
+                outputMsg = ":pencil2: Keterangan schedule \"" + oldTitle + "\" berhasil diubah!";
                 eb.setColor(Color.green);
-                outputMsg = ":pencil2: Keterangan schedule \"" + updatedSchedule.getTitle() + "\" berhasil diubah!";
                 eb.setTitle(outputMsg);
-                eb.addField("✍ Judul: ", updatedSchedule.getTitle(), false);
-                eb.addField(":memo: Deskripsi: ", updatedSchedule.getDescription(), false);
+                eb.addField("✍ Judul baru: ", newTitle, false);
+                eb.addField(":memo: Deskripsi baru: ", newDesc, false);
             }
 
             message.getChannel().sendMessage(eb.build()).queue();
 
 
         } catch (NumberFormatException e) {
-            eb.setColor(Color.red);
             outputMsg = "Tolong masukan ID yang valid.";
+            eb.setColor(Color.red);
             eb.addField(outputMsg, "", false);
             message.getChannel().sendMessage(eb.build()).queue();
         }

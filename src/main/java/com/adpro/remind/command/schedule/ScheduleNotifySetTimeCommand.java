@@ -13,7 +13,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -26,17 +28,51 @@ public class ScheduleNotifySetTimeCommand implements Command {
     private final ScheduledExecutorService scheduler =
             Executors.newScheduledThreadPool(1);
     private HashMap<String, ScheduledFuture<?>> subscriber;
+    private List<Schedule> scheduleListDay;
     private ScheduledFuture<?> notifyHandle;
+    private String outputMsg;
+
+    public List<Schedule> getScheduleListDay() {
+        return scheduleListDay;
+    }
+
+    public String getOutputMsg() {
+        return outputMsg;
+    }
 
     public ScheduleNotifySetTimeCommand(GuildService guildService, ScheduleService scheduleService) {
         this.guildService = guildService;
         this.scheduleService = scheduleService;
     }
 
+    public void notificationMessage(Message message, String idGuild, String today) {
+        EmbedBuilder eb = new EmbedBuilder();
+        scheduleListDay = scheduleService.getScheduleByDay(today, idGuild);
+        eb.setTitle(":yellow_square: " + today);
+
+        if(scheduleListDay.isEmpty()) {
+            outputMsg = "Schedule Anda kosong untuk hari " + today + " :smile:";
+            eb.addField(outputMsg, "", false);
+
+        } else {
+            outputMsg = "Berikut adalah Schedule Anda untuk hari " + today + ":";
+            eb.addField(outputMsg, "", false);
+            for (Schedule schedule : scheduleListDay) {
+                eb.addField(
+                        String.format(":bulb: \"%s\" - <:id::%s>", schedule.getTitle(), schedule.getIdSchedule()),
+                        String.format("(%s-%s)", schedule.getStartTime().toString(), schedule.getEndTime().toString()),
+                        false);
+            }
+        }
+        message.getChannel().sendMessage(eb.build()).queue();
+    }
+
     public ScheduledFuture<?> notifyOn(Message message, String idGuild) {
+        scheduleListDay = new ArrayList<>();
         LocalDateTime now = LocalDateTime.now();
         int hours = guildService.getNotifyTimeSchedule(idGuild).getHour();
         int minute = guildService.getNotifyTimeSchedule(idGuild).getMinute();
+        String today = now.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
 
         LocalDateTime nextRun = now.withHour(hours).withMinute(minute).withSecond(0);
         if(now.compareTo(nextRun) > 0)
@@ -47,23 +83,7 @@ public class ScheduleNotifySetTimeCommand implements Command {
 
         final Runnable notifier = new Runnable() {
             public void run() {
-                EmbedBuilder eb = new EmbedBuilder();
-                String today = now.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
-                Iterable<Schedule> listScheduleDay = scheduleService.getScheduleByDay(today.toUpperCase(), idGuild);
-                eb.setTitle(":yellow_square: " + today);
-
-                if(listScheduleDay.spliterator().getExactSizeIfKnown() == 0) {
-                    eb.addField("Schedule Anda kosong untuk hari tersebut :smile:", "", false);
-
-                } else {
-                    for (Schedule schedule : listScheduleDay) {
-                        eb.addField(":bulb: \"" + schedule.getTitle() + "\" - <:id:: " + schedule.getIdSchedule() + ">",
-                                String.format("(%s-%s)",
-                                        schedule.getStartTime().toString(),
-                                        schedule.getEndTime().toString()), false);
-                    }
-                }
-                message.getChannel().sendMessage(eb.build()).queue();
+                notificationMessage(message, idGuild, today);
             }
         };
         this.notifyHandle = scheduler.scheduleAtFixedRate(notifier, initalDelay, TimeUnit.DAYS.toSeconds(1), TimeUnit.SECONDS); // -> set sesuai timer
@@ -75,7 +95,7 @@ public class ScheduleNotifySetTimeCommand implements Command {
         notifyHandle.cancel(true);
     }
 
-    public static LocalTime getTime(String time) {
+    public LocalTime getTime(String time) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         return LocalTime.parse(time, formatter);
     }
@@ -85,19 +105,20 @@ public class ScheduleNotifySetTimeCommand implements Command {
 
         if (subscriber.containsKey(idGuild))
         {
+            outputMsg = "Notifikasi aktif dan berhasil diubah menjadi jam " +
+                    guildService.getNotifyTimeSchedule(idGuild).toString() + " tiap harinya.";
             notifyOff(subscriber.get(idGuild));
             subscriber.replace(idGuild, notifyOn(message, idGuild));
             eb.setColor(Color.ORANGE);
-            eb.setDescription("Notifikasi berhasil diubah menjadi jam " +
-                    guildService.getNotifyTimeSchedule(idGuild).toString() + " tiap harinya.");
 
         } else {
+            outputMsg = "Notifikasi aktif! Schedule Anda akan dinotifikasikan jam " +
+                    guildService.getNotifyTimeSchedule(idGuild).toString() + " tiap harinya.";
             subscriber.put(idGuild, notifyOn(message, idGuild));
             guildService.notifySchedule(idGuild);
             eb.setColor(Color.GREEN);
-            eb.setDescription("Notifikasi aktif! Schedule Anda akan dinotifikasikan jam " +
-                    guildService.getNotifyTimeSchedule(idGuild).toString() + " tiap harinya.");
         }
+        eb.setDescription(outputMsg);
         message.getChannel().sendMessage(eb.build()).queue();
 
     }

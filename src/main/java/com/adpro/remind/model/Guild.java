@@ -43,7 +43,7 @@ public class Guild {
     @JsonIgnore
     private List<TodoList> todoList;
 
-    public Guild(String idGuild){
+    public Guild(String idGuild) {
         this.idGuild = idGuild;
         this.isScheduleSubscribed = false;
         this.scheduleNotificationTime = LocalTime.MIDNIGHT;
