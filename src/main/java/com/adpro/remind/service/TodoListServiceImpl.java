@@ -23,16 +23,16 @@ public class TodoListServiceImpl implements TodoListService{
     private GuildRepository guildRepository;
 
     @Override
-    public void addTodoList(TodoList todoList){
-
-        todoListRepository.save(todoList);
+    public TodoList addTodoList(TodoList todoList){
+        return todoListRepository.save(todoList);
     }
 
     @Override
-    public void addTodoItem(int idList, TodoItem todoItem){
+    public TodoList addTodoItem(int idList, TodoItem todoItem){
         TodoList todoList = todoListRepository.findById(idList);
         todoItem.setTodoList(todoList);
         todoItemRepository.save(todoItem);
+        return todoListRepository.findById(todoList.getId());
     }
 
     @Override
@@ -53,15 +53,11 @@ public class TodoListServiceImpl implements TodoListService{
 
     @Override
     public TodoList showTodoList(int id){
-        ArrayList <Integer> arr = new ArrayList<>();
-        arr.add(id);
-        System.out.println(todoItemRepository.findAllById(arr));
         return todoListRepository.findById(id);
     }
 
     @Override
-    public Iterable<TodoList> showAllTodoList(String idGuild) {
-        Guild guild = guildRepository.findById(idGuild).orElse(null);
+    public Iterable<TodoList> showAllTodoList(Guild guild) {
         if (guild == null){
             return null;
         }

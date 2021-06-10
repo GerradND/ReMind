@@ -23,30 +23,36 @@ import java.util.Locale;
 public class ScheduleAddCommand implements Command {
 
     private ScheduleService scheduleService;
+    private String outputMsg;
 
     public ScheduleAddCommand(ScheduleService scheduleService){
         this.scheduleService = scheduleService;
     }
 
     public String formDescription(String[] inputContent) {
-        String description = "";
-        for(int i = 6; i < inputContent.length; i++) {
-            description += inputContent[i] + " ";
+        StringBuilder description = new StringBuilder();
+        for(int i = 6; i < inputContent.length-1; i++) {
+            description.append(inputContent[i]).append(" ");
         }
-        return description;
+        description.append((inputContent[inputContent.length-1]));
+        return description.toString();
     }
 
-    public static DayOfWeek getDayOfWeek(String day) {
+    public DayOfWeek getDayOfWeek(String day) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE", Locale.US);
         TemporalAccessor accessor = formatter.parse(day);
         return DayOfWeek.from(accessor);
     }
 
-    public static LocalTime getTime(String time) {
+    public LocalTime getTime(String time) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         LocalTime dateTime = LocalTime.parse(time, formatter);
 
         return dateTime;
+    }
+
+    public String getOutputMsg() {
+        return outputMsg;
     }
 
     @Override
@@ -59,12 +65,15 @@ public class ScheduleAddCommand implements Command {
         String desc = formDescription(inputContent);
 
         String idGuild = message.getGuild().getId();
+        
 
         try {
-            Schedule schedule = scheduleService.createSchedule(new Schedule(title, getDayOfWeek(day),
-                    getTime(startTime), getTime(endTime), desc), idGuild);
+            Schedule schedule = new Schedule(title, getDayOfWeek(day), getTime(startTime), getTime(endTime), desc);
+            schedule = scheduleService.createSchedule(schedule, idGuild);
 
-            eb.setTitle(":white_check_mark: Schedule \"" + title + "\" berhasil ditambahkan!");
+            outputMsg = ":white_check_mark: Schedule \"" + title + "\" berhasil ditambahkan!";
+            eb.setTitle(outputMsg);
+
             eb.addField(":id: Id:", schedule.getIdSchedule().toString(), true);
             eb.addField(":writing_hand: Judul:", title, true);
             eb.addBlankField(true);
@@ -78,7 +87,8 @@ public class ScheduleAddCommand implements Command {
 
         } catch (Exception e) {
             e.printStackTrace();
-            eb.addField("Penambahan schedule gagal/terdapat kesalahan parameter. Silahkan coba lagi.","", false);
+            outputMsg = "Penambahan schedule gagal/terdapat kesalahan parameter. Silahkan coba lagi.";
+            eb.addField(outputMsg, "", false);
             eb.setColor(Color.red);
             message.getChannel().sendMessage(eb.build()).queue();
         }

@@ -4,7 +4,6 @@ import com.adpro.remind.command.list.*;
 import com.adpro.remind.command.help.*;
 import com.adpro.remind.command.reminder.*;
 import com.adpro.remind.command.schedule.*;
-import com.adpro.remind.model.Guild;
 import com.adpro.remind.repository.CommandRepository;
 import com.adpro.remind.service.GuildService;
 import com.adpro.remind.service.ScheduleService;
@@ -49,15 +48,17 @@ public class InitCommand {
         commandRepository.addCommand("reminder detail", new ReminderDetailCommand(taskService));
         commandRepository.addCommand("reminder set", new ReminderSetCommand(taskService));
         commandRepository.addCommand("schedule add", new ScheduleAddCommand(scheduleService));
-        commandRepository.addCommand("schedule update", new ScheduleTimeUpdateCommand(scheduleService));
-        commandRepository.addCommand("schedule updatedesc", new ScheduleDescriptionUpdateCommand(scheduleService));
+        commandRepository.addCommand("schedule update", new ScheduleUpdateTimeCommand(scheduleService));
+        commandRepository.addCommand("schedule updatedesc", new ScheduleUpdateDescriptionCommand(scheduleService));
         commandRepository.addCommand("schedule delete", new ScheduleDeleteCommand(scheduleService));
         commandRepository.addCommand("schedule show", new ScheduleShowCommand(scheduleService));
         commandRepository.addCommand("schedule notify", new ScheduleNotifyCommand(guildService, scheduleService));
+        commandRepository.addCommand("schedule notifyset", new ScheduleNotifySetTimeCommand(guildService, scheduleService));
         commandRepository.addCommand("list add", new ListAddTodoListCommand(todoListService, guildService));
         commandRepository.addCommand("list additem", new ListAddTodoItemCommand(todoListService));
         commandRepository.addCommand("list delete", new ListDeleteTodoListCommand(todoListService));
         commandRepository.addCommand("list deleteitem", new ListDeleteTodoItemCommand(todoListService));
+        commandRepository.addCommand("list show", new ListShowTodoListCommand(todoListService));
         commandRepository.addCommand("list showall", new ListShowAllTodoListCommand(todoListService));
     }
 

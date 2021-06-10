@@ -10,31 +10,41 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import java.awt.*;
 import java.time.format.TextStyle;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 public class ScheduleShowCommand implements Command {
 
     public final String[] arrHari = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
     private ScheduleService scheduleService;
+    private List<Schedule> scheduleList;
+    private String outputMsg;
 
     public ScheduleShowCommand(ScheduleService scheduleService) {
         this.scheduleService = scheduleService;
     }
-    public static boolean stringContainsItemFromList(String inputStr, String[] items) {
+
+    public boolean stringContainsItemFromList(String inputStr, String[] items) {
         return Arrays.stream(items).anyMatch(inputStr::contains);
     }
 
-    private boolean IsInt_ByException(String str)
+    public boolean IsInt_ByException(String str)
     {
-        try
-        {
+        try {
             Integer.parseInt(str);
             return true;
         }
-        catch(NumberFormatException nfe)
-        {
+        catch(NumberFormatException nfe) {
             return false;
         }
+    }
+
+    public List<Schedule> getScheduleList() {
+        return scheduleList;
+    }
+
+    public String getOutputMsg() {
+        return outputMsg;
     }
 
     @Override
@@ -45,10 +55,11 @@ public class ScheduleShowCommand implements Command {
 
         if (inputContent[2].equals("all")) {    // semua schedule
             eb.setTitle(":calendar_spiral: List semua schedule");
-            Iterable<Schedule> list = scheduleService.getListSchedule(idGuild);
+            scheduleList = scheduleService.getListSchedule(idGuild);
 
-            if(list == null) {
-                eb.addField("Schedule Anda masih kosong!", "", false);
+            if (scheduleList.isEmpty()) {
+                outputMsg = "Schedule Anda masih kosong!";
+                eb.addField(outputMsg, "", false);
             } else {
                 for (Schedule schedule : scheduleService.getListSchedule(idGuild)) {
                     eb.addField(":bulb: \"" + schedule.getTitle() + "\" - <:id:: " + schedule.getIdSchedule() + ">",
@@ -62,10 +73,12 @@ public class ScheduleShowCommand implements Command {
         } else if (IsInt_ByException(inputContent[2])) {    // schedule spesifik
             Schedule schedule = scheduleService.getScheduleByID(Integer.parseInt(inputContent[2]));
 
-            if(schedule == null) {
-                eb.addField("Schedule dengan ID: " + inputContent[2] + " tidak dapat ditemukan!", "", false);
+            if (schedule == null) {
+                outputMsg = "Schedule dengan ID: " + inputContent[2] + " tidak dapat ditemukan!";
+                eb.addField(outputMsg, "", false);
             } else {
-                eb.setTitle(":yellow_circle: \"" + schedule.getTitle() + "\"");
+                outputMsg = ":yellow_circle: \"" + schedule.getTitle() + "\"";
+                eb.setTitle(outputMsg);
                 eb.addField(":date: " + schedule.getDay().getDisplayName(TextStyle.FULL, Locale.getDefault()), "", false);
                 eb.addField(":alarm_clock: " + schedule.getStartTime() + "-" + schedule.getEndTime(), "", false);
                 eb.addField(":memo: Deskripsi:", schedule.getDescription(), false);
@@ -73,19 +86,23 @@ public class ScheduleShowCommand implements Command {
 
 
         } else if (stringContainsItemFromList(inputContent[2], arrHari)) {  // schedule per hari
-            Iterable<Schedule> listScheduleDay = scheduleService.getScheduleByDay(inputContent[2].toUpperCase(), idGuild);
+            scheduleList = scheduleService.getScheduleByDay(inputContent[2], idGuild);
             eb.setTitle(":yellow_square: " + inputContent[2]);
 
-            if(listScheduleDay.spliterator().getExactSizeIfKnown() == 0) {
-                eb.addField("Schedule Anda kosong untuk hari tersebut :smile:", "", false);
+            if (scheduleList.size() == 0) {
+                outputMsg = "Schedule Anda kosong untuk hari tersebut :smile:";
+                eb.addField(outputMsg, "", false);
             } else {
-                for (Schedule schedule : listScheduleDay) {
+                for (Schedule schedule : scheduleList) {
                     eb.addField(":bulb: \"" + schedule.getTitle() + "\" - <:id:: " + schedule.getIdSchedule() + ">",
                             String.format("(%s-%s)",
                                     schedule.getStartTime().toString(),
                                     schedule.getEndTime().toString()), false);
                 }
             }
+        } else {
+            outputMsg = "Command 'Show' yang Anda masukan salah! Silahkan coba lagi.";
+            eb.addField(outputMsg, "", false);
         }
         message.getChannel().sendMessage(eb.build()).queue();
     }
