@@ -87,7 +87,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Reminder setReminder(Reminder reminder, Task task){
+    public Reminder setReminder(Reminder reminder, Task task) {
         task.setReminder(reminder);
         reminder.setTask(task);
         reminderRepository.save(reminder);
@@ -96,7 +96,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Reminder findByIDReminder(Integer idReminder){
+    public Reminder findByIDReminder(Integer idReminder) {
         return reminderRepository.findByIdReminder(idReminder);
     }
 
@@ -106,7 +106,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void deleteReminder(Integer id){
+    public void deleteReminder(Integer id) {
         Reminder reminder = reminderRepository.findByIdReminder(id);
         Task task = reminder.getTask();
         task.getReminders().remove(reminder);

@@ -49,8 +49,8 @@ public class ReminderAddCommand implements Command {
         embedBuilder.addField(":hourglass: Jam: ", task.getTime().toString(), true);
         embedBuilder.addBlankField(true);
 
-        embedBuilder.addField("", "Pasang reminder untuk tugas ini dengan:\n `-reminder set " +
-                task.getIdTask() + " [WAKTU_REMINDER]`", false);
+        embedBuilder.addField("", "Pasang reminder untuk tugas ini dengan:\n `-reminder set "
+                                + task.getIdTask() + " [WAKTU_REMINDER]`", false);
 
         embedBuilder.setColor(Color.YELLOW);
 

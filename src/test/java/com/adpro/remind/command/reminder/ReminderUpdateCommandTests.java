@@ -63,7 +63,7 @@ public class ReminderUpdateCommandTests {
         when(message.getChannel()).thenReturn(messageChannel);
         when(messageChannel.sendMessage(embedOutput.build())).thenReturn(messageAction);
 
-        reminderUpdateCommand.getOutputMessage(message,inputContent);
+        reminderUpdateCommand.getOutputMessage(message, inputContent);
 
         MessageEmbed output = reminderUpdateCommand.embedOutput.build();
         Assertions.assertEquals(":white_check_mark:  Tugas dengan ID: 1 berhasil diupdate.", output.getTitle());

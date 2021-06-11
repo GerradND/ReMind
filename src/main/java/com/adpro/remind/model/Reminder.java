@@ -1,9 +1,9 @@
 package com.adpro.remind.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,11 +27,11 @@ public class Reminder {
     @Column(name = "time")
     private LocalTime time;
 
-    @Column(name="id_channel")
+    @Column(name = "id_channel")
     private String idChannel;
 
     @ManyToOne
-    @JoinColumn(name="id_task")
+    @JoinColumn(name = "id_task")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Task task;

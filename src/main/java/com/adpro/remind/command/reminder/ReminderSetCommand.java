@@ -36,7 +36,7 @@ public class ReminderSetCommand implements Command {
     }
 
     private LocalDateTime getReminderDateTime(LocalDateTime taskTime, Integer time, String type) {
-        if(type.equalsIgnoreCase("HARI")) {
+        if (type.equalsIgnoreCase("HARI")) {
             taskTime = taskTime.minusDays(time);
         } else {
             taskTime = taskTime.minusHours(time);
@@ -49,7 +49,7 @@ public class ReminderSetCommand implements Command {
     public EmbedBuilder getEmbedOutput(String id, Reminder reminder) {
         EmbedBuilder embedBuilder = new EmbedBuilder();
 
-        embedBuilder.setTitle("Reminder untuk tugas dengan ID "+ id + " telah dipasang.");
+        embedBuilder.setTitle("Reminder untuk tugas dengan ID " + id + " telah dipasang.");
         embedBuilder.addField(":date:  Tanggal: ", reminder.getDate().toString(), true);
         embedBuilder.addField(":hourglass:  Jam: ", reminder.getTime().toString(), true);
         embedBuilder.addBlankField(true);
@@ -61,7 +61,7 @@ public class ReminderSetCommand implements Command {
 
     @Override
     public void getOutputMessage(Message message, String[] inputContent) {
-        String id =inputContent[2];
+        String id = inputContent[2];
         Integer time = Integer.parseInt(inputContent[3]);
         String type = inputContent[4];
         String idChannel = message.getChannel().getId();
