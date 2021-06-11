@@ -5,22 +5,20 @@ import com.adpro.remind.model.Task;
 import com.adpro.remind.repository.ReminderRepository;
 import com.adpro.remind.repository.TaskRepository;
 import com.adpro.remind.service.TaskService;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.requests.restaction.MessageAction;
 import org.junit.jupiter.api.Assertions;
-import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.lenient;
@@ -54,7 +52,7 @@ public class ReminderSetCommandTests {
     private final String channelID = "1234567890";
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         LocalDate date = LocalDate.of(2021, 5,28);
         LocalTime time = LocalTime.of(12, 0);
         task = new Task("Adpro", date, time);
@@ -62,7 +60,7 @@ public class ReminderSetCommandTests {
     }
 
     @Test
-    void testReminderSetDaysOutput(){
+    void testReminderSetDaysOutput() {
         String[] inputContent = {"-reminder", "set", "1", "2", "hari"};
 
         LocalDate newDate = LocalDate.of(2021, 5,26);
@@ -85,7 +83,7 @@ public class ReminderSetCommandTests {
     }
 
     @Test
-    void testReminderSetHoursOutput(){
+    void testReminderSetHoursOutput() {
         String[] inputContent = {"-reminder", "set", "1", "2", "jam"};
 
         LocalTime newTime = LocalTime.of(10, 0);

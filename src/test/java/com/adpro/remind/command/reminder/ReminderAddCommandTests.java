@@ -5,6 +5,8 @@ import com.adpro.remind.model.Task;
 import com.adpro.remind.repository.GuildRepository;
 import com.adpro.remind.repository.TaskRepository;
 import com.adpro.remind.service.TaskService;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
@@ -17,9 +19,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -58,7 +57,7 @@ public class ReminderAddCommandTests {
     private TaskRepository taskRepository;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         guild = new Guild("1234567890");
 
         LocalDate date = LocalDate.of(2021, 5,28);
@@ -67,7 +66,7 @@ public class ReminderAddCommandTests {
     }
 
     @Test
-    void testReminderAddOutput(){
+    void testReminderAddOutput() {
         String[] inputContent = {"-reminder", "add", "Adpro", "28/05/2021", "12:00"};
 
         when(message.getGuild()).thenReturn(DiscordGuild);
@@ -89,6 +88,5 @@ public class ReminderAddCommandTests {
 
         MessageEmbed output = reminderAddCommand.embedOutput.build();
         Assertions.assertEquals("Tugas berhasil dibuat!", output.getTitle());
-
     }
 }
