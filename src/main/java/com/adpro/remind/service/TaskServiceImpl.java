@@ -6,23 +6,21 @@ import com.adpro.remind.model.Task;
 import com.adpro.remind.repository.GuildRepository;
 import com.adpro.remind.repository.ReminderRepository;
 import com.adpro.remind.repository.TaskRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
-public class TaskServiceImpl implements TaskService{
+public class TaskServiceImpl implements TaskService {
 
-    private TaskRepository taskRepository;
-    private ReminderRepository reminderRepository;
-    private GuildRepository guildRepository;
-    private GuildService guildService;
+    private final TaskRepository taskRepository;
+    private final ReminderRepository reminderRepository;
+    private final GuildRepository guildRepository;
 
     @Autowired
-    public TaskServiceImpl(TaskRepository taskRepository, ReminderRepository reminderRepository, GuildRepository guildRepository){
+    public TaskServiceImpl(TaskRepository taskRepository, ReminderRepository reminderRepository, GuildRepository guildRepository) {
         this.taskRepository = taskRepository;
         this.reminderRepository = reminderRepository;
         this.guildRepository = guildRepository;
@@ -63,7 +61,7 @@ public class TaskServiceImpl implements TaskService{
     @Override
     public Iterable<Task> showAllTask(String idGuild) {
         Guild guild = guildRepository.findByIdGuild(idGuild);
-        if (guild == null){
+        if (guild == null) {
             return null;
         }
         return taskRepository.findByGuild(guild);
@@ -72,7 +70,7 @@ public class TaskServiceImpl implements TaskService{
     @Override
     public Iterable<Task> showTaskAtDate(LocalDate date, String idGuild) {
         Guild guild = guildRepository.findByIdGuild(idGuild);
-        if (guild == null){
+        if (guild == null) {
             return null;
         }
         return taskRepository.findByDateAndGuild(date, guild);
@@ -84,12 +82,12 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public Task findByIDTask(Integer idTask){
+    public Task findByIDTask(Integer idTask) {
         return taskRepository.findByIdTask(idTask);
     }
 
     @Override
-    public Reminder setReminder(Reminder reminder, Task task) {
+    public Reminder setReminder(Reminder reminder, Task task){
         task.setReminder(reminder);
         reminder.setTask(task);
         reminderRepository.save(reminder);
@@ -98,17 +96,17 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public Reminder findByIDReminder(Integer idReminder) {
+    public Reminder findByIDReminder(Integer idReminder){
         return reminderRepository.findByIdReminder(idReminder);
     }
 
     @Override
-    public List<Reminder> findAllReminder() {
+    public List<Reminder> findAllReminder(){
         return reminderRepository.findAll();
     }
 
     @Override
-    public void deleteReminder(Integer id) {
+    public void deleteReminder(Integer id){
         Reminder reminder = reminderRepository.findByIdReminder(id);
         Task task = reminder.getTask();
         task.getReminders().remove(reminder);
