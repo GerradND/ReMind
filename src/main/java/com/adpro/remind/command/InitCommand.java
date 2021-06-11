@@ -1,19 +1,18 @@
 package com.adpro.remind.command;
 
-import com.adpro.remind.command.list.*;
 import com.adpro.remind.command.help.*;
+import com.adpro.remind.command.list.*;
 import com.adpro.remind.command.reminder.*;
 import com.adpro.remind.command.schedule.*;
 import com.adpro.remind.repository.CommandRepository;
 import com.adpro.remind.service.GuildService;
 import com.adpro.remind.service.ScheduleService;
-import com.adpro.remind.service.TodoListService;
 import com.adpro.remind.service.TaskService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
+import com.adpro.remind.service.TodoListService;
 import javax.annotation.PostConstruct;
 import javax.security.auth.login.LoginException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class InitCommand {
@@ -53,7 +52,8 @@ public class InitCommand {
         commandRepository.addCommand("schedule delete", new ScheduleDeleteCommand(scheduleService));
         commandRepository.addCommand("schedule show", new ScheduleShowCommand(scheduleService));
         commandRepository.addCommand("schedule notify", new ScheduleNotifyCommand(guildService, scheduleService));
-        commandRepository.addCommand("schedule notifyset", new ScheduleNotifySetTimeCommand(guildService, scheduleService));
+        commandRepository.addCommand("schedule notifyset",
+            new ScheduleNotifySetTimeCommand(guildService, scheduleService));
         commandRepository.addCommand("list add", new ListAddTodoListCommand(todoListService, guildService));
         commandRepository.addCommand("list additem", new ListAddTodoItemCommand(todoListService));
         commandRepository.addCommand("list delete", new ListDeleteTodoListCommand(todoListService));

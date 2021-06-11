@@ -1,40 +1,32 @@
 package com.adpro.remind.command.schedule;
 
 import com.adpro.remind.command.Command;
-import com.adpro.remind.event.InputEventListener;
-import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Schedule;
-import com.adpro.remind.service.GuildService;
 import com.adpro.remind.service.ScheduleService;
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageEmbed;
-import org.hibernate.id.GUIDGenerator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.awt.*;
+import java.awt.Color;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.util.Locale;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Message;
 
 public class ScheduleAddCommand implements Command {
 
     private ScheduleService scheduleService;
     private String outputMsg;
 
-    public ScheduleAddCommand(ScheduleService scheduleService){
+    public ScheduleAddCommand(ScheduleService scheduleService) {
         this.scheduleService = scheduleService;
     }
 
     public String formDescription(String[] inputContent) {
         StringBuilder description = new StringBuilder();
-        for(int i = 6; i < inputContent.length-1; i++) {
+        for (int i = 6; i < inputContent.length - 1; i++) {
             description.append(inputContent[i]).append(" ");
         }
-        description.append((inputContent[inputContent.length-1]));
+        description.append((inputContent[inputContent.length - 1]));
         return description.toString();
     }
 
@@ -46,9 +38,7 @@ public class ScheduleAddCommand implements Command {
 
     public LocalTime getTime(String time) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-        LocalTime dateTime = LocalTime.parse(time, formatter);
-
-        return dateTime;
+        return LocalTime.parse(time, formatter);
     }
 
     public String getOutputMsg() {
@@ -65,10 +55,10 @@ public class ScheduleAddCommand implements Command {
         String desc = formDescription(inputContent);
 
         String idGuild = message.getGuild().getId();
-        
 
         try {
             Schedule schedule = new Schedule(title, getDayOfWeek(day), getTime(startTime), getTime(endTime), desc);
+
             schedule = scheduleService.createSchedule(schedule, idGuild);
 
             outputMsg = ":white_check_mark: Schedule \"" + title + "\" berhasil ditambahkan!";
