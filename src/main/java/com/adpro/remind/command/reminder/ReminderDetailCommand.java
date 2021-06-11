@@ -3,16 +3,19 @@ package com.adpro.remind.command.reminder;
 import com.adpro.remind.command.Command;
 import com.adpro.remind.model.Task;
 import com.adpro.remind.service.TaskService;
+import java.awt.*;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 
-import java.awt.*;
-
 public class ReminderDetailCommand implements Command {
-    private TaskService taskService;
+    private final TaskService taskService;
     EmbedBuilder embedOutput;
 
-    public EmbedBuilder getEmbedOutput(Task task){
+    public ReminderDetailCommand(TaskService taskService) {
+        this.taskService = taskService;
+    }
+
+    public EmbedBuilder getEmbedOutput(Task task) {
         EmbedBuilder embedBuilder = new EmbedBuilder();
 
         embedBuilder.setTitle("Detail Tugas [#" + task.getIdTask() + "]");
@@ -30,9 +33,6 @@ public class ReminderDetailCommand implements Command {
         embedBuilder.setColor(Color.YELLOW);
 
         return embedBuilder;
-    }
-    public ReminderDetailCommand(TaskService taskService){
-        this.taskService = taskService;
     }
 
     @Override

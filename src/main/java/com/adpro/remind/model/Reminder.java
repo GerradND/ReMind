@@ -1,16 +1,14 @@
 package com.adpro.remind.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
-import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Entity
 @Table(name = "reminder")
@@ -29,16 +27,16 @@ public class Reminder {
     @Column(name = "time")
     private LocalTime time;
 
-    @Column(name="id_channel")
+    @Column(name = "id_channel")
     private String idChannel;
 
     @ManyToOne
-    @JoinColumn(name="id_task")
+    @JoinColumn(name = "id_task")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Task task;
 
-    public Reminder(LocalDate date, LocalTime time, String idChannel){
+    public Reminder(LocalDate date, LocalTime time, String idChannel) {
         this.date = date;
         this.time = time;
         this.idChannel = idChannel;

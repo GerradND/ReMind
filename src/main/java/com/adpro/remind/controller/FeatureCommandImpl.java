@@ -3,12 +3,11 @@ package com.adpro.remind.controller;
 import com.adpro.remind.command.Command;
 import com.adpro.remind.repository.CommandRepository;
 import com.adpro.remind.service.GuildService;
+import java.awt.*;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.awt.*;
 
 
 @Component

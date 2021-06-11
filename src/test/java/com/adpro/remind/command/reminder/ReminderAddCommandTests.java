@@ -4,8 +4,9 @@ import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Task;
 import com.adpro.remind.repository.GuildRepository;
 import com.adpro.remind.repository.TaskRepository;
-import com.adpro.remind.service.GuildService;
 import com.adpro.remind.service.TaskService;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
@@ -17,11 +18,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -60,28 +57,27 @@ public class ReminderAddCommandTests {
     private TaskRepository taskRepository;
 
     @BeforeEach
-    public void setUp(){
-        MockitoAnnotations.initMocks(this);
-        guild = new Guild("814323773107994655");
+    public void setUp() {
+        guild = new Guild("1234567890");
 
-        LocalDate date = LocalDate.of(2021,05,28);
-        LocalTime time = LocalTime.of(12,00);
+        LocalDate date = LocalDate.of(2021, 5,28);
+        LocalTime time = LocalTime.of(12, 0);
         task = new Task("Adpro", date, time);
     }
 
     @Test
-    void testReminderAddOutput(){
+    void testReminderAddOutput() {
         String[] inputContent = {"-reminder", "add", "Adpro", "28/05/2021", "12:00"};
 
         when(message.getGuild()).thenReturn(DiscordGuild);
-        when(DiscordGuild.getId()).thenReturn("814323773107994655");
+        when(DiscordGuild.getId()).thenReturn("1234567890");
 
         lenient().when(guildRepository.findByIdGuild(guild.getIdGuild())).thenReturn(guild);
 
         lenient().when(guildRepository.save(any(Guild.class))).thenReturn(guild);
         lenient().when(taskRepository.save(any(Task.class))).thenReturn(task);
 
-        when(taskService.createTask(any(Task.class), eq("814323773107994655"))).thenReturn(task);
+        when(taskService.createTask(any(Task.class), eq("1234567890"))).thenReturn(task);
         task.setIdTask(1);
 
         EmbedBuilder embedOutput = reminderAddCommand.getEmbedOutput(task);
@@ -92,6 +88,5 @@ public class ReminderAddCommandTests {
 
         MessageEmbed output = reminderAddCommand.embedOutput.build();
         Assertions.assertEquals("Tugas berhasil dibuat!", output.getTitle());
-
     }
 }

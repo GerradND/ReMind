@@ -1,6 +1,7 @@
 package com.adpro.remind.command.reminder;
 
 import com.adpro.remind.service.TaskService;
+import java.awt.*;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
@@ -12,8 +13,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.awt.*;
 
 import static org.mockito.Mockito.when;
 
@@ -35,7 +34,7 @@ public class ReminderDeleteCommandTests {
     private ReminderDeleteCommand reminderDeleteCommand;
 
     @Test
-    void testReminderDeleteOutput(){
+    void testReminderDeleteOutput() {
         String[] inputContent = {"-reminder", "-delete", "1"};
 
         EmbedBuilder embedOutput = reminderDeleteCommand.getEmbedOutput(1);
