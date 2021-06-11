@@ -1,11 +1,9 @@
 package com.adpro.remind.command.reminder;
 
-import com.adpro.remind.command.Command;
 import com.adpro.remind.model.Reminder;
 import com.adpro.remind.model.Task;
-import com.adpro.remind.service.*;
-import com.adpro.remind.service.GuildService;
-import java.awt.*;
+import com.adpro.remind.service.TaskService;
+import java.awt.Color;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -29,7 +27,6 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 @Component
 public class ReminderNotifyCommand {
     private JDA jda;
-    private GuildService guildService;
     private TaskService taskService;
     private final ScheduledExecutorService scheduler =
             Executors.newScheduledThreadPool(1);
@@ -40,8 +37,7 @@ public class ReminderNotifyCommand {
     private String token;
 
     @Autowired
-    public ReminderNotifyCommand(GuildService guildService, TaskService taskService) {
-        this.guildService = guildService;
+    public ReminderNotifyCommand(TaskService taskService) {
         this.taskService = taskService;
     }
 
