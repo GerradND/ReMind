@@ -3,9 +3,14 @@ package com.adpro.remind.command.help;
 import com.adpro.remind.command.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageEmbed;
 
 public class HelpToDoListCommand implements Command {
+    private EmbedBuilder embedOutput;
+
+    public EmbedBuilder getEmbedOutput() {
+        return embedOutput;
+    }
+
     @Override
     public void getOutputMessage(Message message, String[] inputContent) {
         EmbedBuilder eb = new EmbedBuilder();
@@ -18,8 +23,9 @@ public class HelpToDoListCommand implements Command {
                 "`-list showall`\n" +
                 "\n" +
                 "Notes:\n" +
-                "1. Untuk melihat ID suatu List, gunakan `-list show all`\n"+
+                "1. Untuk melihat ID suatu List, gunakan `-list show all`\n" +
                 "2. Untuk melihat nomor suatu item pada list, gunakan `-list show [ID_LIST]`\n");
+        embedOutput = eb;
 
         message.getChannel().sendMessage(eb.build()).queue();
     }

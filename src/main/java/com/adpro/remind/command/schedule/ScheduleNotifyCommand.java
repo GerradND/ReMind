@@ -4,13 +4,7 @@ import com.adpro.remind.command.Command;
 import com.adpro.remind.model.Schedule;
 import com.adpro.remind.service.GuildService;
 import com.adpro.remind.service.ScheduleService;
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Message;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-
-import java.awt.*;
-import java.time.Clock;
+import java.awt.Color;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -23,6 +17,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Message;
 
 
 public class ScheduleNotifyCommand implements Command {
@@ -43,7 +39,7 @@ public class ScheduleNotifyCommand implements Command {
         return outputMsg;
     }
 
-    public ScheduleNotifyCommand(GuildService guildService, ScheduleService scheduleService){
+    public ScheduleNotifyCommand(GuildService guildService, ScheduleService scheduleService) {
         this.guildService = guildService;
         this.scheduleService = scheduleService;
     }
@@ -53,7 +49,7 @@ public class ScheduleNotifyCommand implements Command {
         scheduleListDay = scheduleService.getScheduleByDay(today, idGuild);
         eb.setTitle(":yellow_square: " + today);
 
-        if(scheduleListDay.isEmpty()) {
+        if (scheduleListDay.isEmpty()) {
             outputMsg = "Schedule Anda kosong untuk hari " + today + " :smile:";
             eb.addField(outputMsg, "", false);
 
@@ -77,8 +73,9 @@ public class ScheduleNotifyCommand implements Command {
         String today = now.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
 
         LocalDateTime nextRun = now.withHour(notifyTime.getHour()).withMinute(notifyTime.getHour()).withSecond(0);
-        if(now.compareTo(nextRun) > 0)
+        if (now.compareTo(nextRun) > 0) {
             nextRun = nextRun.plusDays(1);
+        }
 
         Duration duration = Duration.between(now, nextRun);
         long initalDelay = duration.getSeconds();
@@ -88,7 +85,8 @@ public class ScheduleNotifyCommand implements Command {
                 notificationMessage(message, idGuild, today);
             }
         };
-        this.notifyHandle = scheduler.scheduleAtFixedRate(notifier, initalDelay, TimeUnit.DAYS.toSeconds(1), TimeUnit.SECONDS); // -> set sesuai timer
+        this.notifyHandle = scheduler.scheduleAtFixedRate(notifier, initalDelay,
+            TimeUnit.DAYS.toSeconds(1), TimeUnit.SECONDS);
         return notifyHandle;
 
     }
@@ -108,7 +106,7 @@ public class ScheduleNotifyCommand implements Command {
 
         EmbedBuilder eb = new EmbedBuilder();
 
-        if (guildService.getGuildByID(idGuild).isScheduleSubscribed()) {
+        if (guildService.getGuildById(idGuild).isScheduleSubscribed()) {
             outputMsg = "Notifikasi dinonaktifkan!";
             notifyOff(subscriber.get(idGuild));
             eb.setColor(Color.RED);

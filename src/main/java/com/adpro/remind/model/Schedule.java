@@ -1,17 +1,12 @@
 package com.adpro.remind.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
-import javax.persistence.*;
-import java.time.DayOfWeek;
-import java.time.LocalTime;
 
 @Entity
 @Table(name = "schedule")
@@ -42,7 +37,7 @@ public class Schedule {
     @JoinColumn(name = "id_guild")
     private Guild guild;
 
-    public Schedule(String title, DayOfWeek day, LocalTime startTime, LocalTime endTime, String description){
+    public Schedule(String title, DayOfWeek day, LocalTime startTime, LocalTime endTime, String description) {
         this.title = title;
         this.day = day;
         this.startTime = startTime;

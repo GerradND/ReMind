@@ -6,6 +6,11 @@ import com.adpro.remind.model.Task;
 import com.adpro.remind.repository.GuildRepository;
 import com.adpro.remind.repository.ReminderRepository;
 import com.adpro.remind.repository.TaskRepository;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,12 +18,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -43,21 +42,21 @@ public class TaskServiceImplTest {
     private Reminder reminder;
 
     @BeforeEach
-    public void setUp(){
-        LocalDate date = LocalDate.of(2021, 05, 31);
+    public void setUp() {
+        LocalDate date = LocalDate.of(2021, 5, 31);
         LocalTime time = LocalTime.of(23, 55);
 
-        guild = new Guild("814323773107994655");
+        guild = new Guild("1234567890");
         task = new Task("Adpro", date, time);
 
-        LocalDate dateReminder = LocalDate.of(2021, 05, 29);
+        LocalDate dateReminder = LocalDate.of(2021, 5, 29);
         LocalTime timeReminder = LocalTime.of(20, 15);
-        String randomIDChannel = "814323773696114690";
+        String randomIDChannel = "1234567890";
         reminder = new Reminder(dateReminder, timeReminder, randomIDChannel);
     }
 
     @Test
-    void testServiceCreateTask(){
+    void testServiceCreateTask() {
         when(taskRepository.save(any(Task.class))).thenReturn(task);
         String idGuild = guild.getIdGuild();
         when(guildRepository.findByIdGuild(idGuild)).thenReturn(guild);
@@ -67,7 +66,7 @@ public class TaskServiceImplTest {
     }
 
     @Test
-    void testServiceDeleteTask(){
+    void testServiceDeleteTask() {
         task.setGuild(guild);
         Integer idTask = task.getIdTask();
         when(taskRepository.findByIdTask(idTask)).thenReturn(task);
@@ -79,7 +78,7 @@ public class TaskServiceImplTest {
     }
 
     @Test
-    void testServiceUpdateTask(){
+    void testServiceUpdateTask() {
         when(taskRepository.save(any(Task.class))).thenReturn(task);
 
         String idGuild = guild.getIdGuild();
@@ -89,7 +88,7 @@ public class TaskServiceImplTest {
         Task savedTask = taskServiceImpl.createTask(task, idGuild);
 
         Integer idTask = savedTask.getIdTask();
-        LocalDate newDate = LocalDate.of(2021, 06, 05);
+        LocalDate newDate = LocalDate.of(2021, 6, 5);
         LocalTime oldTime = savedTask.getTime();
 
         when(taskRepository.findByIdTask(idTask)).thenReturn(savedTask);
@@ -100,7 +99,7 @@ public class TaskServiceImplTest {
     }
 
     @Test
-    void testServiceShowAllTask(){
+    void testServiceShowAllTask() {
         List<Task> listTasks = new ArrayList<>();
         listTasks.add(task);
 
@@ -115,8 +114,8 @@ public class TaskServiceImplTest {
     }
 
     @Test
-    void testServiceShowAtDate(){
-        List<Task> listTasks = new ArrayList<Task>();
+    void testServiceShowAtDate() {
+        List<Task> listTasks = new ArrayList<>();
         listTasks.add(task);
 
         LocalDate date = task.getDate();
@@ -132,7 +131,7 @@ public class TaskServiceImplTest {
     }
 
     @Test
-    void testServiceDetailTask(){
+    void testServiceDetailTask() {
         Integer idTask = task.getIdTask();
         when(taskRepository.findByIdTask(idTask)).thenReturn(task);
         Task returnedTask = taskServiceImpl.detailTask(idTask);
@@ -141,7 +140,7 @@ public class TaskServiceImplTest {
     }
 
     @Test
-    void testServiceFindByIDTask(){
+    void testServiceFindByIDTask() {
         Integer idTask = task.getIdTask();
         when(taskRepository.findByIdTask(idTask)).thenReturn(task);
         Task returnedTask = taskServiceImpl.findByIDTask(idTask);
@@ -150,7 +149,7 @@ public class TaskServiceImplTest {
     }
 
     @Test
-    void testServiceSetReminder(){
+    void testServiceSetReminder() {
         when(taskRepository.save(any(Task.class))).thenReturn(task);
         when(reminderRepository.save(any(Reminder.class))).thenReturn(reminder);
 
@@ -160,7 +159,7 @@ public class TaskServiceImplTest {
     }
 
     @Test
-    void testReminderFindByID(){
+    void testReminderFindByID() {
         Integer id = reminder.getIdReminder();
         when(reminderRepository.findByIdReminder(id)).thenReturn(reminder);
 
@@ -169,7 +168,7 @@ public class TaskServiceImplTest {
     }
 
     @Test
-    void testReminderFindAllReminder(){
+    void testReminderFindAllReminder() {
         List<Reminder> listReminder = new ArrayList<>();
         listReminder.add(reminder);
         when(reminderRepository.findAll()).thenReturn(listReminder);
@@ -179,7 +178,7 @@ public class TaskServiceImplTest {
     }
 
     @Test
-    void testReminderDeleteByID(){
+    void testReminderDeleteByID() {
         reminder.setTask(task);
         Integer idReminder = reminder.getIdReminder();
         when(reminderRepository.findByIdReminder(idReminder)).thenReturn(reminder);

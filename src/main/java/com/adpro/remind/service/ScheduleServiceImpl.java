@@ -4,12 +4,11 @@ import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Schedule;
 import com.adpro.remind.repository.GuildRepository;
 import com.adpro.remind.repository.ScheduleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
 import java.time.DayOfWeek;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {

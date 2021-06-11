@@ -1,43 +1,32 @@
 package com.adpro.remind.command.reminder;
 
-import com.adpro.remind.command.Command;
 import com.adpro.remind.model.Reminder;
 import com.adpro.remind.model.Task;
-import com.adpro.remind.service.*;
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.entities.Message;
-
-import java.awt.*;
-import java.time.Duration;
+import com.adpro.remind.service.TaskService;
+import java.awt.Color;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
-
-import com.adpro.remind.service.GuildService;
+import javax.annotation.PostConstruct;
+import javax.security.auth.login.LoginException;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import javax.security.auth.login.LoginException;
-
-import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 @Component
 public class ReminderNotifyCommand {
     private JDA jda;
-    private GuildService guildService;
     private TaskService taskService;
     private final ScheduledExecutorService scheduler =
             Executors.newScheduledThreadPool(1);
@@ -48,8 +37,7 @@ public class ReminderNotifyCommand {
     private String token;
 
     @Autowired
-    public ReminderNotifyCommand(GuildService guildService, TaskService taskService) {
-        this.guildService = guildService;
+    public ReminderNotifyCommand(TaskService taskService) {
         this.taskService = taskService;
     }
 
@@ -62,8 +50,9 @@ public class ReminderNotifyCommand {
     public ScheduledFuture<?> notifyOn() {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime nextRun = now.withSecond(5);
-        if(now.compareTo(nextRun) > 0)
+        if (now.compareTo(nextRun) > 0) {
             nextRun = nextRun.plusMinutes(1);
+        }
 
         final Runnable notifier = new Runnable() {
             public void run() {
