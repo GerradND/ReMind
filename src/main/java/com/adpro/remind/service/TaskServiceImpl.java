@@ -20,7 +20,8 @@ public class TaskServiceImpl implements TaskService {
     private final GuildRepository guildRepository;
 
     @Autowired
-    public TaskServiceImpl(TaskRepository taskRepository, ReminderRepository reminderRepository, GuildRepository guildRepository) {
+    public TaskServiceImpl(TaskRepository taskRepository, ReminderRepository reminderRepository,
+                           GuildRepository guildRepository) {
         this.taskRepository = taskRepository;
         this.reminderRepository = reminderRepository;
         this.guildRepository = guildRepository;
@@ -101,7 +102,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Reminder> findAllReminder(){
+    public List<Reminder> findAllReminder() {
         return reminderRepository.findAll();
     }
 
