@@ -24,5 +24,4 @@ public class BotConfiguration {
                 .addEventListeners(inputEventListener)
                 .build();
     }
-
 }
