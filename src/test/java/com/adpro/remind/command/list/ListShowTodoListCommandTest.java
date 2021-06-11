@@ -15,11 +15,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 
 @ExtendWith(MockitoExtension.class)
-public class ListAddTodoItemCommandTest {
+public class ListShowTodoListCommandTest {
     @Mock
     private net.dv8tion.jda.api.entities.Guild guildDC;
 
@@ -39,7 +41,7 @@ public class ListAddTodoItemCommandTest {
     private TodoListServiceImpl todoListService;
 
     @InjectMocks
-    private ListAddTodoItemCommand listAddTodoItemCommand;
+    private ListShowTodoListCommand listShowTodoListCommand;
 
     private Guild guild;
     private TodoList todoList;
@@ -49,18 +51,22 @@ public class ListAddTodoItemCommandTest {
     public void setUp(){
         guild = new Guild("1");
         todoList = new TodoList("Monday", guild);
-        todoItem = new TodoItem("belajar");
+        todoItem = new TodoItem("Belajar");
         todoList.getTodoItemSet().add(todoItem);
+        todoItem.setTodoList(todoList);
     }
 
     @Test
-    public void testAddTodoItem(){
-        String[] inputContent = {"-list", "additem", "1", "belajar"};
+    public void testShowTodoList(){
+        String[] inputContent = {"-list", "show", "1"};
         lenient().when(message.getGuild()).thenReturn(guildDC);
         lenient().when(guildDC.getId()).thenReturn("1");
-        lenient().when(todoListService.addTodoItem(any(Integer.class),any(TodoItem.class))).thenReturn(todoList);
-        lenient().when(message.reply(any(MessageEmbed.class))).thenReturn(messageAction);
-        listAddTodoItemCommand.getOutputMessage(message, inputContent);
-        verify(todoListService, times(1)).addTodoItem(1, todoItem);
+        lenient().when(todoListService.showTodoList(any(Integer.class))).thenReturn(todoList);
+        lenient().when(message.reply(any(MessageEmbed.
+                class))).thenReturn(messageAction);
+        doNothing().when(messageAction).queue();
+        listShowTodoListCommand.getOutputMessage(message, inputContent);
+        verify(todoListService, times(1)).showTodoList(1);
     }
+
 }
