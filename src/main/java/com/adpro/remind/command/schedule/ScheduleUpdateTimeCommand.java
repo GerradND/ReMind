@@ -3,17 +3,14 @@ package com.adpro.remind.command.schedule;
 import com.adpro.remind.command.Command;
 import com.adpro.remind.model.Schedule;
 import com.adpro.remind.service.ScheduleService;
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageEmbed;
-
-import java.awt.*;
+import java.awt.Color;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.TextStyle;
 import java.time.temporal.TemporalAccessor;
 import java.util.Locale;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Message;
 
 public class ScheduleUpdateTimeCommand implements Command {
 

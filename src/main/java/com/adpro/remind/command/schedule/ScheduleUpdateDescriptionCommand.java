@@ -3,11 +3,9 @@ package com.adpro.remind.command.schedule;
 import com.adpro.remind.command.Command;
 import com.adpro.remind.model.Schedule;
 import com.adpro.remind.service.ScheduleService;
+import java.awt.Color;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageEmbed;
-
-import java.awt.*;
 
 public class ScheduleUpdateDescriptionCommand implements Command {
 
@@ -20,10 +18,10 @@ public class ScheduleUpdateDescriptionCommand implements Command {
 
     public String formDescription(String[] inputContent, int start) {
         StringBuilder desc = new StringBuilder();
-        for(int i = start; i < inputContent.length-1; i++) {
+        for (int i = start; i < inputContent.length - 1; i++) {
             desc.append(inputContent[i]).append(" ");
         }
-        desc.append(inputContent[inputContent.length-1]);
+        desc.append(inputContent[inputContent.length - 1]);
         return desc.toString();
     }
 

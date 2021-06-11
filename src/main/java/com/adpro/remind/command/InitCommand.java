@@ -52,7 +52,8 @@ public class InitCommand {
         commandRepository.addCommand("schedule delete", new ScheduleDeleteCommand(scheduleService));
         commandRepository.addCommand("schedule show", new ScheduleShowCommand(scheduleService));
         commandRepository.addCommand("schedule notify", new ScheduleNotifyCommand(guildService, scheduleService));
-        commandRepository.addCommand("schedule notifyset", new ScheduleNotifySetTimeCommand(guildService, scheduleService));
+        commandRepository.addCommand("schedule notifyset",
+            new ScheduleNotifySetTimeCommand(guildService, scheduleService));
         commandRepository.addCommand("list add", new ListAddTodoListCommand(todoListService, guildService));
         commandRepository.addCommand("list additem", new ListAddTodoItemCommand(todoListService));
         commandRepository.addCommand("list delete", new ListDeleteTodoListCommand(todoListService));
