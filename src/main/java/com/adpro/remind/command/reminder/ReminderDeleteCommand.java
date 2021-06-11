@@ -23,7 +23,6 @@ public class ReminderDeleteCommand implements Command {
         return embedBuilder;
     }
 
-
     @Override
     public void getOutputMessage(Message message, String[] inputContent) {
         Integer idTask = Integer.parseInt(inputContent[2]);

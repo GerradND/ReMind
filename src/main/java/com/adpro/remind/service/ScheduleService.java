@@ -1,7 +1,6 @@
 package com.adpro.remind.service;
 
 import com.adpro.remind.model.Schedule;
-
 import java.util.List;
 
 public interface ScheduleService {

@@ -82,7 +82,7 @@ public class ScheduleNotifyCommandTests {
         lenient().when(guildService.getScheduleSubscriber()).thenReturn(subscriber);
         lenient().when(scheduleService.getScheduleByDay(today.toString(), "123")).thenReturn(scheduleListToday);
 
-        lenient().when(guildService.getGuildByID("123")).thenReturn(guild);
+        lenient().when(guildService.getGuildById("123")).thenReturn(guild);
         lenient().when(guildService.getNotifyTimeSchedule("123")).thenReturn(LocalTime.now());
         lenient().when(message.getChannel()).thenReturn(messageChannel);
 
@@ -104,7 +104,7 @@ public class ScheduleNotifyCommandTests {
         lenient().when(guildService.getScheduleSubscriber()).thenReturn(subscriber);
         lenient().when(scheduleService.getScheduleByDay(today.toString(), "123")).thenReturn(new ArrayList<>());
 
-        lenient().when(guildService.getGuildByID("123")).thenReturn(guild);
+        lenient().when(guildService.getGuildById("123")).thenReturn(guild);
         lenient().when(guildService.getNotifyTimeSchedule("123")).thenReturn(LocalTime.now());
         lenient().when(message.getChannel()).thenReturn(messageChannel);
 
@@ -127,7 +127,7 @@ public class ScheduleNotifyCommandTests {
         lenient().when(guildService.getScheduleSubscriber()).thenReturn(subscriber);
         lenient().when(scheduleService.getScheduleByDay(today.toString(), "123")).thenReturn(scheduleListToday);
 
-        lenient().when(guildService.getGuildByID("123")).thenReturn(guild);
+        lenient().when(guildService.getGuildById("123")).thenReturn(guild);
         lenient().when(guildService.getNotifyTimeSchedule("123")).thenReturn(LocalTime.now());
         lenient().when(message.getChannel()).thenReturn(messageChannel);
 
@@ -153,7 +153,7 @@ public class ScheduleNotifyCommandTests {
         lenient().when(guildService.getScheduleSubscriber()).thenReturn(subscriber);
         lenient().when(scheduleService.getScheduleByDay(today.toString(), "123")).thenReturn(scheduleListToday);
 
-        lenient().when(guildService.getGuildByID("123")).thenReturn(guild);
+        lenient().when(guildService.getGuildById("123")).thenReturn(guild);
         lenient().when(guildService.getNotifyTimeSchedule("123")).thenReturn(LocalTime.now());
         lenient().when(message.getChannel()).thenReturn(messageChannel);
 
