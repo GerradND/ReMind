@@ -2,7 +2,6 @@ package com.adpro.remind.command.reminder;
 
 import com.adpro.remind.command.Command;
 import com.adpro.remind.model.Task;
-import com.adpro.remind.service.GuildService;
 import com.adpro.remind.service.TaskService;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
@@ -17,14 +16,14 @@ public class ReminderAddCommand implements Command {
     private final TaskService taskService;
     EmbedBuilder embedOutput;
 
-    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+    private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
     public ReminderAddCommand(TaskService taskService){
         this.taskService = taskService;
     }
 
-    public Task newTask(String idGuild, String[] inputContent){
+    public Task newTask(String idGuild, String[] inputContent) {
         String name = inputContent[2].replace("\"", "");
         String dateText = inputContent[3];
         String timeText = inputContent[4];
@@ -38,7 +37,7 @@ public class ReminderAddCommand implements Command {
         return task;
     }
 
-    public EmbedBuilder getEmbedOutput(Task task){
+    public EmbedBuilder getEmbedOutput(Task task) {
         EmbedBuilder embedBuilder = new EmbedBuilder();
 
         embedBuilder.setTitle("Tugas berhasil dibuat!");
