@@ -5,6 +5,12 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 
 public class HelpScheduleCommand implements Command {
+    private EmbedBuilder embedOutput;
+
+    public EmbedBuilder getEmbedOutput() {
+        return embedOutput;
+    }
+
     @Override
     public void getOutputMessage(Message message, String[] inputContent) {
         EmbedBuilder eb = new EmbedBuilder();
@@ -24,6 +30,7 @@ public class HelpScheduleCommand implements Command {
                 "2. Format JAM: HH:MM\n" +
                 "3. Disclaimer: Waktu dalam WIB :flag_id:\n" +
                 "4. Untuk melihat ID suatu Schedule, gunakan `-schedule show all` atau `-schedule show [HARI]`\n");
+        embedOutput = eb;
 
         message.getChannel().sendMessage(eb.build()).queue();
     }

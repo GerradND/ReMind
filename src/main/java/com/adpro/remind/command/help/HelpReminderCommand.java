@@ -5,6 +5,12 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 
 public class HelpReminderCommand implements Command {
+    private EmbedBuilder embedOutput;
+
+    public EmbedBuilder getEmbedOutput() {
+        return embedOutput;
+    }
+
     @Override
     public void getOutputMessage(Message message, String[] inputContent) {
         EmbedBuilder eb = new EmbedBuilder();
@@ -22,6 +28,7 @@ public class HelpReminderCommand implements Command {
                 "2. Format JAM: HH:MM\n" +
                 "3. Format WAKTU: X hari atau X jam\n" +
                 "4. Untuk melihat ID suatu Reminder, gunakan `-reminder show all` atau `-reminder show [TANGGAL]`\n");
+        embedOutput = eb;
 
         message.getChannel().sendMessage(eb.build()).queue();
     }
