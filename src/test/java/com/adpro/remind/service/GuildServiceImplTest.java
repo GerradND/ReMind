@@ -39,7 +39,7 @@ public class GuildServiceImplTest {
     public void testServiceCreateGuildSuccess() {
         Guild dummy;
         guildService.createGuild("test2");
-        dummy = guildService.getGuildByID("test2");
+        dummy = guildService.getGuildById("test2");
         assertNotEquals(dummy, guild);
     }
 
@@ -47,14 +47,14 @@ public class GuildServiceImplTest {
     public void testGetGuildByIdSuccess() {
         Guild dummy = new Guild("test");
         lenient().when(guildRepository.findByIdGuild("123")).thenReturn(guild);
-        Guild dummy2 = guildService.getGuildByID("123");
+        Guild dummy2 = guildService.getGuildById("123");
         assertNotEquals(dummy, dummy2);
     }
 
     @Test
     public void testDeleteGuildSuccess() {
         guildService.deleteGuild("123");
-        Guild dummy = guildService.getGuildByID("123");
+        Guild dummy = guildService.getGuildById("123");
         assertEquals(null, dummy);
     }
 }

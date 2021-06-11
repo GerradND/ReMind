@@ -5,7 +5,6 @@ import com.adpro.remind.model.Schedule;
 import com.adpro.remind.repository.GuildRepository;
 import com.adpro.remind.repository.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;

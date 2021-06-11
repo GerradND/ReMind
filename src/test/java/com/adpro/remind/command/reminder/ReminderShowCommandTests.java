@@ -3,6 +3,10 @@ package com.adpro.remind.command.reminder;
 import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Task;
 import com.adpro.remind.service.TaskService;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
@@ -16,11 +20,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.mockito.Mockito.when;
 
@@ -48,16 +47,16 @@ public class ReminderShowCommandTests {
     private Guild guild;
 
     @BeforeEach
-    public void setUp(){
-        guild = new Guild("814323773107994655");
-        LocalDate date = LocalDate.of(2021,05,28);
-        LocalTime time = LocalTime.of(12,00);
+    public void setUp() {
+        guild = new Guild("1234567890");
+        LocalDate date = LocalDate.of(2021, 5,28);
+        LocalTime time = LocalTime.of(12, 0);
         task = new Task("Adpro", date, time);
         task.setIdTask(1);
     }
 
     @Test
-    void testReminderShowAllOutput(){
+    void testReminderShowAllOutput() {
         String[] inputContent = {"-reminder", "show", "all"};
 
         List<Task> tasks = new ArrayList<>();
@@ -80,7 +79,7 @@ public class ReminderShowCommandTests {
     }
 
     @Test
-    void testReminderShowDateOutput(){
+    void testReminderShowDateOutput() {
         String[] inputContent = {"-reminder", "show", "28/05/2021"};
 
         List<Task> tasks = new ArrayList<>();
