@@ -1,6 +1,7 @@
 package com.adpro.remind.service;
 
 import com.adpro.remind.model.Schedule;
+import java.util.List;
 
 public interface ScheduleService {
     Schedule createSchedule(Schedule schedule, String idGuild);
@@ -9,9 +10,9 @@ public interface ScheduleService {
 
     Schedule updateSchedule(Integer idSchedule, Schedule schedule);
 
-    void deleteSchedule(Integer idSchedule);
+    void deleteSchedule(Integer idSchedule, String idGuild);
 
-    Iterable<Schedule> getScheduleByDay(String day, String idGuild);
+    List<Schedule> getScheduleByDay(String day, String idGuild);
 
-    Iterable<Schedule> getListSchedule(String idGuild);
+    List<Schedule> getListSchedule(String idGuild);
 }

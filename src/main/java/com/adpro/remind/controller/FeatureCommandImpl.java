@@ -1,22 +1,13 @@
 package com.adpro.remind.controller;
 
 import com.adpro.remind.command.Command;
-import com.adpro.remind.command.PingCommand;
-import com.adpro.remind.event.InputEventListener;
 import com.adpro.remind.repository.CommandRepository;
 import com.adpro.remind.service.GuildService;
+import java.awt.*;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.entities.PrivateChannel;
-import net.dv8tion.jda.api.requests.RestAction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.awt.*;
-
 
 @Component
 public class FeatureCommandImpl implements FeatureCommand {

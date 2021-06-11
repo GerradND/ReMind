@@ -4,11 +4,11 @@ import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Schedule;
 import com.adpro.remind.repository.GuildRepository;
 import com.adpro.remind.repository.ScheduleRepository;
+import java.time.DayOfWeek;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.time.DayOfWeek;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
@@ -46,19 +46,18 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public void deleteSchedule(Integer idSchedule) {
-        Schedule schedule = scheduleRepository.findByIdSchedule(idSchedule);
-        scheduleRepository.delete(schedule);
+    public void deleteSchedule(Integer idSchedule, String idGuild) {
+        scheduleRepository.deleteById(idSchedule);
     }
 
     @Override
-    public Iterable<Schedule> getScheduleByDay(String day, String idGuild) {
+    public List<Schedule> getScheduleByDay(String day, String idGuild) {
         Guild guild = guildRepository.findByIdGuild(idGuild);
-        return scheduleRepository.findByDayAndGuild(DayOfWeek.valueOf(day), guild);
+        return scheduleRepository.findByDayAndGuild(DayOfWeek.valueOf(day.toUpperCase()), guild);
     }
 
     @Override
-    public Iterable<Schedule> getListSchedule(String idGuild) {
+    public List<Schedule> getListSchedule(String idGuild) {
         Guild guild = guildRepository.findByIdGuild(idGuild);
         return scheduleRepository.findAllByGuild(guild);
     }

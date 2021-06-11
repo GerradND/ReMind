@@ -1,15 +1,17 @@
 package com.adpro.remind.model;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import java.util.ArrayList;
+import java.util.List;
+import java.time.LocalTime;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "guild")
@@ -24,7 +26,11 @@ public class Guild {
     @Column(name = "isScheduleSubscribed")
     private boolean isScheduleSubscribed;
 
-    @OneToMany(targetEntity = Schedule.class, mappedBy = "guild", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Column(name = "schedule_notification_time")
+    private LocalTime scheduleNotificationTime;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "guild", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Schedule> scheduleList;
 
@@ -37,8 +43,9 @@ public class Guild {
     @JsonIgnore
     private List<TodoList> todoList;
 
-    public Guild(String idGuild){
+    public Guild(String idGuild) {
         this.idGuild = idGuild;
         this.isScheduleSubscribed = false;
+        this.scheduleNotificationTime = LocalTime.MIDNIGHT;
     }
 }
