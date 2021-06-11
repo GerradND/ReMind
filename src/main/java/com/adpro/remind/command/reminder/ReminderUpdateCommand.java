@@ -3,13 +3,12 @@ package com.adpro.remind.command.reminder;
 import com.adpro.remind.command.Command;
 import com.adpro.remind.model.Task;
 import com.adpro.remind.service.TaskService;
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Message;
-
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Message;
 
 public class ReminderUpdateCommand implements Command {
     private final TaskService taskService;
@@ -17,11 +16,11 @@ public class ReminderUpdateCommand implements Command {
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
     EmbedBuilder embedOutput;
 
-    public ReminderUpdateCommand(TaskService taskService){
+    public ReminderUpdateCommand(TaskService taskService) {
         this.taskService = taskService;
     }
 
-    public EmbedBuilder getEmbedOutput(Task task){
+    public EmbedBuilder getEmbedOutput(Task task) {
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setColor(Color.GREEN);
         embedBuilder.setTitle(":white_check_mark:  Tugas dengan ID: " + task.getIdTask() + " berhasil diupdate.");
