@@ -115,7 +115,7 @@ public class TaskServiceImplTest {
 
     @Test
     void testServiceShowAtDate() {
-        List<Task> listTasks = new ArrayList<Task>();
+        List<Task> listTasks = new ArrayList<>();
         listTasks.add(task);
 
         LocalDate date = task.getDate();

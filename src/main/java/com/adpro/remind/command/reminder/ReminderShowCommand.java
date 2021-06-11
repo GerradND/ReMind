@@ -19,7 +19,7 @@ public class ReminderShowCommand implements Command {
     }
 
     private Iterable<Task> getListTasks(String type, String idGuild) {
-        if(type.equalsIgnoreCase("ALL")) {
+        if (type.equalsIgnoreCase("ALL")) {
             return taskService.showAllTask(idGuild);
         } else {
             LocalDate date = LocalDate.parse(type, dateFormatter);
@@ -32,7 +32,7 @@ public class ReminderShowCommand implements Command {
         embedBuilder.setTitle("Tugas yang telah dibuat: ");
         embedBuilder.setColor(Color.CYAN);
 
-        for(Task task:listTasks) {
+        for (Task task:listTasks) {
             embedBuilder.addField(":id:", task.getIdTask().toString(), true);
             embedBuilder.addField(":notepad_spiral: Nama Tugas: ", task.getName(), true);
             embedBuilder.addBlankField(true);
