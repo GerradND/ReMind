@@ -7,10 +7,7 @@ import com.adpro.remind.repository.TodoItemRepository;
 import com.adpro.remind.repository.TodoListRepository;
 import com.adpro.remind.model.TodoList;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 
 
 @Service

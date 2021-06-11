@@ -12,7 +12,7 @@ public class ReminderDetailCommand implements Command {
     private TaskService taskService;
     EmbedBuilder embedOutput;
 
-    public EmbedBuilder getEmbedOutput(Task task){
+    public EmbedBuilder getEmbedOutput(Task task) {
         EmbedBuilder embedBuilder = new EmbedBuilder();
 
         embedBuilder.setTitle("Detail Tugas [#" + task.getIdTask() + "]");

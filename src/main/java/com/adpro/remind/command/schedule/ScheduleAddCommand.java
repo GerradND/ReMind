@@ -1,18 +1,10 @@
 package com.adpro.remind.command.schedule;
 
-import com.adpro.remind.command.Command;
-import com.adpro.remind.event.InputEventListener;
-import com.adpro.remind.model.Guild;
+import com.adpro.remind.command.Command;s
 import com.adpro.remind.model.Schedule;
-import com.adpro.remind.service.GuildService;
 import com.adpro.remind.service.ScheduleService;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageEmbed;
-import org.hibernate.id.GUIDGenerator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.awt.*;
 import java.time.DayOfWeek;
 import java.time.LocalTime;

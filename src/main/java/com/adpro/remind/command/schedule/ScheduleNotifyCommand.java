@@ -108,7 +108,7 @@ public class ScheduleNotifyCommand implements Command {
 
         EmbedBuilder eb = new EmbedBuilder();
 
-        if (guildService.getGuildByID(idGuild).isScheduleSubscribed()) {
+        if (guildService.getGuildById(idGuild).isScheduleSubscribed()) {
             outputMsg = "Notifikasi dinonaktifkan!";
             notifyOff(subscriber.get(idGuild));
             eb.setColor(Color.RED);

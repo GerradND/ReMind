@@ -10,10 +10,10 @@ public class HelpCommand implements Command {
     public void getOutputMessage(Message message, String[] inputContent) {
         EmbedBuilder eb = new EmbedBuilder();
         eb.setTitle("ReMind Bot Command List");
-        eb.appendDescription("`-help` untuk menampilkan list ini\n" +
-                "`-help reminder` untuk menampilkan list command untuk fitur reminder\n" +
-                "`-help schedule` untuk menampilkan list command untuk fitur schedule\n" +
-                "`-help list` untuk menampilkan list command untuk fitur todolist\n");
+        eb.appendDescription("`-help` untuk menampilkan list ini\n"
+                + "`-help reminder` untuk menampilkan list command untuk fitur reminder\n"
+                + "`-help schedule` untuk menampilkan list command untuk fitur schedule\n"
+                + "`-help list` untuk menampilkan list command untuk fitur todolist\n");
 
         message.getChannel().sendMessage(eb.build()).queue();
     }
