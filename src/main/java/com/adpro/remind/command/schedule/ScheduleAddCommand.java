@@ -1,6 +1,6 @@
 package com.adpro.remind.command.schedule;
 
-import com.adpro.remind.command.Command;s
+import com.adpro.remind.command.Command;
 import com.adpro.remind.model.Schedule;
 import com.adpro.remind.service.ScheduleService;
 import net.dv8tion.jda.api.EmbedBuilder;

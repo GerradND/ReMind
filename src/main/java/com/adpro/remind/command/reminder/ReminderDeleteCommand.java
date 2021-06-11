@@ -7,7 +7,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 
 public class ReminderDeleteCommand implements Command {
-    private TaskService taskService;
+    private final TaskService taskService;
     EmbedBuilder embedOutput;
 
     public ReminderDeleteCommand(TaskService taskService) {
@@ -17,9 +17,8 @@ public class ReminderDeleteCommand implements Command {
     public EmbedBuilder getEmbedOutput(Integer id) {
         EmbedBuilder embedBuilder = new EmbedBuilder();
 
-        embedBuilder.setTitle(":x:  Tugas dengan ID "+ id + " telah dihapus.");
+        embedBuilder.setTitle(":x:  Tugas dengan ID " + id + " telah dihapus.");
         embedBuilder.setColor(Color.RED);
-
 
         return embedBuilder;
     }

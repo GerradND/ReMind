@@ -2,7 +2,6 @@ package com.adpro.remind.command.reminder;
 
 import com.adpro.remind.command.Command;
 import com.adpro.remind.model.Task;
-import com.adpro.remind.service.GuildService;
 import com.adpro.remind.service.TaskService;
 import java.awt.*;
 import java.time.LocalDate;
@@ -13,16 +12,14 @@ import net.dv8tion.jda.api.entities.Message;
 
 public class ReminderAddCommand implements Command {
 
-    private TaskService taskService;
-    private GuildService guildService;
+    private final TaskService taskService;
     EmbedBuilder embedOutput;
 
-    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+    private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
-    public ReminderAddCommand(TaskService taskService, GuildService guildService) {
+    public ReminderAddCommand(TaskService taskService) {
         this.taskService = taskService;
-        this.guildService = guildService;
     }
 
     public Task newTask(String idGuild, String[] inputContent) {
@@ -52,8 +49,8 @@ public class ReminderAddCommand implements Command {
         embedBuilder.addField(":hourglass: Jam: ", task.getTime().toString(), true);
         embedBuilder.addBlankField(true);
 
-        embedBuilder.addField("", "Pasang reminder untuk tugas ini dengan:\n `-reminder set " +
-                task.getIdTask() + " [WAKTU_REMINDER]`", false);
+        embedBuilder.addField("", "Pasang reminder untuk tugas ini dengan:\n `-reminder set "
+                                + task.getIdTask() + " [WAKTU_REMINDER]`", false);
 
         embedBuilder.setColor(Color.YELLOW);
 

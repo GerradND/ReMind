@@ -40,7 +40,7 @@ public class InitCommand {
         commandRepository.addCommand("help schedule", new HelpScheduleCommand());
         commandRepository.addCommand("help list", new HelpToDoListCommand());
         commandRepository.addCommand("ping", new PingCommand());
-        commandRepository.addCommand("reminder add", new ReminderAddCommand(taskService, guildService));
+        commandRepository.addCommand("reminder add", new ReminderAddCommand(taskService));
         commandRepository.addCommand("reminder delete", new ReminderDeleteCommand(taskService));
         commandRepository.addCommand("reminder update", new ReminderUpdateCommand(taskService));
         commandRepository.addCommand("reminder show", new ReminderShowCommand(taskService));
