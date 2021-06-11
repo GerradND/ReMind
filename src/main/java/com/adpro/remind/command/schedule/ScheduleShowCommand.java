@@ -3,15 +3,13 @@ package com.adpro.remind.command.schedule;
 import com.adpro.remind.command.Command;
 import com.adpro.remind.model.Schedule;
 import com.adpro.remind.service.ScheduleService;
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageEmbed;
-
-import java.awt.*;
+import java.awt.Color;
 import java.time.format.TextStyle;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Message;
 
 public class ScheduleShowCommand implements Command {
 
@@ -28,13 +26,11 @@ public class ScheduleShowCommand implements Command {
         return Arrays.stream(items).anyMatch(inputStr::contains);
     }
 
-    public boolean IsInt_ByException(String str)
-    {
+    public boolean isIntByException(String str) {
         try {
             Integer.parseInt(str);
             return true;
-        }
-        catch(NumberFormatException nfe) {
+        } catch (NumberFormatException nfe) {
             return false;
         }
     }
@@ -70,7 +66,7 @@ public class ScheduleShowCommand implements Command {
                 }
             }
 
-        } else if (IsInt_ByException(inputContent[2])) {    // schedule spesifik
+        } else if (isIntByException(inputContent[2])) {    // schedule spesifik
             Schedule schedule = scheduleService.getScheduleByID(Integer.parseInt(inputContent[2]));
 
             if (schedule == null) {
@@ -79,8 +75,10 @@ public class ScheduleShowCommand implements Command {
             } else {
                 outputMsg = ":yellow_circle: \"" + schedule.getTitle() + "\"";
                 eb.setTitle(outputMsg);
-                eb.addField(":date: " + schedule.getDay().getDisplayName(TextStyle.FULL, Locale.getDefault()), "", false);
-                eb.addField(":alarm_clock: " + schedule.getStartTime() + "-" + schedule.getEndTime(), "", false);
+                eb.addField(":date: " + schedule.getDay().getDisplayName(TextStyle.FULL, Locale.getDefault()),
+                    "", false);
+                eb.addField(":alarm_clock: " + schedule.getStartTime() + "-" + schedule.getEndTime(),
+                    "", false);
                 eb.addField(":memo: Deskripsi:", schedule.getDescription(), false);
             }
 

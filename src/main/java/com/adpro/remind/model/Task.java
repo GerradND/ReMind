@@ -1,11 +1,11 @@
 package com.adpro.remind.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -54,7 +54,7 @@ public class Task {
 
     public String getAllReminders() {
         StringBuilder listReminder = new StringBuilder();
-        if(reminders.size() > 0) {
+        if (reminders.size() > 0) {
             for (Reminder reminder : reminders) {
                 listReminder.append("- ").append(reminder.getDate()).append(" ").append(reminder.getTime()).append("\n");
             }

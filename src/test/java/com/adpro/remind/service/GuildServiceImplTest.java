@@ -13,6 +13,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.concurrent.ScheduledFuture;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -56,5 +58,44 @@ public class GuildServiceImplTest {
         guildService.deleteGuild("123");
         Guild dummy = guildService.getGuildById("123");
         assertEquals(null, dummy);
+    }
+
+    @Test
+    public void testNotifySchedule() {
+        Guild dummy = new Guild("test");
+        lenient().when(guildRepository.findByIdGuild("test")).thenReturn(dummy);
+        Guild dummy2 = guildService.getGuildById("test");
+        dummy2 = guildService.notifySchedule("test");
+        dummy2.setScheduleSubscribed(!dummy2.isScheduleSubscribed());
+        assertEquals(false  , dummy2.isScheduleSubscribed());
+    }
+
+    @Test
+    public void testGetNotifyTimeSchedule() {
+        Guild dummy = new Guild("test");
+        LocalTime time1 = LocalTime.parse("03:18:23");
+        lenient().when(guildRepository.findByIdGuild("test")).thenReturn(dummy);
+        Guild dummy2 = guildService.getGuildById("test");
+        LocalTime time2 = guildService.getNotifyTimeSchedule("test");
+        assertNotEquals(null, time2);
+    }
+
+    @Test
+    public void testSetNotifyTimeSchedule() {
+        Guild dummy = new Guild("test");
+        LocalTime time1 = LocalTime.parse("03:18:23");
+        lenient().when(guildRepository.findByIdGuild("test")).thenReturn(dummy);
+        Guild dummy2 = guildService.getGuildById("test");
+        dummy2.setScheduleNotificationTime(time1);
+        guildService.setNotifyTimeSchedule("test", time1);
+        assertEquals(time1, dummy2.getScheduleNotificationTime());
+    }
+    @Test
+    public void testGetScheduleSubscriber() {
+        Guild dummy = new Guild("test");
+        lenient().when(guildRepository.findByIdGuild("test")).thenReturn(dummy);
+        Guild dummy2 = guildService.getGuildById("test");
+        HashMap<String, ScheduledFuture<?>> dummy3 = guildService.getScheduleSubscriber();
+        assertEquals(dummy3, guildService.getScheduleSubscriber());
     }
 }

@@ -1,8 +1,6 @@
 package com.adpro.remind.command.schedule;
 
-import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Schedule;
-import com.adpro.remind.service.ScheduleService;
 import com.adpro.remind.service.ScheduleServiceImpl;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
@@ -81,8 +79,8 @@ public class ScheduleShowCommandTests {
     }
 
     @Test
-    public void testIsInt_ByExceptionMethod() {
-        assertTrue(scheduleShowCommand.IsInt_ByException("5"));
+    public void testIsIntByExceptionMethod() {
+        assertTrue(scheduleShowCommand.isIntByException("5"));
     }
 
     @Test
