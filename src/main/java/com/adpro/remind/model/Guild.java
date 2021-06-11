@@ -2,9 +2,9 @@ package com.adpro.remind.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.time.LocalTime;
 import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
