@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TodoListRepository extends JpaRepository<TodoList, Integer> {
     TodoList findById(int id);
+
     Iterable<TodoList> findByGuild(Guild guild);
 }

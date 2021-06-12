@@ -107,11 +107,15 @@ public class ScheduleNotifyCommand implements Command {
         EmbedBuilder eb = new EmbedBuilder();
 
         if (guildService.getGuildById(idGuild).isScheduleSubscribed()) {
+            if (notifyHandle == null) {
+                subscriber.replace(idGuild, notifyOn(message, idGuild));
+            }
             outputMsg = "Notifikasi dinonaktifkan!";
             notifyOff(subscriber.get(idGuild));
             eb.setColor(Color.RED);
         } else {
-            outputMsg = "Notifikasi aktif! Schedule Anda akan dinotifikasikan jam 00:00 tiap harinya.";
+            outputMsg = "Notifikasi aktif! Schedule Anda akan dinotifikasikan jam " +
+                guildService.getNotifyTimeSchedule(idGuild).toString() + " tiap harinya.";
             subscriber.replace(idGuild, notifyOn(message, idGuild));
             eb.setColor(Color.GREEN);
         }

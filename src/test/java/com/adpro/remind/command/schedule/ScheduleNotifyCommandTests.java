@@ -128,7 +128,7 @@ public class ScheduleNotifyCommandTests {
         lenient().when(scheduleService.getScheduleByDay(today.toString(), "123")).thenReturn(scheduleListToday);
 
         lenient().when(guildService.getGuildById("123")).thenReturn(guild);
-        lenient().when(guildService.getNotifyTimeSchedule("123")).thenReturn(LocalTime.now());
+        lenient().when(guildService.getNotifyTimeSchedule("123")).thenReturn(LocalTime.of(0, 0));
         lenient().when(message.getChannel()).thenReturn(messageChannel);
 
         lenient().when(messageChannel.sendMessage(any(MessageEmbed.class))).thenReturn(messageAction);

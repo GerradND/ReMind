@@ -154,6 +154,7 @@ public class ScheduleNotifySetTimeCommandTests {
     public void testChangeNotifyTime() {
         String[] inputContent = {"-schedule", "notifyset", "09:00"};
 
+        guild.setScheduleSubscribed(true);
         subscriber.put("123", notifyHandle);
 
         lenient().when(message.getGuild()).thenReturn(guildDC);
