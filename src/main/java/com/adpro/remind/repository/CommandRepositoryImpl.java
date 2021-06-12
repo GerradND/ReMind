@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 public class CommandRepositoryImpl implements CommandRepository {
     static final Map<String, Command> feature = new HashMap<>();
 
-
     @Override
     public Command getCommand(String commandName) {
         return feature.get(commandName);

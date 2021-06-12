@@ -24,22 +24,12 @@ public class InputEventListener extends ListenerAdapter {
     @Value("${prefix}")
     private String prefix;
     private String[] content;
-    private Map<String, String> Command = new HashMap<String, String>();
 
     @Autowired
     private GuildService guildService;
 
     @Autowired
     private FeatureCommand featureCommand;
-
-    @Autowired
-    private ScheduleService scheduleService;
-
-    @Autowired
-    private TodoListService todoListService;
-
-    @Autowired
-    private TaskService taskService;
 
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event)  {
         Message message = event.getMessage();

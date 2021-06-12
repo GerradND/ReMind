@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Integer> {
     Task findByIdTask(Integer idTask);
+
     Iterable<Task> findByGuild(Guild guild);
+
     Iterable<Task> findByDateAndGuild(LocalDate date, Guild guild);
 }

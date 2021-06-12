@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
     Schedule findByIdSchedule(Integer idSchedule);
+
     List<Schedule> findAllByGuild(Guild guild);
+
     List<Schedule> findByDayAndGuild(DayOfWeek day, Guild guild);
 }
