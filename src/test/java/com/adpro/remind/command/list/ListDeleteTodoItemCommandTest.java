@@ -4,7 +4,6 @@ import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.TodoItem;
 import com.adpro.remind.model.TodoList;
 import com.adpro.remind.service.TodoListServiceImpl;
-import com.sun.tools.javac.comp.Todo;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
