@@ -22,12 +22,16 @@ public class ScheduleAddCommand implements Command {
     }
 
     public String formDescription(String[] inputContent) {
-        StringBuilder description = new StringBuilder();
-        for (int i = 6; i < inputContent.length - 1; i++) {
-            description.append(inputContent[i]).append(" ");
+        if (inputContent.length > 6) {
+            StringBuilder description = new StringBuilder();
+            for (int i = 6; i < inputContent.length - 1; i++) {
+                description.append(inputContent[i]).append(" ");
+            }
+            description.append((inputContent[inputContent.length - 1]));
+            return description.toString();
+        } else {
+            return "-";
         }
-        description.append((inputContent[inputContent.length - 1]));
-        return description.toString();
     }
 
     public DayOfWeek getDayOfWeek(String day) {

@@ -68,6 +68,12 @@ public class ScheduleAddCommandTests {
     }
 
     @Test
+    public void testFormDescriptionMethodIfEmpty() {
+        String[] inputContent = {"-schedule", "add", "test", "test", "00:00", "01:00"};
+        assertEquals("-", scheduleAddCommand.formDescription(inputContent));
+    }
+
+    @Test
     public void testGetDayOfWeekMethod() {
         String day = "Monday";
         assertEquals(DayOfWeek.MONDAY, scheduleAddCommand.getDayOfWeek(day));
