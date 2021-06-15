@@ -1,14 +1,18 @@
 package com.adpro.remind.controller;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
 import com.adpro.remind.command.Command;
-import com.adpro.remind.repository.CommandRepository;
 import com.adpro.remind.repository.CommandRepositoryImpl;
-import com.adpro.remind.repository.CommandRepositoryImplTests;
+import java.lang.reflect.Modifier;
+import java.lang.reflect.Type;
+import java.util.Arrays;
+import java.util.Collection;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.requests.restaction.MessageAction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,14 +20,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.lang.reflect.Modifier;
-import java.lang.reflect.Type;
-import java.util.Arrays;
-import java.util.Collection;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class FeatureCommandImplTest {
@@ -47,8 +43,8 @@ public class FeatureCommandImplTest {
 
     @Test
     public void testFeatureCommandImplIsConcreteClass() {
-        assertFalse(Modifier.
-                isAbstract(featureCommandImplClass.getModifiers()));
+        assertFalse(Modifier
+            .isAbstract(featureCommandImplClass.getModifiers()));
     }
 
     @Test

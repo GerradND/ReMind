@@ -1,5 +1,10 @@
 package com.adpro.remind.command.reminder;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.when;
+
 import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Task;
 import com.adpro.remind.repository.GuildRepository;
@@ -20,11 +25,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.lenient;
-import static org.mockito.Mockito.when;
-
 @ExtendWith(MockitoExtension.class)
 public class ReminderAddCommandTests {
     @Mock
@@ -37,7 +37,7 @@ public class ReminderAddCommandTests {
     MessageAction messageAction;
 
     @Mock
-    net.dv8tion.jda.api.entities.Guild DiscordGuild;
+    net.dv8tion.jda.api.entities.Guild discordGuild;
 
     @InjectMocks
     ReminderAddCommand reminderAddCommand;
@@ -69,8 +69,8 @@ public class ReminderAddCommandTests {
     void testReminderAddOutput() {
         String[] inputContent = {"-reminder", "add", "Adpro", "28/05/2021", "12:00"};
 
-        when(message.getGuild()).thenReturn(DiscordGuild);
-        when(DiscordGuild.getId()).thenReturn("1234567890");
+        when(message.getGuild()).thenReturn(discordGuild);
+        when(discordGuild.getId()).thenReturn("1234567890");
 
         lenient().when(guildRepository.findByIdGuild(guild.getIdGuild())).thenReturn(guild);
 

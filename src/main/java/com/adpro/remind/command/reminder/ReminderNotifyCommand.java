@@ -1,5 +1,7 @@
 package com.adpro.remind.command.reminder;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+
 import com.adpro.remind.model.Reminder;
 import com.adpro.remind.model.Task;
 import com.adpro.remind.service.TaskService;
@@ -21,8 +23,6 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import static java.util.concurrent.TimeUnit.SECONDS;
 
 @Component
 public class ReminderNotifyCommand {

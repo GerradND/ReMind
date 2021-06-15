@@ -1,30 +1,28 @@
 package com.adpro.remind.event;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import com.adpro.remind.controller.FeatureCommand;
 import com.adpro.remind.service.GuildService;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.requests.restaction.MessageAction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import static org.mockito.Mockito.*;
-import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.requests.restaction.MessageAction;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -57,7 +55,8 @@ public class InputEventListenerTest {
 
     @Test
     public void testOnGuildMessageReceivedMethodExist() throws NoSuchMethodException {
-        Method method = inputEventListenerClass.getDeclaredMethod("onGuildMessageReceived", GuildMessageReceivedEvent.class);
+        Method method = inputEventListenerClass.getDeclaredMethod("onGuildMessageReceived",
+            GuildMessageReceivedEvent.class);
         int methodModifiers = method.getModifiers();
         assertTrue(Modifier.isPublic(methodModifiers));
     }
@@ -91,7 +90,8 @@ public class InputEventListenerTest {
     }
 
     @Test
-    public void testInputEventListenerCalledFeatureCommandGetOutputMessage() throws NoSuchFieldException, IllegalAccessException {
+    public void testInputEventListenerCalledFeatureCommandGetOutputMessage() throws
+        NoSuchFieldException, IllegalAccessException {
         GuildMessageReceivedEvent guildMessageReceivedEvent = mock(GuildMessageReceivedEvent.class);
         Message message = mock(Message.class);
         Guild guild = mock(Guild.class);
@@ -142,7 +142,8 @@ public class InputEventListenerTest {
         when(message.getGuild()).thenReturn(guild);
         when(guild.getId()).thenReturn(idGuild);
         when(message.getContentRaw()).thenReturn(messageContent);
-        doThrow(IllegalStateException.class).when(featureCommand).outputMessage(any(Message.class), any(String[].class));
+        doThrow(IllegalStateException.class).when(featureCommand).outputMessage(any(Message.class),
+            any(String[].class));
         when(message.getChannel()).thenReturn(messageChannel);
         when(messageChannel.sendMessage(anyString())).thenReturn(messageAction);
 
