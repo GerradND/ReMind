@@ -114,6 +114,15 @@ public class TaskServiceImplTest {
     }
 
     @Test
+    void testServiceShowAllTaskWhenGuildIsNull() {
+        String idGuild = "987654321";
+        when(guildRepository.findByIdGuild(idGuild)).thenReturn(null);
+
+        Iterable<Task> tasks = taskServiceImpl.showAllTask(idGuild);
+        Assertions.assertNull(tasks);
+    }
+
+    @Test
     void testServiceShowAtDate() {
         List<Task> listTasks = new ArrayList<>();
         listTasks.add(task);
@@ -128,6 +137,16 @@ public class TaskServiceImplTest {
 
         List<Task> returnedTasks = (List<Task>) tasks;
         Assertions.assertEquals(listTasks, returnedTasks);
+    }
+
+    @Test
+    void testServiceShowAtDateWhenGuildIsNull() {
+        LocalDate date = task.getDate();
+        String idGuild = "987654321";
+        when(guildRepository.findByIdGuild(idGuild)).thenReturn(null);
+
+        Iterable<Task> tasks = taskServiceImpl.showTaskAtDate(date, idGuild);
+        Assertions.assertNull(tasks);
     }
 
     @Test
@@ -156,6 +175,13 @@ public class TaskServiceImplTest {
         taskServiceImpl.setReminder(reminder, task);
         Assertions.assertEquals(task.getReminders().size(), 1);
 
+    }
+
+    @Test
+    void testGetAllReminder() {
+        task.setReminder(reminder);
+        String output = task.getAllReminders();
+        Assertions.assertTrue(output.contains("- 2021-05-29 20:15"));
     }
 
     @Test
