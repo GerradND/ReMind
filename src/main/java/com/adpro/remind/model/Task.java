@@ -56,7 +56,8 @@ public class Task {
         StringBuilder listReminder = new StringBuilder();
         if (reminders.size() > 0) {
             for (Reminder reminder : reminders) {
-                listReminder.append("- ").append(reminder.getDate()).append(" ").append(reminder.getTime()).append("\n");
+                listReminder.append("- ").append(reminder.getDate()).append(" ")
+                    .append(reminder.getTime()).append("\n");
             }
         }
         return listReminder.toString();

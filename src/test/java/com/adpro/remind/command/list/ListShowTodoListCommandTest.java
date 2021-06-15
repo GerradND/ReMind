@@ -1,5 +1,9 @@
 package com.adpro.remind.command.list;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+
 import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.TodoItem;
 import com.adpro.remind.model.TodoList;
@@ -15,10 +19,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
 
 @ExtendWith(MockitoExtension.class)
 public class ListShowTodoListCommandTest {
@@ -48,7 +48,7 @@ public class ListShowTodoListCommandTest {
     private TodoItem todoItem;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         guild = new Guild("1");
         todoList = new TodoList("Monday", guild);
         todoItem = new TodoItem("Belajar");
@@ -57,13 +57,12 @@ public class ListShowTodoListCommandTest {
     }
 
     @Test
-    public void testShowTodoList(){
+    public void testShowTodoList() {
         String[] inputContent = {"-list", "show", "1"};
         lenient().when(message.getGuild()).thenReturn(guildDC);
         lenient().when(guildDC.getId()).thenReturn("1");
         lenient().when(todoListService.showTodoList(any(Integer.class))).thenReturn(todoList);
-        lenient().when(message.reply(any(MessageEmbed.
-                class))).thenReturn(messageAction);
+        lenient().when(message.reply(any(MessageEmbed.class))).thenReturn(messageAction);
         doNothing().when(messageAction).queue();
         listShowTodoListCommand.getOutputMessage(message, inputContent);
         verify(todoListService, times(1)).showTodoList(1);

@@ -1,24 +1,20 @@
 package com.adpro.remind.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.mockito.Mockito.*;
+
 import com.adpro.remind.model.Guild;
-import com.adpro.remind.model.Schedule;
 import com.adpro.remind.repository.GuildRepository;
-import com.adpro.remind.repository.ScheduleRepository;
+import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.concurrent.ScheduledFuture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.time.DayOfWeek;
-import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.concurrent.ScheduledFuture;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class GuildServiceImplTest {
@@ -32,7 +28,7 @@ public class GuildServiceImplTest {
     private Guild guild;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         guild = new Guild("123");
     }
 
@@ -67,7 +63,7 @@ public class GuildServiceImplTest {
         Guild dummy2 = guildService.getGuildById("test");
         dummy2 = guildService.notifySchedule("test");
         dummy2.setScheduleSubscribed(!dummy2.isScheduleSubscribed());
-        assertEquals(false  , dummy2.isScheduleSubscribed());
+        assertEquals(false, dummy2.isScheduleSubscribed());
     }
 
     @Test
@@ -90,6 +86,7 @@ public class GuildServiceImplTest {
         guildService.setNotifyTimeSchedule("test", time1);
         assertEquals(time1, dummy2.getScheduleNotificationTime());
     }
+
     @Test
     public void testGetScheduleSubscriber() {
         Guild dummy = new Guild("test");

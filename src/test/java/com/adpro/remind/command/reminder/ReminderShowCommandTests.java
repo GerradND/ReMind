@@ -1,5 +1,7 @@
 package com.adpro.remind.command.reminder;
 
+import static org.mockito.Mockito.when;
+
 import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Task;
 import com.adpro.remind.service.TaskService;
@@ -21,15 +23,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.mockito.Mockito.when;
-
 @ExtendWith(MockitoExtension.class)
 public class ReminderShowCommandTests {
     @Mock
     private Message message;
 
     @Mock
-    private net.dv8tion.jda.api.entities.Guild DiscordGuild;
+    private net.dv8tion.jda.api.entities.Guild discordGuild;
 
     @Mock
     private TaskService taskService;
@@ -64,8 +64,8 @@ public class ReminderShowCommandTests {
 
         String idGuild = guild.getIdGuild();
         when(taskService.showAllTask(idGuild)).thenReturn(tasks);
-        when(message.getGuild()).thenReturn(DiscordGuild);
-        when(DiscordGuild.getId()).thenReturn(idGuild);
+        when(message.getGuild()).thenReturn(discordGuild);
+        when(discordGuild.getId()).thenReturn(idGuild);
 
         EmbedBuilder embedOutput = reminderShowCommand.getEmbedOutput(tasks);
         when(message.getChannel()).thenReturn(messageChannel);
@@ -87,8 +87,8 @@ public class ReminderShowCommandTests {
 
         String idGuild = guild.getIdGuild();
         when(taskService.showTaskAtDate(task.getDate(), idGuild)).thenReturn(tasks);
-        when(message.getGuild()).thenReturn(DiscordGuild);
-        when(DiscordGuild.getId()).thenReturn(idGuild);
+        when(message.getGuild()).thenReturn(discordGuild);
+        when(discordGuild.getId()).thenReturn(idGuild);
 
         EmbedBuilder embedOutput = reminderShowCommand.getEmbedOutput(tasks);
         when(message.getChannel()).thenReturn(messageChannel);
