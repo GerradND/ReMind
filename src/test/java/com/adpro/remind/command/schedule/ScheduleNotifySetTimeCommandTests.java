@@ -1,9 +1,22 @@
 package com.adpro.remind.command.schedule;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.lenient;
+
 import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Schedule;
 import com.adpro.remind.service.GuildServiceImpl;
 import com.adpro.remind.service.ScheduleServiceImpl;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.ScheduledFuture;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -14,20 +27,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.time.DayOfWeek;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.ScheduledFuture;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.lenient;
 
 @ExtendWith(MockitoExtension.class)
 public class ScheduleNotifySetTimeCommandTests {
@@ -154,6 +153,7 @@ public class ScheduleNotifySetTimeCommandTests {
     public void testChangeNotifyTime() {
         String[] inputContent = {"-schedule", "notifyset", "09:00"};
 
+        guild.setScheduleSubscribed(true);
         subscriber.put("123", notifyHandle);
 
         lenient().when(message.getGuild()).thenReturn(guildDC);

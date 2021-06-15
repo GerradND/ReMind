@@ -1,8 +1,15 @@
 package com.adpro.remind.command.schedule;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
 import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Schedule;
 import com.adpro.remind.service.ScheduleServiceImpl;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
+import java.util.*;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.requests.restaction.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,14 +18,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.time.DayOfWeek;
-import java.time.LocalTime;
-import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ScheduleDeleteCommandTests {
@@ -44,7 +43,7 @@ public class ScheduleDeleteCommandTests {
     private Guild guild;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         schedule = new Schedule();
         schedule.setTitle("Adpro");
         schedule.setDay(DayOfWeek.MONDAY);

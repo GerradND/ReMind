@@ -1,29 +1,26 @@
 package com.adpro.remind.command.schedule;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.lenient;
+
 import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Schedule;
 import com.adpro.remind.service.ScheduleServiceImpl;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.requests.restaction.MessageAction;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.util.Assert;
-
-import java.time.DayOfWeek;
-import java.time.LocalTime;
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.lenient;
 
 @ExtendWith(MockitoExtension.class)
 public class ScheduleAddCommandTests {
@@ -49,7 +46,7 @@ public class ScheduleAddCommandTests {
     private Schedule schedule;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         schedule = new Schedule();
         schedule.setIdSchedule(1);
         schedule.setTitle("Adpro");
@@ -65,6 +62,12 @@ public class ScheduleAddCommandTests {
     public void testFormDescriptionMethod() {
         String[] inputContent = {"-schedule", "add", "test", "test", "00:00", "01:00", "This", "is", "desc"};
         assertEquals("This is desc", scheduleAddCommand.formDescription(inputContent));
+    }
+
+    @Test
+    public void testFormDescriptionMethodIfEmpty() {
+        String[] inputContent = {"-schedule", "add", "test", "test", "00:00", "01:00"};
+        assertEquals("-", scheduleAddCommand.formDescription(inputContent));
     }
 
     @Test
@@ -111,6 +114,7 @@ public class ScheduleAddCommandTests {
 
         scheduleAddCommand.getOutputMessage(message, inputContent);
 
-        assertEquals("Penambahan schedule gagal/terdapat kesalahan parameter. Silahkan coba lagi.", scheduleAddCommand.getOutputMsg());
+        assertEquals("Penambahan schedule gagal/terdapat kesalahan parameter. Silahkan coba lagi.",
+            scheduleAddCommand.getOutputMsg());
     }
 }

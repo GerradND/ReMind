@@ -1,8 +1,17 @@
 package com.adpro.remind.command.schedule;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.lenient;
+
 import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Schedule;
 import com.adpro.remind.service.ScheduleService;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -13,18 +22,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.util.Assert;
-
-import java.time.DayOfWeek;
-import java.time.LocalTime;
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.lenient;
 
 @ExtendWith(MockitoExtension.class)
 public class ScheduleUpdateTimeCommandTests {

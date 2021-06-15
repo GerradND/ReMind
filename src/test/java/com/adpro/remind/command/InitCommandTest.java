@@ -1,10 +1,10 @@
 package com.adpro.remind.command;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.lang.reflect.Modifier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.lang.reflect.Modifier;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 
 public class InitCommandTest {
@@ -21,8 +21,7 @@ public class InitCommandTest {
 
     @Test
     public void testInitCommandIsConcreteClass() {
-        assertFalse(Modifier.
-                isAbstract(initCommandClass.getModifiers()));
+        assertFalse(Modifier.isAbstract(initCommandClass.getModifiers()));
     }
 
 }

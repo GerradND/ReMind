@@ -1,5 +1,7 @@
 package com.adpro.remind.command.reminder;
 
+import static org.mockito.Mockito.when;
+
 import com.adpro.remind.model.Task;
 import com.adpro.remind.service.TaskService;
 import java.time.LocalDate;
@@ -16,8 +18,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class ReminderDetailCommandTests {

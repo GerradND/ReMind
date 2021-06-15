@@ -1,5 +1,8 @@
 package com.adpro.remind.command.list;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
 import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.TodoItem;
 import com.adpro.remind.model.TodoList;
@@ -15,8 +18,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ListAddTodoItemCommandTest {
@@ -46,7 +47,7 @@ public class ListAddTodoItemCommandTest {
     private TodoItem todoItem;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         guild = new Guild("1");
         todoList = new TodoList("Monday", guild);
         todoItem = new TodoItem("belajar");
@@ -54,7 +55,7 @@ public class ListAddTodoItemCommandTest {
     }
 
     @Test
-    public void testAddTodoItem(){
+    public void testAddTodoItem() {
         String[] inputContent = {"-list", "additem", "1", "belajar"};
         lenient().when(message.getGuild()).thenReturn(guildDC);
         lenient().when(guildDC.getId()).thenReturn("1");

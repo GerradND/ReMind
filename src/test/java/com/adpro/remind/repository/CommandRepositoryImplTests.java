@@ -1,14 +1,13 @@
 package com.adpro.remind.repository;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import com.adpro.remind.command.Command;
 import com.adpro.remind.command.PingCommand;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class CommandRepositoryImplTests {
     private Class<?> commandRepositoryClass;

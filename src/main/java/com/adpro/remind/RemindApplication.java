@@ -11,9 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableJpaRepositories("com.adpro.remind.repository")
 @EnableScheduling
 public class RemindApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(RemindApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(RemindApplication.class, args);
+    }
 }

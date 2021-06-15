@@ -24,7 +24,8 @@ public class ListAddTodoItemCommand implements Command {
         EmbedBuilder eb = new EmbedBuilder();
         eb.setColor(Color.GREEN);
         eb.setTitle("TodoItem Added Successfully");
-        eb.addField("", String.format("Id TodoList: %d\nTitle TodoList: %s\n(ID Item, Name)", todoList.getId(), todoList.getTitle()), false);
+        eb.addField("", String.format("Id TodoList: %d\nTitle TodoList: %s\n(ID Item, Name)",
+            todoList.getId(), todoList.getTitle()), false);
         for (TodoItem todoItem : todoList.getTodoItemSet()) {
             eb.addField("", String.format("%d %s", todoItem.getId(), todoItem.getName()), false);
         }

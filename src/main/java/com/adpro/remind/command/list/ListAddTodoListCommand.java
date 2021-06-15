@@ -18,23 +18,24 @@ public class ListAddTodoListCommand implements Command {
     public Message message;
 
     public ListAddTodoListCommand(TodoListService todoListService, GuildService guildService) {
-       this.todoListService = todoListService;
-       this.guildService = guildService;
-   }
+        this.todoListService = todoListService;
+        this.guildService = guildService;
+    }
 
-   @Override
-   public void getOutputMessage(Message message, String[] inputContent) {
-       this.message = message;
-       Guild guild = new Guild(message.getGuild().getId());
-       String namaList = inputContent[2];
-       TodoList todoList = todoListService.addTodoList(new TodoList(namaList, guild));
+    @Override
+    public void getOutputMessage(Message message, String[] inputContent) {
+        this.message = message;
+        Guild guild = new Guild(message.getGuild().getId());
+        String namaList = inputContent[2];
+        TodoList todoList = todoListService.addTodoList(new TodoList(namaList, guild));
 
-       EmbedBuilder eb = new EmbedBuilder();
-       eb.setColor(Color.GREEN);
-       eb.setTitle("TodoList Added Successfully");
-       eb.addField("", String.format("Id TodoList: %d\nTitle TodoList: %s", todoList.getId(), todoList.getTitle()), false);
-       message.reply(eb.build()).queue();
-   }
+        EmbedBuilder eb = new EmbedBuilder();
+        eb.setColor(Color.GREEN);
+        eb.setTitle("TodoList Added Successfully");
+        eb.addField("", String.format("Id TodoList: %d\nTitle TodoList: %s", todoList.getId(), todoList.getTitle()),
+            false);
+        message.reply(eb.build()).queue();
+    }
 
     @Scheduled(fixedRate = 600000)
     public void sendNotificationToReadTodoList() {
@@ -49,7 +50,7 @@ public class ListAddTodoListCommand implements Command {
         for (TodoList todoList : todoLists) {
             eb.addField("", String.format("%d %s", todoList.getId(), todoList.getTitle()), false);
         }
-       message.reply(eb.build()).queue();
+        message.reply(eb.build()).queue();
     }
 
 }

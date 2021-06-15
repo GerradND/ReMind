@@ -1,28 +1,21 @@
 package com.adpro.remind.command;
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.requests.restaction.MessageAction;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.Collection;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
 
+@SuppressWarnings("checkstyle:CommentsIndentation")
 @ExtendWith(MockitoExtension.class)
 public class PingCommandTest {
     private Class<?> pingCommandClass;
@@ -40,8 +33,7 @@ public class PingCommandTest {
 
     @Test
     public void testPingCommandIsConcreteClass() {
-        assertFalse(Modifier.
-                isAbstract(pingCommandClass.getModifiers()));
+        assertFalse(Modifier.isAbstract(pingCommandClass.getModifiers()));
     }
 
     @Test
@@ -62,7 +54,7 @@ public class PingCommandTest {
                 getOutputMessage.getParameterCount());
         assertTrue(Modifier.isPublic(getOutputMessage.getModifiers()));
     }
-/*
+    /*
     @Test
     public void testGetOutputMessageSuccess() {
         long time = System.currentTimeMillis();
@@ -80,6 +72,6 @@ public class PingCommandTest {
         verify(messageChannel, times(1)).sendMessage(any(String.class));
         verify(messageAction, times(1)).queue();
     }
- */
+    */
 
 }

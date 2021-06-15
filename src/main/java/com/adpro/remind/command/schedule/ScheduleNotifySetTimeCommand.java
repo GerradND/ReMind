@@ -103,7 +103,10 @@ public class ScheduleNotifySetTimeCommand implements Command {
     public void changeNotifyTime(Message message, String idGuild) {
         EmbedBuilder eb = new EmbedBuilder();
 
-        if (subscriber.containsKey(idGuild)) {
+        if (guildService.getGuildById(idGuild).isScheduleSubscribed()) {
+            if (notifyHandle == null) {
+                subscriber.put(idGuild, notifyOn(message, idGuild));
+            }
             outputMsg = "Notifikasi aktif dan berhasil diubah menjadi jam " +
                     guildService.getNotifyTimeSchedule(idGuild).toString() + " tiap harinya.";
             notifyOff(subscriber.get(idGuild));

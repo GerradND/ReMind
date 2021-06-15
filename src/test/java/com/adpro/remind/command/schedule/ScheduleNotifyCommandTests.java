@@ -1,9 +1,18 @@
 package com.adpro.remind.command.schedule;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
 import com.adpro.remind.model.Guild;
 import com.adpro.remind.model.Schedule;
 import com.adpro.remind.service.GuildServiceImpl;
 import com.adpro.remind.service.ScheduleServiceImpl;
+import java.time.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.ScheduledFuture;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -14,16 +23,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.time.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.ScheduledFuture;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ScheduleNotifyCommandTests {
@@ -128,7 +127,7 @@ public class ScheduleNotifyCommandTests {
         lenient().when(scheduleService.getScheduleByDay(today.toString(), "123")).thenReturn(scheduleListToday);
 
         lenient().when(guildService.getGuildById("123")).thenReturn(guild);
-        lenient().when(guildService.getNotifyTimeSchedule("123")).thenReturn(LocalTime.now());
+        lenient().when(guildService.getNotifyTimeSchedule("123")).thenReturn(LocalTime.of(0, 0));
         lenient().when(message.getChannel()).thenReturn(messageChannel);
 
         lenient().when(messageChannel.sendMessage(any(MessageEmbed.class))).thenReturn(messageAction);
