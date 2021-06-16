@@ -28,8 +28,11 @@ public class HelpScheduleCommand implements Command {
                 "Notes:\n" +
                 "1. Format HARI: Monday, Tuesday, .., Sunday\n" +
                 "2. Format JAM: HH:MM\n" +
-                "3. Disclaimer: Waktu dalam WIB :flag_id:\n" +
-                "4. Untuk melihat ID suatu Schedule, gunakan `-schedule show all` atau `-schedule show [HARI]`\n");
+                "3. Format NAMA_SCHEDULE dituliskan tanpa ada spasi\n" +
+                "4. Gunakan `-schedule notify` untuk mengaktifkan dan mematikan notifikasi\n" +
+                "5. Notifikasi berlangsung pada detik pertama (nol) dari jam yang ditentukan\n" +
+                "6. Disclaimer: Waktu notifikasi dalam WIB :flag_id:\n" +
+                "7. Untuk melihat ID suatu Schedule, gunakan `-schedule show all` atau `-schedule show [HARI]`\n");
         embedOutput = eb;
 
         message.getChannel().sendMessage(eb.build()).queue();
