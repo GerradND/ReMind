@@ -52,6 +52,7 @@ public class ScheduleShowCommand implements Command {
         if (inputContent[2].equals("all")) {    // semua schedule
             eb.setTitle(":calendar_spiral: List semua schedule");
             scheduleList = scheduleService.getListSchedule(idGuild);
+            eb.setColor(Color.MAGENTA);
 
             if (scheduleList.isEmpty()) {
                 outputMsg = "Schedule Anda masih kosong!";
