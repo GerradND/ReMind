@@ -47,6 +47,7 @@ public class ScheduleNotifyCommand implements Command {
     public void notificationMessage(Message message, String idGuild, String today) {
         EmbedBuilder eb = new EmbedBuilder();
         scheduleListDay = scheduleService.getScheduleByDay(today, idGuild);
+        eb.setColor(Color.YELLOW);
         eb.setTitle(":yellow_square: " + today);
 
         if (scheduleListDay.isEmpty()) {
@@ -107,7 +108,7 @@ public class ScheduleNotifyCommand implements Command {
         EmbedBuilder eb = new EmbedBuilder();
 
         if (guildService.getGuildById(idGuild).isScheduleSubscribed()) {
-            if (notifyHandle == null) {
+            if (subscriber.get(idGuild) == null) {
                 subscriber.replace(idGuild, notifyOn(message, idGuild));
             }
             outputMsg = "Notifikasi dinonaktifkan!";
