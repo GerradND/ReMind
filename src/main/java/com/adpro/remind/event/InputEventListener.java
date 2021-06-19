@@ -2,11 +2,6 @@ package com.adpro.remind.event;
 
 import com.adpro.remind.controller.FeatureCommand;
 import com.adpro.remind.service.GuildService;
-import com.adpro.remind.service.ScheduleService;
-import com.adpro.remind.service.TaskService;
-import com.adpro.remind.service.TodoListService;
-import java.util.HashMap;
-import java.util.Map;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;

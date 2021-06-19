@@ -53,7 +53,6 @@ public class ScheduleNotifySetTimeCommand implements Command {
         if (scheduleListDay.isEmpty()) {
             outputMsg = "Schedule Anda kosong untuk hari " + today + " :smile:";
             eb.addField(outputMsg, "", false);
-
         } else {
             outputMsg = "Berikut adalah Schedule Anda untuk hari " + today + ":";
             eb.addField(outputMsg, "", false);

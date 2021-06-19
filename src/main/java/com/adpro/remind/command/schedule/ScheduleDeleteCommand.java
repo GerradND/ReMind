@@ -40,7 +40,6 @@ public class ScheduleDeleteCommand implements Command {
             eb.setTitle(outputMsg);
             message.getChannel().sendMessage(eb.build()).queue();
 
-
         } catch (NumberFormatException e) {
             eb.setColor(Color.red);
             outputMsg = "Tolong masukan ID yang valid.";

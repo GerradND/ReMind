@@ -58,7 +58,6 @@ public class ScheduleUpdateDescriptionCommand implements Command {
 
             message.getChannel().sendMessage(eb.build()).queue();
 
-
         } catch (NumberFormatException e) {
             outputMsg = "Tolong masukan ID yang valid.";
             eb.setColor(Color.red);

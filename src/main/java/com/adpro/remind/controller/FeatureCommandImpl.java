@@ -40,8 +40,6 @@ public class FeatureCommandImpl implements FeatureCommand {
             command.getOutputMessage(message, inputContent);
 
         } catch (Exception e) {
-            e.printStackTrace();
-
             EmbedBuilder eb = new EmbedBuilder();
             eb.setColor(Color.red);
             eb.addField("Perintah yang Anda masukan salah, coba lagi.","", false);
