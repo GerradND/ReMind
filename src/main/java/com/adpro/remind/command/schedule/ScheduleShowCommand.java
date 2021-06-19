@@ -49,7 +49,7 @@ public class ScheduleShowCommand implements Command {
         EmbedBuilder eb = new EmbedBuilder();
         eb.setColor(Color.YELLOW);
 
-        if (inputContent[2].equals("all")) {    // semua schedule
+        if (inputContent[2].equals("all")) {    // show semua schedule
             eb.setTitle(":calendar_spiral: List semua schedule");
             scheduleList = scheduleService.getListSchedule(idGuild);
             eb.setColor(Color.MAGENTA);
@@ -67,7 +67,7 @@ public class ScheduleShowCommand implements Command {
                 }
             }
 
-        } else if (isIntByException(inputContent[2])) {    // schedule spesifik
+        } else if (isIntByException(inputContent[2])) {    // show schedule spesifik
             Schedule schedule = scheduleService.getScheduleByID(Integer.parseInt(inputContent[2]));
 
             if (schedule == null) {
@@ -83,8 +83,7 @@ public class ScheduleShowCommand implements Command {
                 eb.addField(":memo: Deskripsi:", schedule.getDescription(), false);
             }
 
-
-        } else if (stringContainsItemFromList(inputContent[2], arrHari)) {  // schedule per hari
+        } else if (stringContainsItemFromList(inputContent[2], arrHari)) {  // show schedule per hari
             scheduleList = scheduleService.getScheduleByDay(inputContent[2], idGuild);
             eb.setTitle(":yellow_square: " + inputContent[2]);
 
@@ -99,6 +98,7 @@ public class ScheduleShowCommand implements Command {
                                     schedule.getEndTime().toString()), false);
                 }
             }
+
         } else {
             outputMsg = "Command 'Show' yang Anda masukan salah! Silahkan coba lagi.";
             eb.addField(outputMsg, "", false);

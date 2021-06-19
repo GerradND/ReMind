@@ -120,8 +120,8 @@ public class ScheduleNotifyCommand implements Command {
             subscriber.replace(idGuild, notifyOn(message, idGuild));
             eb.setColor(Color.GREEN);
         }
-        eb.setDescription(outputMsg);
 
+        eb.setDescription(outputMsg);
         message.getChannel().sendMessage(eb.build()).queue();
         guildService.notifySchedule(idGuild);
 

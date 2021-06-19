@@ -57,17 +57,14 @@ public class ScheduleAddCommand implements Command {
         String startTime = inputContent[4];
         String endTime = inputContent[5];
         String desc = formDescription(inputContent);
-
         String idGuild = message.getGuild().getId();
 
         try {
             Schedule schedule = new Schedule(title, getDayOfWeek(day), getTime(startTime), getTime(endTime), desc);
-
             schedule = scheduleService.createSchedule(schedule, idGuild);
 
             outputMsg = ":white_check_mark: Schedule \"" + title + "\" berhasil ditambahkan!";
             eb.setTitle(outputMsg);
-
             eb.addField(":id: Id:", schedule.getIdSchedule().toString(), true);
             eb.addField(":writing_hand: Judul:", title, true);
             eb.addBlankField(true);
@@ -80,7 +77,6 @@ public class ScheduleAddCommand implements Command {
             message.getChannel().sendMessage(eb.build()).queue();
 
         } catch (Exception e) {
-            e.printStackTrace();
             outputMsg = "Penambahan schedule gagal/terdapat kesalahan parameter. Silahkan coba lagi.";
             eb.addField(outputMsg, "", false);
             eb.setColor(Color.red);

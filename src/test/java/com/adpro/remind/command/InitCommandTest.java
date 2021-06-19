@@ -9,14 +9,10 @@ import org.junit.jupiter.api.Test;
 
 public class InitCommandTest {
     private Class<?> initCommandClass;
-    //private CommandRepositoryImpl commandRepositoryDummy;
-    //private ScheduleServiceImpl scheduleServiceDummy;
 
     @BeforeEach
     public void setUp() throws Exception {
         initCommandClass = Class.forName("com.adpro.remind.command.InitCommand");
-        //commandRepositoryDummy = new CommandRepositoryImpl();
-        //scheduleServiceDummy = new ScheduleServiceImpl();
     }
 
     @Test
