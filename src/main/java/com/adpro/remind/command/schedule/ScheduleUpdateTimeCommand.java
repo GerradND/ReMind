@@ -63,6 +63,7 @@ public class ScheduleUpdateTimeCommand implements Command {
                 eb.addField("Hari, Jam",  newDay + ", " + newStartTime + "-" + newEndTime, true);
 
             }
+
             message.getChannel().sendMessage(eb.build()).queue();
 
         } catch (NumberFormatException e) {

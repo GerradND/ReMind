@@ -54,24 +54,5 @@ public class PingCommandTest {
                 getOutputMessage.getParameterCount());
         assertTrue(Modifier.isPublic(getOutputMessage.getModifiers()));
     }
-    /*
-    @Test
-    public void testGetOutputMessageSuccess() {
-        long time = System.currentTimeMillis();
-        String[] messageContent = {"-ping"};
-        Message message = mock(Message.class);
-        MessageChannel messageChannel = mock(MessageChannel.class);
-        MessageAction messageAction = mock(MessageAction.class);
-
-        when(message.getChannel()).thenReturn(messageChannel);
-        when(messageChannel.sendMessage(anyString())).thenReturn(messageAction);
-
-        pingCommand.getOutputMessage(message, messageContent);
-
-        verify(message, times(1)).getChannel();
-        verify(messageChannel, times(1)).sendMessage(any(String.class));
-        verify(messageAction, times(1)).queue();
-    }
-    */
 
 }
